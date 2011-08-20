@@ -1,0 +1,29 @@
+    <project name="Hello World" default="build" basedir=".">
+        <description>The Hello World of build files.</description>
+        <property name="debug" value="true" overwrite="false" />
+        <target name="clean" description="remove all generated files">
+            <delete file="HelloWorld.exe" failonerror="false" />
+            <delete file="HelloWorld.pdb" failonerror="false" />
+        </target>
+        <target name="build" description="compiles the source code">
+            <csc target="library" output="HelloWorld.dll" debug="true">
+            	<references>
+            		<include name="nunit.framework.dll"/>
+        		</references>
+                <sources>
+                    <include name="MockUnity/**/*.cs" />
+                    <include name="Test/**/*.cs" />
+                    <include name="Assets/Scripts/DeShaker.cs" />
+                    <include name="Assets/Scripts/Images.cs" />
+                    <include name="Assets/Scripts/Sounds.cs" />
+                </sources>
+            </csc>
+            <nunit2>
+            	<test>
+	            	<assemblies>
+	            		<include name="*.dll" />
+	            	</assemblies>
+            	</test>
+            </nunit2>
+        </target>
+    </project>
