@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class FullScreenQuad : MonoBehaviour {
+	public Texture2D texture;
+	public bool tiled = false;
+	
+	void Start () {
+		Camera cam = Camera.main;
+		Mesh mesh = new Mesh();
+		float z = gameObject.transform.position.z;
+		Vector3 tr = cam.ViewportToWorldPoint(new Vector3(1, 1, z));
+		Vector3 tl = cam.ViewportToWorldPoint(new Vector3(0, 1, z));
+		Vector3 br = cam.ViewportToWorldPoint(new Vector3(1, 0, z));
+		Vector3 bl = cam.ViewportToWorldPoint(new Vector3(0, 0, z));
+		mesh.vertices = new Vector3[] {tr, tl, br, bl};
+		mesh.triangles = new int[] {0, 2, 1, 1, 2, 3};
+		//mesh.triangles = new int[] {1, 0, 3, 3, 0, 2};
+		ImageMaterial img = new ImageMaterial(gameObject, mesh);
+		img.SetTexture(texture);
+
+		if(tiled)
+			img.SetUVTiled();
+		else
+			img.SetUVStretched();
+	}
+}
