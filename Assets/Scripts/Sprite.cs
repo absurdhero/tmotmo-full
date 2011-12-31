@@ -8,6 +8,8 @@ using UnityEngine;
  */
 public class Sprite : MonoBehaviour {
 	public Texture2D[] textures;
+	public int height = 0;
+	public int width = 0;
 	
 	private int texture_index = 0;
 	private bool texture_dirty = true;
@@ -15,15 +17,22 @@ public class Sprite : MonoBehaviour {
 	private Mesh mesh;
 	private ImageMaterial imageMaterial;
 	
+	public Material material { get { return imageMaterial.material; } }
+	
 	void Awake() {
 		Camera cam = Camera.main;
+		// if width/height were not specified, base it on the first texture
+		if (this.width == 0 || this.height == 0) {
+			width = textures[0].width;
+			height = textures[0].height;
+		}
+
 		// calculate world points that allow the texture width/height to
 		// display pixel perfect on the screen
-		Texture2D texture = textures[0];
 		Vector3 pos = cam.WorldToScreenPoint(gameObject.transform.position);
-		Vector3 tr = cam.ScreenToWorldPoint(new Vector3(pos.x + texture.width, pos.y + texture.height, pos.z));
-		Vector3 tl = cam.ScreenToWorldPoint(new Vector3(pos.x, pos.y + texture.height, pos.z));
-		Vector3 br = cam.ScreenToWorldPoint(new Vector3(pos.x + texture.width, pos.y, pos.z));
+		Vector3 tr = cam.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y + height, pos.z));
+		Vector3 tl = cam.ScreenToWorldPoint(new Vector3(pos.x, pos.y + height, pos.z));
+		Vector3 br = cam.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y, pos.z));
 		Vector3 bl = cam.ScreenToWorldPoint(pos);
 
 		mesh = new Mesh();
@@ -53,6 +62,7 @@ public class Sprite : MonoBehaviour {
 	public void NextTexture() {
 		texture_index = (texture_index + 1) % textures.Length;
 		texture_dirty = true;
+		Debug.Log(this.GetInstanceID().ToString() + " switched to texture " + texture_index);
 	}
 	
 	public Vector3 Center() {
@@ -63,20 +73,22 @@ public class Sprite : MonoBehaviour {
 		return sum / (float) mesh.vertices.Length;
 	}
 	
-	void OnDrawGizmos() {
-		if (textures == null || textures.Length == 0) return;
-		if (mesh == null) {
-			Awake();
-			Start();
-		}
-		GetComponent<MeshRenderer>().sharedMaterial.mainTexture = textures[0];
+	public int PixelWidth() {
+		return width;
 	}
 	
-	void OnDrawGizmosSelected() {
-		OnDrawGizmos();
-		if (textures.Length > 0) {
-	        Gizmos.color = Color.yellow;
-        	Gizmos.DrawWireCube(transform.position + mesh.bounds.size / 2.0f, mesh.bounds.size);
-		}
-    }
+	public int PixelHeight() {
+		return height;
+	}
+	
+	public Rect ScreenRect() {
+		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+		return new Rect(pos.x, pos.y, width, height);
+	}
+	
+	/* In viewport space, 0 and 1 are the edges of the screen. */
+	public void setCenterToViewportCoord(Camera camera, float x, float y) {
+		var layoutpos = Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f));
+		gameObject.transform.position = new Vector3(layoutpos.x, layoutpos.y, gameObject.transform.position.z) - Center();
+	}
 }

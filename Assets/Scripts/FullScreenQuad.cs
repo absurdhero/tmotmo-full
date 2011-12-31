@@ -15,7 +15,16 @@ public class FullScreenQuad : MonoBehaviour {
 		mesh.vertices = new Vector3[] {tr, tl, br, bl};
 		mesh.triangles = new int[] {0, 2, 1, 1, 2, 3};
 		//mesh.triangles = new int[] {1, 0, 3, 3, 0, 2};
-		ImageMaterial img = new ImageMaterial(gameObject, mesh);
+		
+		var shader = Shader.Find("Mobile/Unlit (Supports Lightmap)");
+		if (shader == null) {
+			Debug.LogError("Shader (" + shader.name + ") not found.");
+		}
+
+		var material = new Material(shader);
+		material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
+
+		ImageMaterial img = new ImageMaterial(gameObject, mesh, material);
 		img.SetTexture(texture);
 
 		if(tiled)

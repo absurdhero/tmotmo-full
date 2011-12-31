@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class ImageMaterial {
 	private Mesh mesh;
-	private Material material;
+	public Material material { private set; get; }
+
+	public ImageMaterial (GameObject gameObject, Mesh mesh)
+		: this(gameObject, mesh, DefaultMaterial()) {
+	}
 	
-	public ImageMaterial (GameObject gameObject, Mesh mesh) {
+	public ImageMaterial (GameObject gameObject, Mesh mesh, Material material) {
 		this.mesh = mesh;
 		var meshFilter = gameObject.GetComponent<MeshFilter>();
 		if (meshFilter == null) {
@@ -15,13 +19,15 @@ public class ImageMaterial {
 		var meshRenderer = gameObject.GetComponent<MeshRenderer>();
 		if (meshRenderer == null) {
 			meshRenderer = gameObject.AddComponent<MeshRenderer>();
-			material = new Material(Shader.Find("Unlit/Transparent"));
+
 			meshRenderer.material = material;
 			meshRenderer.receiveShadows = false;
 			meshRenderer.castShadows = false;
 		} else {
 			material = meshRenderer.sharedMaterial;
 		}
+		
+		this.material = material;
 	}
 	
 	public void SetTexture(Texture2D texture) {
@@ -47,5 +53,16 @@ public class ImageMaterial {
         uvs[2] = new Vector2(1, 0);
         uvs[3] = new Vector2(0, 0);
         mesh.uv = uvs;
+	}
+	
+	public static Material DefaultMaterial() {
+		var shader = Shader.Find("Mobile/Transparent/Vertex Color");
+		if (shader == null) {
+			Debug.LogError("Shader (" + shader.name + ") not found.");
+		}
+			
+		Material material = new Material(shader);
+		material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
+		return material;
 	}
 }
