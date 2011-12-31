@@ -1,3 +1,5 @@
+namespace UnityEngine
+{
 //[DefaultMember("Item")]
 public struct Vector3
 {
@@ -8,8 +10,17 @@ public struct Vector3
   public float z;
 
   // Constructors
-//  public Vector3(float x, float y, float z);
-//  public Vector3(float x, float y);
+  public Vector3(float x, float y, float z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+  public Vector3(float x, float y) {
+    this.x = x;
+    this.y = y;
+    this.z = 0f;
+  }
+
 //
 //  // Methods
 //  public static Vector3 Lerp(Vector3 from, Vector3 to, float t);
@@ -25,7 +36,6 @@ public struct Vector3
 //  public void Scale(Vector3 scale);
 //  public static Vector3 Cross(Vector3 lhs, Vector3 rhs);
 //  public virtual int GetHashCode();
-//  public virtual bool Equals(object other);
 //  public static Vector3 Reflect(Vector3 inDirection, Vector3 inNormal);
 //  public static Vector3 Normalize(Vector3 value);
 //  public void Normalize();
@@ -47,8 +57,7 @@ public struct Vector3
 //  public float Item[int index] { get; set; }
 //  public Vector3 normalized { get; }
 //  public float magnitude { get; }
-//  public float sqrMagnitude { get; }
-//  public static Vector3 zero { get; }
+  public static Vector3 zero = new Vector3(0f, 0f, 0f);
 //  public static Vector3 one { get; }
 //  public static Vector3 forward { get; }
 //  public static Vector3 back { get; }
@@ -57,5 +66,56 @@ public struct Vector3
 //  public static Vector3 left { get; }
 //  public static Vector3 right { get; }
 //  public static Vector3 fwd { get; }
+
+        public static float SqrMagnitude(Vector3 v) {
+            return v.x * v.x + v.y * v.y + v.z * v.z;
+        }
+
+        public override bool Equals(object other) {
+            if (!(other is Vector3)) return false;
+            return this == (Vector3) other;
+        }
+
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode();
+        }
+        
+        private const float epsilon = 0.0000000001f;
+
+		public static Vector3 operator + (Vector3 a, Vector3 b)
+		{
+			return new Vector3 (a.x + b.x, a.y + b.y, a.z + b.z);
+		}
+		public static Vector3 operator - (Vector3 a, Vector3 b)
+		{
+			return new Vector3 (a.x - b.x, a.y - b.y, a.z - b.z);
+		}
+		public static Vector3 operator - (Vector3 a)
+		{
+			return new Vector3 (-a.x, -a.y, -a.z);
+		}
+		public static Vector3 operator * (Vector3 a, float d)
+		{
+			return new Vector3 (a.x * d, a.y * d, a.z * d);
+		}
+		public static Vector3 operator * (float d, Vector3 a)
+		{
+			return new Vector3 (a.x * d, a.y * d, a.z * d);
+		}
+		public static Vector3 operator / (Vector3 a, float d)
+		{
+			return new Vector3 (a.x / d, a.y / d, a.z / d);
+		}
+		public static bool operator == (Vector3 lhs, Vector3 rhs)
+		{
+			return Vector3.SqrMagnitude (lhs - rhs) < epsilon;
+		}
+		public static bool operator != (Vector3 lhs, Vector3 rhs)
+		{
+			return Vector3.SqrMagnitude (lhs - rhs) >= epsilon;
+		}
+	}
+  
 }
 

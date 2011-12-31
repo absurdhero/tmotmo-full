@@ -5,7 +5,7 @@ namespace UnityEngine
 
 public struct Rect
 {
-  private float left, top, width, height;
+  public float left, top, width, height;
   
   // Constructors
   public Rect(float left, float top, float width, float height) {this.left = left; this.top = top; this.width = width; this.height = height; }

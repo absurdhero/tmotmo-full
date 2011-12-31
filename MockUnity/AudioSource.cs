@@ -10,8 +10,8 @@ public interface AudioSource
   void Play();
   void Stop();
   void Pause();
-  //void PlayOneShot(AudioClip clip, float volumeScale);
-  //void PlayOneShot(AudioClip clip);
+  void PlayOneShot(AudioClip clip, float volumeScale);
+  void PlayOneShot(AudioClip clip);
   float[] GetOutputData(int numSamples, int channel);
   void GetOutputData(float[] samples, int channel);
   //float[] GetSpectrumData(int numSamples, int channel, FFTWindow window);
@@ -23,7 +23,7 @@ public interface AudioSource
   float pitch { get; set; }
   float time { get; set; }
   int timeSamples { get; set; }
-  //AudioClip clip { get; set; }
+  AudioClip clip { get; set; }
   bool isPlaying { get; }
   bool loop { get; set; }
   bool ignoreListenerVolume { get; set; }

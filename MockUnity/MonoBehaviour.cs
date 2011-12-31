@@ -34,7 +34,12 @@ namespace UnityEngine
   // Properties
 
   public bool useGUILayout { get; set; }
+  protected GameObject gameObject { get; set; }
+  protected Transform transform { get { return gameObject.transform; } }
 
+  protected int GetInstanceID() {
+      return this.GetHashCode();
+  }
   
   }
 }
