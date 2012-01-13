@@ -20,6 +20,7 @@
                     <include name="Assets/Scripts/Sounds.cs" />
                     <include name="Assets/Scripts/ImageMaterial.cs" />
                     <include name="Assets/Scripts/Sprite.cs" />
+                    <include name="Assets/Scripts/LoopTracker.cs" />
                     <include name="Assets/Scripts/Cycler.cs" />
                 </sources>
             </csc>
