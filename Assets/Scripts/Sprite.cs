@@ -59,10 +59,9 @@ public class Sprite : MonoBehaviour {
 		}
 	}
 	
-	public void NextTexture() {
+	public virtual void NextTexture() {
 		texture_index = (texture_index + 1) % textures.Length;
 		texture_dirty = true;
-		Debug.Log(this.GetInstanceID().ToString() + " switched to texture " + texture_index);
 	}
 	
 	public Vector3 Center() {

@@ -7,17 +7,14 @@ namespace Tests
   [TestFixture]
   public class MusicPlayerTest
   {
-    private Foo foo; 
     [SetUp]
     public void SFJKHSDFJKH()
     {
-      foo = new Foo();
     }
     
     [TearDown]
     public void SDFJHDSF() 
     {
-      fo3
     }
     
     
