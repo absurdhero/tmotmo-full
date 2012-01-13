@@ -5,20 +5,23 @@ using System.Collections.Generic;
 public class Cycler
 {
 	protected float interval;
-	protected float length;
+	protected int cycles;
 	protected IList<Sprite> sprites;
 	protected float startTime;
-	protected int currentIndex = 0;
+	protected int currentCycle = 0;
 
-	public Cycler (float interval, float length)
+	public Cycler (float interval, int totalCycles, float startTime)
 	{
 		this.interval = interval;
-		this.length = length;
-		startTime = Time.time;
+		this.cycles = totalCycles;
+		this.startTime = startTime;
 		sprites = new List<Sprite>();
 	}
 	
-	public Cycler(float interval) : this(interval, 0.0f) {
+	public Cycler (float interval, int totalCycles) : this(interval, totalCycles, Time.time) {
+	}
+	
+	public Cycler(float interval) : this(interval, 0) {
 	}
 	
 	public void AddSprite(Sprite sprite) {
@@ -27,29 +30,33 @@ public class Cycler
 
 	public void AddSprite(GameObject spriteObject) {
 		var sprite = spriteObject.GetComponent<Sprite>();
-		if (sprites == null) {
+		if (sprite == null) {
 			throw new MissingComponentException("Expected object to have a Sprite component");
 		}
 		sprites.Add(sprite);
 	}
-		
-	public int FrameIndex() {
-		return currentIndex;
-	}
 	
-	public virtual void Update ()
+	public int Count() {
+		return currentCycle;
+	}
+
+	public virtual void Update (float currentTime)
 	{
-		float run_time = (Time.time - startTime);
-		if (length != 0.0f && run_time > length) {
+		float run_time = (currentTime - startTime);
+		if (cycles != 0 && currentCycle >= cycles) {
 			return;
 		}
 
 		int index = (int)(run_time / interval);
-		if (index != currentIndex) {
-			currentIndex = index;
+		if (index != currentCycle) {
+			currentCycle = index;
 			foreach(var sprite in sprites) {
 				sprite.NextTexture();
 			}
 		}
+	}
+	
+	public float Length() {
+		return interval * cycles;
 	}
 }
