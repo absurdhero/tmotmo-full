@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
-class LoopTracker {
+
+public class LoopTracker : MarshalByRefObject {
 	int repetition;
 	float loopStart = 0.0f;
 	float loopEnd = 0.0f;
@@ -9,6 +11,11 @@ class LoopTracker {
 	public LoopTracker(Sounds sounds) {
 		this.sounds = sounds;
 	}
+	
+	public void startPlaying() {
+		sounds.startPlaying();	
+	}
+	
 	public void Repeat() {
 		if (loopEnd == 0.0f) return;
 
