@@ -1,21 +1,20 @@
-using UnityEngine;
-using System.Collections;
 using System;
+using System.Collections;
+using UnityEngine;
 
-public delegate void SceneEndEventHandler(Scene sender, EventArgs e);
-
-public abstract class Scene {
+public abstract class Scene : MarshalByRefObject {
 	protected float timeLength = 0.0f;
+	
+	protected SceneManager sceneManager;
 
 	public virtual float TimeLength() {
 		return timeLength;
 	}
 	
-	public event SceneEndEventHandler SceneEnded;
-	
 	public bool completed { get; set; }
 	
-	public Scene() {
+	public Scene(SceneManager manager) {
+		sceneManager = manager;
 		completed = false;
 	}
 
@@ -24,9 +23,7 @@ public abstract class Scene {
 	public abstract void Destroy();
 	
 	public virtual void Transition() {
-		if (SceneEnded != null) {
-			SceneEnded(this, EventArgs.Empty);
-		}
+		sceneManager.NextScene();
 	}
 	
 	protected static bool ContainsTouch(Rect rect, Touch touch) {
