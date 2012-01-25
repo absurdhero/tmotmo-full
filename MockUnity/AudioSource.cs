@@ -1,47 +1,46 @@
 using System;
 namespace UnityEngine
 {
-public interface AudioSource
-
+public abstract class AudioSource : Behaviour
 {
 
   // Methods
-  void Play(ulong delay);
-  void Play();
-  void Stop();
-  void Pause();
-  void PlayOneShot(AudioClip clip, float volumeScale);
-  void PlayOneShot(AudioClip clip);
-  float[] GetOutputData(int numSamples, int channel);
-  void GetOutputData(float[] samples, int channel);
-  //float[] GetSpectrumData(int numSamples, int channel, FFTWindow window);
-  //void GetSpectrumData(float[] samples, int channel, FFTWindow window);
+  public void Play(ulong delay) { throw new InvalidOperationException(); }
+  public void Play() { throw new InvalidOperationException(); }
+  public void Stop() { throw new InvalidOperationException(); }
+  public void Pause() { throw new InvalidOperationException(); }
+  public void PlayOneShot(AudioClip clip, float volumeScale) { throw new InvalidOperationException(); }
+  public void PlayOneShot(AudioClip clip) { throw new InvalidOperationException(); }
+  public float[] GetOutputData(int numSamples, int channel) { throw new InvalidOperationException(); }
+  public void GetOutputData(float[] samples, int channel) { throw new InvalidOperationException(); }
+  //public float[] GetSpectrumData(int numSamples, int channel, FFTWindow window);
+  //public void GetSpectrumData(float[] samples, int channel, FFTWindow window);
 
 
   // Properties
-  float volume { get; set; }
-  float pitch { get; set; }
-  float time { get; set; }
-  int timeSamples { get; set; }
-  AudioClip clip { get; set; }
-  bool isPlaying { get; }
-  bool loop { get; set; }
-  bool ignoreListenerVolume { get; set; }
-  bool playOnAwake { get; set; }
- // AudioVelocityUpdateMode velocityUpdateMode { get; set; }
-  float panLevel { get; set; }
-  bool bypassEffects { get; set; }
-  float dopplerLevel { get; set; }
-  float spread { get; set; }
-  int priority { get; set; }
-  bool mute { get; set; }
-  float minDistance { get; set; }
-  float maxDistance { get; set; }
-  float pan { get; set; }
-  //AudioRolloffMode rolloffMode { get; set; }
-  float minVolume { get; set; }
-  float maxVolume { get; set; }
-  float rolloffFactor { get; set; }
+  public float volume { get; set; }
+  public float pitch { get; set; }
+  public float time { get; set; }
+  public int timeSamples { get; set; }
+  public AudioClip clip { get; set; }
+  public bool isPlaying { get { throw new InvalidOperationException(); } }
+  public bool loop { get; set; }
+  public bool ignoreListenerVolume { get; set; }
+  public bool playOnAwake { get; set; }
+ //public  AudioVelocityUpdateMode velocityUpdateMode { get; set; }
+  public float panLevel { get; set; }
+  public bool bypassEffects { get; set; }
+  public float dopplerLevel { get; set; }
+  public float spread { get; set; }
+  public int priority { get; set; }
+  public bool mute { get; set; }
+  public float minDistance { get; set; }
+  public float maxDistance { get; set; }
+  public float pan { get; set; }
+  //public AudioRolloffMode rolloffMode { get; set; }
+  public float minVolume { get; set; }
+  public float maxVolume { get; set; }
+  public float rolloffFactor { get; set; }
 
 }
 }

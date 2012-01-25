@@ -1,5 +1,5 @@
 namespace UnityEngine {
-    public abstract class MeshFilter {
+    public abstract class MeshFilter : Component {
         public Mesh mesh;
     }
 }

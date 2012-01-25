@@ -1,5 +1,8 @@
 namespace UnityEngine {
-    public abstract class MeshRenderer {
+	public abstract class Renderer : Component {
+	}
+	
+    public abstract class MeshRenderer : Renderer {
         public Material material;
         public bool receiveShadows;
         public bool castShadows;

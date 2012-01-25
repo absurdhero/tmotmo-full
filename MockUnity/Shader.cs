@@ -4,7 +4,6 @@ namespace UnityEngine
 {
 	public sealed class Shader : Object
 	{
-        public string name;
 		public bool isSupported;
 		public int maximumLOD;
 		public static int globalMaximumLOD;
