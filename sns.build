@@ -10,7 +10,7 @@
             	<references>
                     <include name="nunit.framework.dll"/>
                     <include name="nunit.mocks.dll"/>
-                    <include name="Tests/Rhino.Mocks.dll"/>
+                    <include name="lib/Rhino.Mocks.dll"/>
         		</references>
                 <sources>
                     <include name="MockUnity/**/*.cs" />
@@ -21,7 +21,12 @@
                     <include name="Assets/Scripts/ImageMaterial.cs" />
                     <include name="Assets/Scripts/Sprite.cs" />
                     <include name="Assets/Scripts/LoopTracker.cs" />
+                    <include name="Assets/Scripts/SceneFactory.cs" />
+                    <include name="Assets/Scripts/SceneManager.cs" />
+                    <include name="Assets/Scripts/Scene.cs" />
+                    <include name="Assets/Scripts/Scenes/*.cs" />
                     <include name="Assets/Scripts/Cycler.cs" />
+                    <include name="Assets/Scripts/DelayedCycler.cs" />
                 </sources>
             </csc>
             <nunit2>

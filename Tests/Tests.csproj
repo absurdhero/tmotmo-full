@@ -2,16 +2,16 @@
 <Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F68BCAA0-DDD6-48BB-954E-B94E638D21E4}</ProjectGuid>
+    <ProjectGuid>{5CD7675E-2B62-445F-A71F-B209AD6E7836}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -19,25 +19,73 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="System" />
+    <Compile Include="TestCycler.cs" />
+    <Compile Include="TestLoopTracker.cs" />
+    <Compile Include="TestStemPicker.cs" />
+    <Compile Include="..\Assets\Scripts\Cycler.cs">
+      <Link>Cycler.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\ImageMaterial.cs">
+      <Link>ImageMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\LoopTracker.cs">
+      <Link>LoopTracker.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Sounds.cs">
+      <Link>Sounds.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Sprite.cs">
+      <Link>Sprite.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\SceneFactory.cs">
+      <Link>SceneFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scene.cs">
+      <Link>Scene.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneOne.cs">
+      <Link>Scenes\SceneOne.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneTwo.cs">
+      <Link>Scenes\SceneTwo.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\TitleScene.cs">
+      <Link>Scenes\TitleScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\DelayedCycler.cs">
+      <Link>DelayedCycler.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\SceneManager.cs">
+      <Link>SceneManager.cs</Link>
+    </Compile>
+    <Compile Include="TestSceneManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MockUnity\MockUnity.csproj">
+      <Project>{0308C045-ED54-4F84-9AB2-C4B0BF69D7F7}</Project>
+      <Name>MockUnity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Test.cs" />
-    <Compile Include="TestStemPicker.cs" />
-    <Compile Include="FooTest.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0308C045-ED54-4F84-9AB2-C4B0BF69D7F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MockUnity</RootNamespace>
+    <AssemblyName>MockUnity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AudioClip.cs" />
+    <Compile Include="AudioSource.cs" />
+    <Compile Include="Bounds.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Material.cs" />
+    <Compile Include="Mesh.cs" />
+    <Compile Include="MeshFilter.cs" />
+    <Compile Include="MeshRenderer.cs" />
+    <Compile Include="MonoBehaviour.cs" />
+    <Compile Include="Rect.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="Shader.cs" />
+    <Compile Include="Texture.cs" />
+    <Compile Include="Texture2D.cs" />
+    <Compile Include="Time.cs" />
+    <Compile Include="Touch.cs" />
+    <Compile Include="TouchPhase.cs" />
+    <Compile Include="Transform.cs" />
+    <Compile Include="Vector2.cs" />
+    <Compile Include="Vector3.cs" />
+    <Compile Include="Vector4.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="Object.cs" />
+    <Compile Include="Application.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,49 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{4E5C389F-6EA3-9C7E-C07B-9134745DDFD5}") = "tmotmo", "Assembly-CSharp.csproj", "{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+																					GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.ClassBraceStyle = EndOfLine
+		$3.InterfaceBraceStyle = EndOfLine
+		$3.MethodBraceStyle = EndOfLine
+		$3.ConstructorBraceStyle = EndOfLine
+		$3.DestructorBraceStyle = EndOfLine
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 120
+		$4.TabWidth = 4
+		$4.inheritsSet = Mono
+		$4.inheritsScope = text/plain
+		$4.scope = text/plain
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-shader
+	EndGlobalSection
+
+EndGlobal
