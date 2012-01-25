@@ -38,14 +38,16 @@ namespace Irrelevant
     [Test]
     public void DontSwitchFramesWhenFrameIntervalHasntPassed() {
       var cycler = new Cycler(frameTime, 3, beginning);
+      var inbetweenFrame = frameTime / 2.0f;
+
       using (mocks.Record()) {
         Expect.Call(delegate{sprite.NextTexture();}).Repeat.Once();
       }
       using (mocks.Playback()) {
         cycler.AddSprite(sprite);
-        cycler.Update(beginning + frameTime / 2.0f);
+        cycler.Update(beginning + inbetweenFrame);
         cycler.Update(beginning + frameTime);
-        cycler.Update(beginning + frameTime + (frameTime / 2.0f));
+        cycler.Update(beginning + frameTime + inbetweenFrame);
       }
     }
 
