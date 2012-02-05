@@ -8,7 +8,8 @@ public class SceneFactory : MarshalByRefObject {
 		var titleScene = new TitleScene(sceneManager);
 		var sceneOne   = new SceneOne(sceneManager);
 		var sceneTwo   = new SceneTwo(sceneManager);
-		sceneSequence = new List<Scene>{titleScene, sceneOne, sceneTwo};
+		var sceneThree   = new SceneThree(sceneManager, sceneTwo);
+		sceneSequence = new List<Scene>{titleScene, sceneOne, sceneTwo, sceneThree};
 	}
 	
 	public Scene GetFirstScene() {

@@ -9,6 +9,9 @@ public class SceneManager {
 	// click instantly through scenes instead of waiting for them to transition
 	public bool debugMode = false;
 	
+	// start the program at the given scene
+	private int skipToSceneNumber = 0;
+	
 	public SceneManager(LoopTracker loopTracker) : this(null, loopTracker) {
 	}
 	
@@ -20,7 +23,24 @@ public class SceneManager {
 		this.loopTracker = loopTracker;
 		
 		currentScene = sceneFactory.GetFirstScene();
+		
+		SkipToScene(skipToSceneNumber);
+
 		currentScene.Setup();
+	}
+	
+	private void SkipToScene(int skipToSceneNumber) {
+		// Skipping to a particular scene at start time -- debugging feature
+		for (int i = 1; i < skipToSceneNumber; i++) {
+			//loopTracker.NextLoop(currentScene.TimeLength());
+			currentScene.Transition();
+			//currentScene = sceneFactory.GetSceneAfter(currentScene);
+		}
+		if (skipToSceneNumber > 0) {
+			//sceneFactory.sceneSequence.RemoveRange(0, skipToSceneNumber);
+			//loopTracker.startPlaying();
+		}
+		
 	}
 	
 	public void NextScene() {
