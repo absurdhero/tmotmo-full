@@ -59,6 +59,10 @@ public class Sprite : MonoBehaviour {
 		}
 	}
 	
+	public bool LastTexture() {
+		return texture_index == (textures.Length - 1);
+	}
+	
 	public virtual void NextTexture() {
 		texture_index = (texture_index + 1) % textures.Length;
 		texture_dirty = true;
@@ -83,6 +87,21 @@ public class Sprite : MonoBehaviour {
 	public Rect ScreenRect() {
 		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
 		return new Rect(pos.x, pos.y, width, height);
+	}
+	
+	public bool Contains(Vector2 position) {
+		return ScreenRect().Contains(position);
+	}
+	
+	public bool Contains(Vector3 position) {
+		return ScreenRect().Contains(new Vector2(position.x, position.y));
+	}
+
+	public void setScreenPosition(int x, int y) {
+		Vector3 pos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+		pos.x = x;
+		pos.y = y;
+		gameObject.transform.position = Camera.main.ScreenToWorldPoint(pos);
 	}
 	
 	/* In viewport space, 0 and 1 are the edges of the screen. */

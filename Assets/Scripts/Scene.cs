@@ -25,14 +25,6 @@ public abstract class Scene : MarshalByRefObject {
 	public virtual void Transition() {
 		sceneManager.NextScene();
 	}
-	
-	protected static bool ContainsTouch(Rect rect, Touch touch) {
-		return rect.Contains(new Vector2(touch.position.x, touch.position.y));
-	}
-
-	protected static bool SpriteContainsTouch(GameObject obj, Touch touch) {
-		return ContainsTouch(obj.GetComponent<Sprite>().ScreenRect(), touch);
-	}
 
 	protected virtual void ConsumeTouches() {
 		for (int i = 0; i < Input.touchCount; i++) {

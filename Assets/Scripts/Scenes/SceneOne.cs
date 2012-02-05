@@ -23,6 +23,9 @@ class SceneOne : Scene {
  	// animate both shapes at the same frequency
 	private float shapeSpeed = 0.5f;
 	
+	public SceneOne(SceneManager manager) : base(manager) {
+	}
+
 	public override void Setup() {
 		timeLength = 8.0f;
 		
@@ -32,7 +35,7 @@ class SceneOne : Scene {
 		circle = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/Circle"));
 		triangle = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/Triangle"));		
 
-		same.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.3f, 0.66f);
+		same.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.35f, 0.66f);
 		notSame.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.7f, 0.66f);
 		var circleSprite = circle.GetComponent<Sprite>();
 		var triangleSprite = triangle.GetComponent<Sprite>();
@@ -65,8 +68,8 @@ class SceneOne : Scene {
 		touched2 = false;
 		for (int i = 0; i < Input.touchCount; i++) {
 			var touch = Input.GetTouch(i);
-			touched1 |= SpriteContainsTouch(circle, touch);
-			touched2 |= SpriteContainsTouch(triangle, touch);
+			touched1 |= circle.GetComponent<Sprite>().Contains(touch.position);
+			touched2 |= triangle.GetComponent<Sprite>().Contains(touch.position);
 		}
 
 		if (touched1 && touched2) {

@@ -23,6 +23,9 @@ public class TitleScene : Scene {
 	
 	private Cycler cycle_title;
 	
+	public TitleScene(SceneManager manager) : base(manager) {
+	}
+	
 	public override void Setup() {
 		background = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/BackgroundQuad"));
 		title = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/Title"));
@@ -33,16 +36,16 @@ public class TitleScene : Scene {
 		Camera cam = Camera.main;
 		Sprite titleSprite = title.GetComponent<Sprite>();
 
-		// Programmer needs swizzling, badly.
 		var layoutpos = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.65f, 0.0f));
 		layoutpos -= titleSprite.Center();
+		// Programmer needs swizzling, badly.
 		title.transform.position = new Vector3(layoutpos.x, layoutpos.y, title.transform.position.z);
 		// Anchor the subtitle an absolute distance from wherever the title ended up
-		subtitle.transform.position = title.transform.position + new Vector3(5, -0.5f, -0.1f);
+		subtitle.transform.position = title.transform.position + titleSprite.Center() + new Vector3(1.5f, -2f, -0.1f);
 		
 		// place buttons in the bottom corners
 		MoveToScreenXY(news, 4, 4);
-		MoveToScreenXY(buyMusic, (int) cam.GetScreenWidth() - news.GetComponent<Sprite>().PixelWidth() - 4, 4);
+		MoveToScreenXY(buyMusic, (int) cam.GetScreenWidth() - buyMusic.GetComponent<Sprite>().PixelWidth() - 4, 4);
 		
 		// animate title
 		cycle_title = new Cycler(0.4f, 5);
@@ -58,8 +61,8 @@ public class TitleScene : Scene {
 		for (int i = 0; i < Input.touchCount; i++) {
 			Debug.Log("TOUCHED");
 			var touch = Input.GetTouch(i);
-			touchedBuy |= SpriteContainsTouch(buyMusic, touch);
-			touchedNews |= SpriteContainsTouch(news, touch);
+			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(touch.position);
+			touchedNews |= news.GetComponent<Sprite>().Contains(touch.position);
 	    }
 		
 		if (touchedBuy) {
