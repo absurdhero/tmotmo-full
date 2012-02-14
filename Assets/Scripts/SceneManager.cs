@@ -23,28 +23,19 @@ public class SceneManager {
 		this.loopTracker = loopTracker;
 		
 		currentScene = sceneFactory.GetFirstScene();
+		currentScene.Setup();
 		
 		SkipToScene(skipToSceneNumber);
-
-		currentScene.Setup();
 	}
 	
 	private void SkipToScene(int skipToSceneNumber) {
 		// Skipping to a particular scene at start time -- debugging feature
 		for (int i = 1; i < skipToSceneNumber; i++) {
-			//loopTracker.NextLoop(currentScene.TimeLength());
 			currentScene.Transition();
-			//currentScene = sceneFactory.GetSceneAfter(currentScene);
 		}
-		if (skipToSceneNumber > 0) {
-			//sceneFactory.sceneSequence.RemoveRange(0, skipToSceneNumber);
-			//loopTracker.startPlaying();
-		}
-		
 	}
 	
 	public void NextScene() {
-		Debug.Log("Beginning next scene (" + currentScene.GetType().Name + ")");
 		currentScene.Destroy();
 		currentScene.completed = false;
 		
@@ -58,6 +49,7 @@ public class SceneManager {
 		}
 		
 		currentScene = sceneFactory.GetSceneAfter(currentScene);		
+		Debug.Log("Beginning next scene (" + currentScene.GetType().Name + ")");
 		currentScene.Setup();
 		
 		loopTracker.NextLoop(currentScene.TimeLength());
