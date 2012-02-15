@@ -200,14 +200,8 @@ public class HospitalRoom {
 		separateHalves(1);
 	}
 	
-	private GameObject createResource(string name) { 
-		return resourceFactory.Create(resourcePrefix +"/" + name);
-	}
-	
-	private string resourcePrefix { get { return this.GetType().ToString(); } }
-	
 	public void addSpeechBubble() {
-		speechBubble = createResource("SpeechBubble");
+		speechBubble = resourceFactory.Create("Hospital/SpeechBubble");
 		speechBubbleLeft = resourceFactory.Create("Hospital/BubbleTailLeft");
 		speechBubbleRight = resourceFactory.Create("Hospital/BubbleTailRight");
 		speechBubbleRight.active = false;
