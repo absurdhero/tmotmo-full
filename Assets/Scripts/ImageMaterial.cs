@@ -35,11 +35,18 @@ public class ImageMaterial {
 	}
 	
 	public void SetUVTiled() {
-		// set uv coordinates so the texture repeats
+		// set uv coordinates so the texture repeats when the size of the mesh is larger than the size of the texture
+		
 		Vector2[] uvs = new Vector2[mesh.vertices.Length];
         int i = 0;
         while (i < uvs.Length) {
-            uvs[i] = new Vector2(mesh.vertices[i].x, mesh.vertices[i].y);
+			// arrived at purely through intuition and trial and error. I will attempt to explain:
+			// - vertices[3] and vertices[0] are the extrema
+			// - I divide the distance from the minimum coordinate and the current vertex by the size of the shape (max - min)
+			// - This gives us coordinates between zero and one that correspond to the ratio of the textures width and height
+			var p = new Vector2((mesh.vertices[3].x - mesh.vertices[i].x) / (mesh.vertices[3].x - mesh.vertices[0].x),
+				(mesh.vertices[3].y - mesh.vertices[i].y) / (mesh.vertices[3].y - mesh.vertices[0].y));
+            uvs[i] = new Vector2(p.x, p.y);
             i++;
         }
         mesh.uv = uvs;
