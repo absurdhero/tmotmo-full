@@ -39,12 +39,12 @@ public class SceneManager {
 		currentScene.Destroy();
 		currentScene.completed = false;
 		
-		if(currentScene == sceneFactory.GetLastScene()) {
+		if(sceneFactory.isLastScene(currentScene)) {
 			GameOver();
 			return;
 		}
 
-		if(currentScene == sceneFactory.GetFirstScene()) {
+		if(sceneFactory.isFirstScene(currentScene)) {
 			loopTracker.startPlaying();
 		}
 		
@@ -71,7 +71,7 @@ public class SceneManager {
 		if(Application.isEditor && Input.GetMouseButtonUp(1)) {
 			if (debugMode) {
 				Debug.Log("Clicked through scene");
-				if (currentScene == sceneFactory.GetLastScene()) GameOver();
+				if (sceneFactory.isLastScene(currentScene)) GameOver();
 				else NextScene();
 			} else {
 				Debug.Log("Causing scene to complete");

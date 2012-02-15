@@ -1,35 +1,40 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SceneFactory : MarshalByRefObject {
-	public List<Scene> sceneSequence;
+	SceneManager sceneManager;
 
 	public SceneFactory (SceneManager sceneManager) {
-		var titleScene = new TitleScene(sceneManager);
-		var sceneOne   = new SceneOne(sceneManager);
-		var sceneTwo   = new SceneTwo(sceneManager);
-		var sceneThree   = new SceneThree(sceneManager, sceneTwo);
-		sceneSequence = new List<Scene>{titleScene, sceneOne, sceneTwo, sceneThree};
+		this.sceneManager = sceneManager;
 	}
 	
 	public Scene GetFirstScene() {
-		return sceneSequence[0];
+		return new TitleScene(sceneManager);
 	}
 
-	public Scene GetLastScene() {
-		return sceneSequence[sceneSequence.Count - 1];
+	public bool isFirstScene(Scene scene) {
+		if (scene.GetType() == typeof(TitleScene)) return true;
+		return false;
+	}
+
+	public bool isLastScene(Scene scene) {
+		if (scene.GetType() == typeof(SceneFour)) return true;
+		return false;
 	}
 
 	public Scene GetSceneAfter(Scene scene) {
 		if (scene == null) return GetFirstScene();
-		
-		int i = sceneSequence.IndexOf(scene);
-		int nextIndex = i + 1;
 
-		if (nextIndex == sceneSequence.Count) {
-			return null;
-		} else {
-			return sceneSequence[nextIndex];
+		switch (scene.GetType().ToString()) {
+		case "TitleScene":
+			return new SceneOne(sceneManager);
+		case "SceneOne":
+			return new SceneTwo(sceneManager);
+		case "SceneTwo":
+			return new SceneThree(sceneManager, ((SceneTwo) scene).room);
 		}
+		
+		throw new InvalidOperationException();
 	}	
 }
