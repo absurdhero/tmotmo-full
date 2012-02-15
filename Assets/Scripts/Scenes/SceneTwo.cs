@@ -10,6 +10,7 @@ class SceneTwo : Scene {
 	public override void Setup() {
 		timeLength = 8.0f;
 		room = new HospitalRoom();
+		room.addZzz();
 		room.addHeartRate();
 		room.addFootboard();
 		room.addCover();
@@ -17,19 +18,20 @@ class SceneTwo : Scene {
 	}
 
 	public override void Destroy() {
-		room.Destroy();
+		// Handled by next scene
+		//room.Destroy();
 	}
 
-	public override void Update () {
-		room.Update();
-		
+	public override void Update () {		
 		bool touched = false;
 		for (int i = 0; i < Input.touchCount; i++) {
 			var touch = Input.GetTouch(i);
-			touched |= room.cover.GetComponent<Sprite>().Contains(touch.position);
+			if (touch.phase == TouchPhase.Began) {
+				touched |= room.cover.GetComponent<Sprite>().Contains(touch.position);
+			}
 		}
-		
-		if (Input.GetMouseButtonUp(0)) {
+
+		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
 			var pos = Input.mousePosition;
 			touched |= room.cover.GetComponent<Sprite>().Contains(pos);
 		}
@@ -38,9 +40,13 @@ class SceneTwo : Scene {
 			room.openEyes();
 		}
 		
-		if (room.eyesTotallyOpen) {
+		if (room.eyesTotallyOpen && !completed) {
 			room.removeCover();
+			room.doubleHeartRate();
+			completed = true;
 		}
+		
+		room.Update();
 	}
 	
 	
