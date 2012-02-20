@@ -30,30 +30,11 @@ namespace Tests
 			var lastScene = mocks.DynamicMock<Scene>();
 			using (mocks.Record ()) {
 				// emulate behavior of sceneFactory and return mock Scenes
-				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene).Repeat.Times(2);
+				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene);
+				Expect.Call(sceneFactory.isFirstScene(firstScene)).Return(true);
 				Expect.Call(delegate{loopTracker.startPlaying();});
 				Expect.Call(sceneFactory.GetSceneAfter(firstScene)).Return(lastScene);
-				Expect.Call(sceneFactory.GetLastScene()).Return(lastScene);
-				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene);
-			}
-			using (mocks.Playback ()) {
-				var sceneManager = new SceneManager(sceneFactory, loopTracker);
-				sceneManager.NextScene();
-				sceneManager.NextScene();
-			}
-
-		}
-		
-		[Test]
-		public void lastSceneEndingTriggersRestart()
-		{
-			var firstScene = mocks.DynamicMock<Scene>();
-			var lastScene = mocks.DynamicMock<Scene>();
-			using (mocks.Record ()) {
-				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene).Repeat.Times(2);
-				Expect.Call(sceneFactory.GetSceneAfter(firstScene)).Return(lastScene);
-				Expect.Call(sceneFactory.GetLastScene()).Return(lastScene);
-				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene);
+				Expect.Call(sceneFactory.isLastScene(lastScene)).Return(true);
 			}
 			using (mocks.Playback ()) {
 				var sceneManager = new SceneManager(sceneFactory, loopTracker);
@@ -63,5 +44,4 @@ namespace Tests
 
 		}
 	}
-
 }
