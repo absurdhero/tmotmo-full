@@ -14,7 +14,7 @@ class SceneOne : Scene {
 
 	int triangleWaitTime = 4;
 
-	Color hi = new Color(0.8f, 0.8f, 0.8f, 1f);
+	//Color hi = new Color(0.8f, 0.8f, 0.8f, 1f);
 	//Fader fader = new Fader(1.0f);
 
 	bool touched1 = false;
@@ -29,11 +29,11 @@ class SceneOne : Scene {
 	public override void Setup() {
 		timeLength = 8.0f;
 		
-		background = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/BackgroundQuad"));
-		same = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/Same"));
-		notSame = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/NotSame"));
-		circle = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/Circle"));
-		triangle = (GameObject)GameObject.Instantiate(Resources.Load("Scene1/Triangle"));		
+		background = resourceFactory.Create("TitleScreen/BackgroundQuad");
+		same = createResource("Same");
+		notSame = createResource("NotSame");
+		circle = createResource("Circle");
+		triangle = createResource("Triangle");
 
 		same.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.35f, 0.66f);
 		notSame.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.7f, 0.66f);
