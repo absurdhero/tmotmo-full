@@ -49,7 +49,7 @@ public class Sprite : MonoBehaviour {
 
 	void Start () {
 		imageMaterial = new ImageMaterial(gameObject, mesh);
-		imageMaterial.SetUVStretched();
+		imageMaterial.SetUVTiled();
 	}
 	
 	void Update() {
@@ -68,6 +68,9 @@ public class Sprite : MonoBehaviour {
 		texture_dirty = true;
 	}
 	
+	///  <summary>
+	/// Center of sprite in World space
+	/// </summary>
 	public Vector3 Center() {
 		Vector3 sum = Vector3.zero;
 		foreach(Vector3 v in mesh.vertices) {
@@ -89,6 +92,11 @@ public class Sprite : MonoBehaviour {
 		return new Rect(pos.x, pos.y, width, height);
 	}
 	
+	public Vector2 ScreenCenter() {
+		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+		return new Vector2(pos.x + width / 2, pos.y + height / 2);
+	}
+
 	public bool Contains(Vector2 position) {
 		return ScreenRect().Contains(position);
 	}
