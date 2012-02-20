@@ -34,9 +34,15 @@ public class HospitalRoom {
 	public GameObject speechBubbleLeft { get; private set; }
 	public GameObject speechBubbleRight { get; private set; }
 	
+	private string resourcePrefix { get { return this.GetType().ToString(); } }
+
+	private GameObject createResource(string name) { 
+		return resourceFactory.Create(resourcePrefix +"/" + name);
+	}
+
 	public HospitalRoom(GameObjectFactory<string> resourceFactory) {
 		this.resourceFactory = resourceFactory;
-		room = resourceFactory.Create("Hospital/HospitalRoomQuad");
+		room = createResource("HospitalRoomQuad");
 	}
 	
 	public HospitalRoom() : this(new ResourceFactory()) {
@@ -63,8 +69,8 @@ public class HospitalRoom {
 	}
 	
 	public void addPerson() {
-		guyLeft = resourceFactory.Create("Hospital/GuyLeft");
-		guyRight = resourceFactory.Create("Hospital/GuyRight");
+		guyLeft = createResource("GuyLeft");
+		guyRight = createResource("GuyRight");
 		
 		var leftSprite = guyLeft.GetComponent<Sprite>();
 		var rightSprite = guyRight.GetComponent<Sprite>();
@@ -74,7 +80,7 @@ public class HospitalRoom {
 		rightSprite.setScreenPosition((int) Camera.main.pixelWidth / 2 + guyCenterOffset,
 									  (int) Camera.main.pixelHeight / 2 - rightSprite.PixelHeight() / 2);
 		
-		eyes = resourceFactory.Create("Hospital/EyesOpening");
+		eyes = createResource("EyesOpening");
 		var pos = eyes.transform.position;
 		pos.x = -0.55f;
 		pos.y = 3.65f;
@@ -83,7 +89,7 @@ public class HospitalRoom {
 	}
 	
 	public void addZzz() {
-		zzz = resourceFactory.Create ("Hospital/Zzz");
+		zzz = createResource("Zzz");
 		var pos = zzz.transform.position;
 		pos.x = 5;
 		pos.y = 6;
@@ -113,7 +119,7 @@ public class HospitalRoom {
 			cover.active = true;
 			return;
 		}
-		cover = resourceFactory.Create("Hospital/Cover");
+		cover = createResource("Cover");
 		var coverSprite = cover.GetComponent<Sprite>();
 		coverSprite.setCenterToViewportCoord(Camera.main, 0.515f, 0.34f);
 		
@@ -126,7 +132,7 @@ public class HospitalRoom {
 	public void addFootboard() {
 		addClipBoard();
 
-		footBoard = resourceFactory.Create("Hospital/Footboard");
+		footBoard = createResource("Footboard");
 		var pos = footBoard.transform.position;
 		pos.y = -9.2f;
 		pos.x = -4.4875f;
@@ -135,7 +141,7 @@ public class HospitalRoom {
 	}
 	
 	private void addClipBoard() {
-		clipBoard = resourceFactory.Create("Hospital/ClipBoard");
+		clipBoard = createResource("ClipBoard");
 		var pos = clipBoard.transform.position;
 		pos.y = -8.0f;
 		pos.x = -1.2f;
@@ -144,7 +150,7 @@ public class HospitalRoom {
 	}
 	
 	public void addHeartRate() {
-		heartRate = resourceFactory.Create("Hospital/HeartRate");
+		heartRate = createResource("HeartRate");
 		var pos = heartRate.transform.position;
 		pos.y = 1.7f;
 		pos.x = -11.5f;
@@ -201,9 +207,9 @@ public class HospitalRoom {
 	}
 	
 	public void addSpeechBubble() {
-		speechBubble = resourceFactory.Create("Hospital/SpeechBubble");
-		speechBubbleLeft = resourceFactory.Create("Hospital/BubbleTailLeft");
-		speechBubbleRight = resourceFactory.Create("Hospital/BubbleTailRight");
+		speechBubble = createResource("SpeechBubble");
+		speechBubbleLeft = createResource("BubbleTailLeft");
+		speechBubbleRight = createResource("BubbleTailRight");
 		speechBubbleRight.active = false;
 
 		
@@ -227,7 +233,7 @@ public class HospitalRoom {
 	}
 	
 	public void chooseBubbleTail() {
-		if (speechBubble.GetComponent<Sprite>().ScreenRect().x > guyCenterPoint) {
+		if (speechBubble.GetComponent<Sprite>().ScreenCenter().x > guyCenterPoint) {
 			speechBubbleLeft.active = false;
 			speechBubbleRight.active = true;
 		} else {

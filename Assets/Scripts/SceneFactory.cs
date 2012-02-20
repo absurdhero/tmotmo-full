@@ -33,6 +33,8 @@ public class SceneFactory : MarshalByRefObject {
 			return new SceneTwo(sceneManager);
 		case "SceneTwo":
 			return new SceneThree(sceneManager, ((SceneTwo) scene).room);
+		case "SceneThree":
+			return new SceneFour(sceneManager, ((SceneThree) scene).room);
 		}
 		
 		throw new InvalidOperationException();
