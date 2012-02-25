@@ -7,6 +7,7 @@ public abstract class Scene : MarshalByRefObject {
 	protected Camera camera;
 	protected SceneManager sceneManager;
 	protected GameObjectFactory<string> resourceFactory;
+	public float rewindTime { get; protected set; }
 
 	public virtual float TimeLength() {
 		return timeLength;
@@ -36,6 +37,9 @@ public abstract class Scene : MarshalByRefObject {
 		sceneManager.NextScene();
 	}
 	
+	protected void rewindLoop(float seconds) {
+		rewindTime = seconds;
+	}
 	protected virtual void ConsumeTouches() {
 		for (int i = 0; i < Input.touchCount; i++) {
 			Input.GetTouch(i);

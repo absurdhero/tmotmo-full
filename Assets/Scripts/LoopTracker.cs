@@ -30,6 +30,11 @@ public class LoopTracker : MarshalByRefObject {
 		PlayRepetition();
 	}
 	
+	public void Rewind(float seconds) {
+		loopStart -= seconds;
+		loopEnd -= seconds;
+	}
+	
 	public bool IsLoopOver() {
 		return (loopEnd == 0.0f) || (sounds.getAudioTime() > loopEnd);
 	}
