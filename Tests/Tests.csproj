@@ -73,19 +73,36 @@
       <Link>SceneManager.cs</Link>
     </Compile>
     <Compile Include="TestSceneManager.cs" />
+    <Compile Include="..\Assets\Scripts\GameObjectFactory.cs">
+      <Link>GameObjectFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\HospitalRoom.cs">
+      <Link>HospitalRoom.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Repeater.cs">
+      <Link>Repeater.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneThree.cs">
+      <Link>Scenes\SceneThree.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneFour.cs">
+      <Link>Scenes\SceneFour.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\SpeechBubble.cs">
+      <Link>SpeechBubble.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MockUnity\MockUnity.csproj">
       <Project>{0308C045-ED54-4F84-9AB2-C4B0BF69D7F7}</Project>
       <Name>MockUnity</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </ItemGroup>
 </Project>

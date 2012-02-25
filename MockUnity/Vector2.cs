@@ -1,12 +1,12 @@
 using System;
-//using System.Reflection;
+
 namespace UnityEngine
 {
-//[DefaultMember("Item")]
 
-public struct Vector2
-
+public class Vector2
 {
+  const float EPSILON = 0.0000001f;
+
   // Fields
   public static float kEpsilon;
   public float x;
@@ -43,5 +43,27 @@ public struct Vector2
   public static Vector2 one { get { throw new InvalidOperationException(); } }
   public static Vector2 up { get { throw new InvalidOperationException(); } }
   public static Vector2 right { get { throw new InvalidOperationException(); } }
-}}
 
+	public static Vector2 operator+ (Vector2 a, Vector2 b) {
+		return new Vector2 (a.x + b.x, a.y + b.y);
+	}
+	
+	public static Vector2 operator- (Vector2 a, Vector2 b) {
+		return new Vector2 (a.x - b.x, a.y - b.y);
+	}
+	
+	public static bool operator== (Vector2 lhs, Vector2 rhs) {
+		return Vector2.SqrMagnitude(lhs - rhs) < EPSILON;
+	}
+	
+	public static bool operator!= (Vector2 lhs, Vector2 rhs) {
+		return Vector2.SqrMagnitude(lhs - rhs) >= EPSILON;
+	}
+		
+	public override bool Equals (object other) {
+		if (other.GetType() != typeof(Vector2)) return false;
+		return this == (Vector2) other;
+	}
+}
+
+}
