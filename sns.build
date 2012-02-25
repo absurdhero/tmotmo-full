@@ -19,14 +19,18 @@
                     <include name="Assets/Scripts/Images.cs" />
                     <include name="Assets/Scripts/Sounds.cs" />
                     <include name="Assets/Scripts/ImageMaterial.cs" />
+                    <include name="Assets/Scripts/GameObjectFactory.cs" />
+                    <include name="Assets/Scripts/Repeater.cs" />
                     <include name="Assets/Scripts/Sprite.cs" />
                     <include name="Assets/Scripts/LoopTracker.cs" />
                     <include name="Assets/Scripts/SceneFactory.cs" />
                     <include name="Assets/Scripts/SceneManager.cs" />
                     <include name="Assets/Scripts/Scene.cs" />
-                    <include name="Assets/Scripts/Scenes/*.cs" />
                     <include name="Assets/Scripts/Cycler.cs" />
                     <include name="Assets/Scripts/DelayedCycler.cs" />
+                    <include name="Assets/Scripts/HospitalRoom.cs" />
+                    <include name="Assets/Scripts/SpeechBubble.cs" />
+                    <include name="Assets/Scripts/Scenes/*.cs" />
                 </sources>
             </csc>
             <nunit2>
