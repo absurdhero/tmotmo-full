@@ -9,7 +9,7 @@ class SceneTwo : Scene {
 
 	public override void Setup() {
 		timeLength = 8.0f;
-		room = new HospitalRoom();
+		room = new HospitalRoom(resourceFactory, camera);
 		room.addZzz();
 		room.addHeartRate();
 		room.addFootboard();
@@ -43,7 +43,7 @@ class SceneTwo : Scene {
 		if (room.eyesTotallyOpen && !completed) {
 			room.removeCover();
 			room.doubleHeartRate();
-			completed = true;
+			endScene();
 		}
 		
 		room.Update();

@@ -2,47 +2,111 @@ using UnityEngine;
 using System;
 
 class SceneFour : Scene {
-	HospitalRoom room;
+	HospitalRoom hospitalRoom;
+
+	GameObject leftMouth;
+	GameObject rightMouth;
 	
-	const int MAX_SPLIT = 40;
+	SpeechBubble speechBubble;
+	
+	MouthAnimator mouthMovement;
+	
+	const int END_POSITION = 120;
 	
 	public SceneFour(SceneManager manager, HospitalRoom room) : base(manager) {
-		this.room = room;
+		this.hospitalRoom = room;
 	}
 
 	public override void Setup() {
 		timeLength = 8.0f;
-		room.separateHalves(MAX_SPLIT);
-		room.addSpeechBubble();
+		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
+		
+		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
+
+		addMouth();
+		mouthMovement = new MouthAnimator(leftMouth, rightMouth);
 	}
 
 	public override void Destroy() {
-		room.Destroy();
+		speechBubble.Destroy();
+		GameObject.Destroy(leftMouth);
+		GameObject.Destroy(rightMouth);
+		hospitalRoom.Destroy();
 	}
 
-	public override void Update () {
-		room.Update();
-
-		setBubbleLocationToTouch();
+	public override void Update() {
+		hospitalRoom.Update();
+		mouthMovement.Update(Time.time);
 		
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
-			moveBubbleUnderFinger(new Vector3(40f, 0f, 0f));
+		if(speechBubble.inTerminalPosition) {
+			speechBubble.snapToEnd();
+			endScene();
+			return;
 		}
-		room.chooseBubbleTail();
+		
+		speechBubble.Update();
+	}
+		
+	private void addMouth() {
+		leftMouth = resourceFactory.Create(this, "LeftMouth");
+		rightMouth = resourceFactory.Create(this, "RightMouth");
+		leftMouth.active = false;
+		rightMouth.active = false;
+		
+		var leftPos = leftMouth.transform.position;
+		leftPos.x = -2.4f;
+		leftPos.y = 2.4f;
+		leftPos.z = -0.4f;
+		leftMouth.transform.position = leftPos;
+		
+		var rightPos = rightMouth.transform.position;
+		rightPos.x = 2.8f;
+		rightPos.y = 2.4f;
+		rightPos.z = -0.4f;
+		rightMouth.transform.position = rightPos;
 	}
 	
-	private void moveBubbleUnderFinger(Vector3 movementDelta) {
-		room.speechBubble.transform.position = Camera.main.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(room.speechBubble.transform.position) + movementDelta);
-		room.speechBubbleLeft.transform.position = Camera.main.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(room.speechBubbleLeft.transform.position) + movementDelta);
-		room.speechBubbleRight.transform.position = Camera.main.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(room.speechBubbleRight.transform.position) + movementDelta);
-	}
-	
-	private void setBubbleLocationToTouch() {
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
-			if (!room.speechBubble.GetComponent<Sprite>().Contains(Input.GetTouch(0).position)) return;
-			var movementDelta = new Vector3(Input.GetTouch(0).deltaPosition.x, 0f, 0f);
-			moveBubbleUnderFinger(movementDelta);
+	class MouthAnimator : Repeater {
+		GameObject leftMouth;
+		GameObject rightMouth;
+		int delay = 1;
+		int frame = 0;
+		
+		const int totalFrames = 8;		
+		
+		public MouthAnimator(GameObject leftMouth, GameObject rightMouth) : base(0.5f) {
+			this.leftMouth = leftMouth;
+			this.rightMouth = rightMouth;
 		}
-	
+		
+		public override void OnTick() {
+			if (delay > 0) {
+				delay -= 1;
+				return;
+			}
+
+			moveMouth(this.leftMouth, 0, 3);
+			moveMouth(this.rightMouth, 4, 4 + 3);
+			
+			incrementFrame();
+		}
+		
+		private void incrementFrame() {
+			frame = (frame + 1) % totalFrames;
+		}
+
+		private void moveMouth(GameObject mouth, int start, int end) {
+			// combinations of nextTexture and activating/deactivating the mouth overlays
+			if (frame == start) {
+				mouth.active = true;
+			}
+			else if(frame > start && frame < end) {
+				mouth.GetComponent<Sprite>().NextTexture();
+			}
+			else if(frame == end) {
+				mouth.GetComponent<Sprite>().NextTexture();
+				mouth.active = false;	
+			}
+		}
 	}
 }

@@ -37,7 +37,6 @@ public class SceneManager {
 	
 	public void NextScene() {
 		currentScene.Destroy();
-		currentScene.completed = false;
 		
 		if(sceneFactory.isLastScene(currentScene)) {
 			GameOver();
@@ -75,7 +74,7 @@ public class SceneManager {
 				else NextScene();
 			} else {
 				Debug.Log("Causing scene to complete");
-				currentScene.completed = true;
+				currentScene.endScene();
 			}
 		}
 	}

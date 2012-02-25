@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Scene : MarshalByRefObject {
 	protected float timeLength = 0.0f;
-	
+	protected Camera camera;
 	protected SceneManager sceneManager;
 	protected GameObjectFactory<string> resourceFactory;
 
@@ -12,17 +12,20 @@ public abstract class Scene : MarshalByRefObject {
 		return timeLength;
 	}
 	
-	public bool completed { get; set; }
+	public bool completed { get; private set; }
+	
+	public void endScene() {
+		completed = true;
+	}
 	
 	public Scene(SceneManager manager) : this(manager, new ResourceFactory()){
-		sceneManager = manager;
-		completed = false;
 	}
 
 	public Scene(SceneManager manager, GameObjectFactory<string> resourceFactory) {
 		sceneManager = manager;
 		this.resourceFactory = resourceFactory;
 		completed = false;
+		camera = Camera.main;
 	}
 
 	public abstract void Setup();
@@ -33,13 +36,6 @@ public abstract class Scene : MarshalByRefObject {
 		sceneManager.NextScene();
 	}
 	
-	protected string resourcePrefix { get { return this.GetType().ToString(); } }
-
-	protected GameObject createResource(string name) { 
-		return resourceFactory.Create(resourcePrefix +"/" + name);
-	}
-
-
 	protected virtual void ConsumeTouches() {
 		for (int i = 0; i < Input.touchCount; i++) {
 			Input.GetTouch(i);
@@ -47,7 +43,7 @@ public abstract class Scene : MarshalByRefObject {
 	}
 	
 	protected void MoveToScreenXY(GameObject obj, int x, int y) {
-		var layoutpos = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
+		var layoutpos = camera.ScreenToWorldPoint(new Vector3(x, y, 0));
 		obj.transform.position = new Vector3(layoutpos.x, layoutpos.y, obj.transform.position.z);
 	}
 }

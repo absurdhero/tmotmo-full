@@ -13,7 +13,7 @@ public class HospitalRoom {
 	public float guySplitDistance { get; private set; }
 	public float guyCenterPoint {
 		get {
-			return Camera.main.pixelWidth / 2.0f + (float) guyCenterOffset;
+			return camera.pixelWidth / 2.0f + (float) guyCenterOffset;
 		}
 	}
 
@@ -24,28 +24,14 @@ public class HospitalRoom {
 	GameObject footBoard;
 	GameObject clipBoard;
 	GameObject eyes;
-	
+	Camera camera;
 	GameObject heartRate;
 	Cycler heartRateCycler;
-	
-	GameObject splitLine;
-	
-	public GameObject speechBubble { get; private set; }
-	public GameObject speechBubbleLeft { get; private set; }
-	public GameObject speechBubbleRight { get; private set; }
-	
-	private string resourcePrefix { get { return this.GetType().ToString(); } }
-
-	private GameObject createResource(string name) { 
-		return resourceFactory.Create(resourcePrefix +"/" + name);
-	}
-
-	public HospitalRoom(GameObjectFactory<string> resourceFactory) {
+		
+	public HospitalRoom(GameObjectFactory<string> resourceFactory, Camera camera) {
 		this.resourceFactory = resourceFactory;
-		room = createResource("HospitalRoomQuad");
-	}
-	
-	public HospitalRoom() : this(new ResourceFactory()) {
+		room = resourceFactory.Create(this, "HospitalRoomQuad");
+		this.camera = camera;
 	}
 	
 	private void DestroyIfNotNull(GameObject gobj) {
@@ -61,26 +47,24 @@ public class HospitalRoom {
 		DestroyIfNotNull(footBoard);
 		DestroyIfNotNull(clipBoard);
 		DestroyIfNotNull(heartRate);
-		DestroyIfNotNull(splitLine);
-		DestroyIfNotNull(speechBubble);
 		
 		heartRateCycler = null;
 		removeZzz();
 	}
 	
 	public void addPerson() {
-		guyLeft = createResource("GuyLeft");
-		guyRight = createResource("GuyRight");
+		guyLeft = resourceFactory.Create(this, "GuyLeft");
+		guyRight = resourceFactory.Create(this, "GuyRight");
 		
 		var leftSprite = guyLeft.GetComponent<Sprite>();
 		var rightSprite = guyRight.GetComponent<Sprite>();
 		
-		leftSprite.setScreenPosition((int) Camera.main.pixelWidth / 2 - leftSprite.PixelWidth() + guyCenterOffset,
-									 (int) Camera.main.pixelHeight / 2 - leftSprite.PixelHeight() / 2);
-		rightSprite.setScreenPosition((int) Camera.main.pixelWidth / 2 + guyCenterOffset,
-									  (int) Camera.main.pixelHeight / 2 - rightSprite.PixelHeight() / 2);
+		leftSprite.setScreenPosition((int) camera.pixelWidth / 2 - leftSprite.PixelWidth() + guyCenterOffset,
+									 (int) camera.pixelHeight / 2 - leftSprite.PixelHeight() / 2);
+		rightSprite.setScreenPosition((int) camera.pixelWidth / 2 + guyCenterOffset,
+									  (int) camera.pixelHeight / 2 - rightSprite.PixelHeight() / 2);
 		
-		eyes = createResource("EyesOpening");
+		eyes = resourceFactory.Create(this, "EyesOpening");
 		var pos = eyes.transform.position;
 		pos.x = -0.55f;
 		pos.y = 3.65f;
@@ -89,7 +73,7 @@ public class HospitalRoom {
 	}
 	
 	public void addZzz() {
-		zzz = createResource("Zzz");
+		zzz = resourceFactory.Create(this, "Zzz");
 		var pos = zzz.transform.position;
 		pos.x = 5;
 		pos.y = 6;
@@ -119,9 +103,9 @@ public class HospitalRoom {
 			cover.active = true;
 			return;
 		}
-		cover = createResource("Cover");
+		cover = resourceFactory.Create(this, "Cover");
 		var coverSprite = cover.GetComponent<Sprite>();
-		coverSprite.setCenterToViewportCoord(Camera.main, 0.515f, 0.34f);
+		coverSprite.setCenterToViewportCoord(camera, 0.515f, 0.34f);
 		
 	}
 	
@@ -132,7 +116,7 @@ public class HospitalRoom {
 	public void addFootboard() {
 		addClipBoard();
 
-		footBoard = createResource("Footboard");
+		footBoard = resourceFactory.Create(this, "Footboard");
 		var pos = footBoard.transform.position;
 		pos.y = -9.2f;
 		pos.x = -4.4875f;
@@ -141,7 +125,7 @@ public class HospitalRoom {
 	}
 	
 	private void addClipBoard() {
-		clipBoard = createResource("ClipBoard");
+		clipBoard = resourceFactory.Create(this, "ClipBoard");
 		var pos = clipBoard.transform.position;
 		pos.y = -8.0f;
 		pos.x = -1.2f;
@@ -150,7 +134,7 @@ public class HospitalRoom {
 	}
 	
 	public void addHeartRate() {
-		heartRate = createResource("HeartRate");
+		heartRate = resourceFactory.Create(this, "HeartRate");
 		var pos = heartRate.transform.position;
 		pos.y = 1.7f;
 		pos.x = -11.5f;
@@ -205,43 +189,6 @@ public class HospitalRoom {
 	public void addSplitLine() {
 		separateHalves(1);
 	}
-	
-	public void addSpeechBubble() {
-		speechBubble = createResource("SpeechBubble");
-		speechBubbleLeft = createResource("BubbleTailLeft");
-		speechBubbleRight = createResource("BubbleTailRight");
-		speechBubbleRight.active = false;
-
-		
-		var bubblePos = speechBubble.transform.position;
-		bubblePos.x = -8f;
-		bubblePos.y = 6f;
-		speechBubble.transform.position = bubblePos;
-		
-		var leftTailPos = speechBubbleLeft.transform.position;
-		leftTailPos.x = -5.5f;
-		leftTailPos.y = 5.0f;
-		leftTailPos.z = -0.5f;
-		speechBubbleLeft.transform.position = leftTailPos;
-
-		var rightTailPos = speechBubbleRight.transform.position;
-		rightTailPos.x = -5.5f;
-		rightTailPos.y = 5.0f;
-		rightTailPos.z = -0.5f;
-		speechBubbleRight.transform.position = rightTailPos;
-
-	}
-	
-	public void chooseBubbleTail() {
-		if (speechBubble.GetComponent<Sprite>().ScreenCenter().x > guyCenterPoint) {
-			speechBubbleLeft.active = false;
-			speechBubbleRight.active = true;
-		} else {
-			speechBubbleLeft.active = true;
-			speechBubbleRight.active = false;			
-		}
-	}
-
 
 	public void Update() {		
 		if(heartRateCycler != null) {

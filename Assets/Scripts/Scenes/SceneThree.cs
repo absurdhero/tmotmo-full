@@ -4,7 +4,7 @@ using System;
 class SceneThree : Scene {
 	public HospitalRoom room { get; private set; }
 	
-	const int MAX_SPLIT = 40;
+	public const int MAX_SPLIT = 40;
 	
 	public SceneThree(SceneManager manager, HospitalRoom room) : base(manager) {
 		this.room = room;
@@ -27,7 +27,7 @@ class SceneThree : Scene {
 		room.Update();
 		
 		if(room.guySplitDistance == MAX_SPLIT) {
-			completed = true;
+			endScene();
 			return;
 		}
 

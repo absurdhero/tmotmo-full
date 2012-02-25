@@ -30,10 +30,10 @@ class SceneOne : Scene {
 		timeLength = 8.0f;
 		
 		background = resourceFactory.Create("TitleScreen/BackgroundQuad");
-		same = createResource("Same");
-		notSame = createResource("NotSame");
-		circle = createResource("Circle");
-		triangle = createResource("Triangle");
+		same = resourceFactory.Create(this, "Same");
+		notSame = resourceFactory.Create(this, "NotSame");
+		circle = resourceFactory.Create(this, "Circle");
+		triangle = resourceFactory.Create(this, "Triangle");
 
 		same.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.35f, 0.66f);
 		notSame.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.7f, 0.66f);
@@ -73,7 +73,7 @@ class SceneOne : Scene {
 		}
 
 		if (touched1 && touched2) {
-			completed = true;
+			endScene();
 		}		
 	}
 	

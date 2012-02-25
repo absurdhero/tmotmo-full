@@ -74,7 +74,7 @@ public class TitleScene : Scene {
 			ConsumeTouches();
 		}
 		else if (touched) {
-			completed = true;
+			endScene();
 		}
 
 		cycle_title.Update(Time.time);
