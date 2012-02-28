@@ -18,7 +18,7 @@ class SceneFour : Scene {
 	}
 
 	public override void Setup() {
-		timeLength = 8.0f;
+		timeLength = 4.0f;
 		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
 		
 		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
@@ -69,12 +69,12 @@ class SceneFour : Scene {
 	class MouthAnimator : Repeater {
 		GameObject leftMouth;
 		GameObject rightMouth;
-		int delay = 1;
+		int delay = 2;
 		int frame = 0;
 		
-		const int totalFrames = 8;		
+		const int totalFrames = 16;		
 		
-		public MouthAnimator(GameObject leftMouth, GameObject rightMouth) : base(0.5f) {
+		public MouthAnimator(GameObject leftMouth, GameObject rightMouth) : base(0.25f) {
 			this.leftMouth = leftMouth;
 			this.rightMouth = rightMouth;
 		}
@@ -85,8 +85,8 @@ class SceneFour : Scene {
 				return;
 			}
 
-			moveMouth(this.leftMouth, 0, 3);
-			moveMouth(this.rightMouth, 4, 4 + 3);
+			moveMouth(this.leftMouth, 0, 4);
+			moveMouth(this.rightMouth, 8, 8 + 4);
 			
 			incrementFrame();
 		}

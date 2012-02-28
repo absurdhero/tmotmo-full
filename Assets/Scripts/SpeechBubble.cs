@@ -84,7 +84,7 @@ class SpeechBubble {
 		setLocationToTouch();
 		
 		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
-			moveToLocation(new Vector3(10f, 0f, 0f));
+			moveToLocation(new Vector3(40f, 0f, 0f));
 		}
 		chooseTail();
 
