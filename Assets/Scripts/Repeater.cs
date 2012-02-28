@@ -44,5 +44,10 @@ public abstract class Repeater
 	public float Length() {
 		return interval * ticks;
 	}
+	
+	public void Reset(float time) {
+		currentTick = 0;
+		startTime = time;
+	}
 }
 

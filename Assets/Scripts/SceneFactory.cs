@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SceneFactory : MarshalByRefObject {
 	SceneManager sceneManager;
+	
+	Type LAST_SCENE = typeof(SceneFive);
 
 	public SceneFactory (SceneManager sceneManager) {
 		this.sceneManager = sceneManager;
@@ -19,7 +21,7 @@ public class SceneFactory : MarshalByRefObject {
 	}
 
 	public bool isLastScene(Scene scene) {
-		if (scene.GetType() == typeof(SceneFour)) return true;
+		if (scene.GetType() == LAST_SCENE) return true;
 		return false;
 	}
 
@@ -35,6 +37,8 @@ public class SceneFactory : MarshalByRefObject {
 			return new SceneThree(sceneManager, ((SceneTwo) scene).room);
 		case "SceneThree":
 			return new SceneFour(sceneManager, ((SceneThree) scene).room);
+		case "SceneFour":
+			return new SceneFive(sceneManager);
 		}
 		
 		throw new InvalidOperationException();
