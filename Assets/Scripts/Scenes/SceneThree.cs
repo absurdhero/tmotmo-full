@@ -12,6 +12,7 @@ class SceneThree : Scene {
 
 	public override void Setup() {
 		timeLength = 8.0f;
+		rewindLoop(8.0f);
 
 		room.addSplitLine();
 		room.removeCover();

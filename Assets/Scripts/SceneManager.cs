@@ -51,6 +51,7 @@ public class SceneManager {
 		Debug.Log("Beginning next scene (" + currentScene.GetType().Name + ")");
 		currentScene.Setup();
 		
+		loopTracker.Rewind(currentScene.rewindTime);
 		loopTracker.NextLoop(currentScene.TimeLength());
 	}
 
