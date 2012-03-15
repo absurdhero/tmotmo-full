@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 class SceneFive : Scene {
 	GameObject background;
@@ -14,7 +15,7 @@ class SceneFive : Scene {
 
 	public override void Setup () {
 		timeLength = 4.0f;
-		//endScene(); // no interaction required to continue
+		endScene(); // no interaction required to continue
 
 		background = resourceFactory.Create(this, "PurpleQuad");
 		faceLeft = resourceFactory.Create(this, "FaceLeft");
@@ -79,56 +80,116 @@ class SceneFive : Scene {
 	}
 	
 	class BigMouthAnimator : Repeater {
-		GameObject mouthLeft;
-		GameObject mouthRight;
-		int delay = 1;
-		int frame = 0;
+		Sprite mouthLeft;
+		Sprite mouthRight;
+		int sceneFrame = 0;
 		
-		const int totalFrames = 8;		
+		const int totalFramesInScene = 16;		
 		
 		public BigMouthAnimator(GameObjectFactory<string> resourceFactory) : base(0.25f) {
-			mouthLeft = resourceFactory.Create("SceneFive/MouthLeft");
-			var leftPosition = mouthLeft.transform.position;
+			var mouthLeftGameObject = resourceFactory.Create("SceneFive/MouthLeft");
+			var leftPosition = mouthLeftGameObject.transform.position;
 			leftPosition.x = -2.95f;
 			leftPosition.y = -5.6f;
 			leftPosition.z = -0.5f;
-			mouthLeft.transform.position = leftPosition;
+			mouthLeftGameObject.transform.position = leftPosition;
+			mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
 
-			mouthRight = resourceFactory.Create("SceneFive/MouthRight");
-			var rightPosition = mouthRight.transform.position;
+			var mouthRightGameObject = resourceFactory.Create("SceneFive/MouthRight");
+			var rightPosition = mouthRightGameObject.transform.position;
 			rightPosition.x = 1f;
 			rightPosition.y = -5.6f;
 			rightPosition.z = -0.5f;
-			mouthRight.transform.position = rightPosition;
+			mouthRightGameObject.transform.position = rightPosition;
+			mouthRight = mouthRightGameObject.GetComponent<Sprite>();
 		}
 		
 		public override void OnTick() {
-			if (delay > 0) {
-				delay -= 1;
-				return;
+			var sprites = getSpritesFor(sceneFrame);
+
+			foreach(var sprite in sprites) {
+				sprite.Animate();
 			}
 
-			moveMouth(0, 4);
-			moveMouth(5, 10);
-			moveMouth(10, 11);
-			
 			incrementFrame();
 		}
 		
+		private ICollection<Sprite> getSpritesFor(int sceneFrame) {
+			if (sceneFrame == 0) return initialMouthFrame();
+			if (sceneFrame >= 1 && sceneFrame <= 3) return sayThis();
+			if (sceneFrame >= 4 && sceneFrame <= 4) return sayIs();
+			if (sceneFrame >= 5 && sceneFrame <= 6) return sayOur();
+			if (sceneFrame >= 9 && sceneFrame <= 10) return sayKiss();
+			if (sceneFrame >= 11 && sceneFrame <= 14) return sayGoodbye();
+			
+			return new List<Sprite>();
+		}
+		
 		public void Destroy() {
-			GameObject.Destroy(mouthLeft);
-			GameObject.Destroy(mouthRight);
+			GameObject.Destroy(mouthLeft.gameObject);
+			GameObject.Destroy(mouthRight.gameObject);
 		}
 		
 		private void incrementFrame() {
-			frame = (frame + 1) % totalFrames;
+			sceneFrame = (sceneFrame + 1) % totalFramesInScene;
+		}
+		
+
+		private ICollection<Sprite> initialMouthFrame()
+		{
+			setMouthFrame(0);
+			return new List<Sprite>{ mouthLeft, mouthRight };
 		}
 
-		private void moveMouth(int start, int end) {
-			if(frame > start && frame < end) {
-				mouthLeft.GetComponent<Sprite>().NextTexture();
-				mouthRight.GetComponent<Sprite>().NextTexture();
+		private ICollection<Sprite> sayThis() {
+			if (sceneFrame == 1)	{
+				setMouthFrame(1);
 			}
+			else nextMouthFrame();
+			
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayIs() {
+			if (sceneFrame == 4)	{
+				setMouthFrame(4);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private ICollection<Sprite> sayOur() {
+			if (sceneFrame == 5) {
+				setMouthFrame(5);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private ICollection<Sprite> sayKiss() {
+			if (sceneFrame == 9) {
+				setMouthFrame(7);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayGoodbye() {
+			if (sceneFrame == 11) {
+				setMouthFrame(9);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private void setMouthFrame(int index) {
+			mouthLeft.setFrame(index);
+			mouthRight.setFrame(index);
+		}
+		
+		private void nextMouthFrame() {
+			mouthLeft.nextFrame();
+			mouthRight.nextFrame();
 		}
 	}
 }

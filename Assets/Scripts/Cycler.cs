@@ -51,7 +51,7 @@ public class Cycler
 		if (index != currentCycle) {
 			currentCycle = index;
 			foreach(var sprite in sprites) {
-				sprite.NextTexture();
+				sprite.DrawNextFrame();
 			}
 		}
 	}

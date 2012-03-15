@@ -63,9 +63,21 @@ public class Sprite : MonoBehaviour {
 		return texture_index == (textures.Length - 1);
 	}
 	
-	public virtual void NextTexture() {
+	public virtual void DrawNextFrame() {
+		nextFrame();
+		Animate();
+	}
+	
+	public void nextFrame() {
 		texture_index = (texture_index + 1) % textures.Length;
+	}
+	
+	public void Animate() {
 		texture_dirty = true;
+	}
+	
+	public void setFrame(int index) {
+		texture_index = index;
 	}
 	
 	///  <summary>

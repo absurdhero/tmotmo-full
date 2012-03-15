@@ -101,10 +101,10 @@ class SceneFour : Scene {
 				mouth.active = true;
 			}
 			else if(frame > start && frame < end) {
-				mouth.GetComponent<Sprite>().NextTexture();
+				mouth.GetComponent<Sprite>().DrawNextFrame();
 			}
 			else if(frame == end) {
-				mouth.GetComponent<Sprite>().NextTexture();
+				mouth.GetComponent<Sprite>().DrawNextFrame();
 				mouth.active = false;	
 			}
 		}
