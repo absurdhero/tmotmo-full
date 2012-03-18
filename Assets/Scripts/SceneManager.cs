@@ -79,7 +79,11 @@ public class SceneManager {
 			}
 		}
 	}
-	
+
+	public float timeLeftInCurrentLoop() {
+		return loopTracker.TimeLeftInCurrentLoop();
+	}
+
 	void GameOver() {
 		Debug.Log("game over");
 		currentScene.Destroy();

@@ -39,6 +39,11 @@ public class LoopTracker : MarshalByRefObject {
 		return (loopEnd == 0.0f) || (sounds.getAudioTime() > loopEnd);
 	}
 	
+	public float TimeLeftInCurrentLoop() {
+		if (IsLoopOver()) return 0.0f;
+		return loopEnd - sounds.getAudioTime();
+	}
+	
 	private void PlayRepetition() {
 		sounds.pickStemsFor(repetition);
 		sounds.setAudioTime(loopStart);
