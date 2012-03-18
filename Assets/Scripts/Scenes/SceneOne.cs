@@ -61,7 +61,6 @@ class SceneOne : Scene {
 	}
 
 	public override void Update () {
-		AnimateShapes();
 		notSameCycler.Update(Time.time);
 		
 		touched1 = false;
@@ -71,10 +70,17 @@ class SceneOne : Scene {
 			touched1 |= circle.GetComponent<Sprite>().Contains(touch.position);
 			touched2 |= triangle.GetComponent<Sprite>().Contains(touch.position);
 		}
-
+		
+		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
+			touched1 = true;
+			touched2 = true;
+		}
+		
 		if (touched1 && touched2) {
 			endScene();
-		}		
+		} else {
+			AnimateShapes();
+		}
 	}
 	
 	void AnimateShapes() {
@@ -88,5 +94,4 @@ class SceneOne : Scene {
 			triangleCycler.Update(Time.time);
 		}
 	}
-
 }

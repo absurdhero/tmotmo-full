@@ -3,32 +3,21 @@ using System;
 using System.Collections.Generic;
 
 class SceneFive : Scene {
-	GameObject background;
-	GameObject faceLeft;
-	GameObject faceRight;
+	BigHeadProp bigHeadProp;
 	
 	BigMouthAnimator bigMouthAnimator;
 	LipsAppear lips;
 	
 	public SceneFive(SceneManager manager) : base(manager) {
+		bigHeadProp = new BigHeadProp(resourceFactory);
+
 	}
 
 	public override void Setup () {
 		timeLength = 4.0f;
 		endScene(); // no interaction required to continue
-
-		background = resourceFactory.Create(this, "PurpleQuad");
-		faceLeft = resourceFactory.Create(this, "FaceLeft");
-		var leftPosition = faceLeft.transform.position;
-		leftPosition.x = -5f;
-		leftPosition.y = -6f;
-		faceLeft.transform.position = leftPosition;
 		
-		faceRight = resourceFactory.Create(this, "FaceRight");
-		var rightPosition = faceRight.transform.position;
-		rightPosition.x = 1f;
-		rightPosition.y = -6f;
-		faceRight.transform.position = rightPosition;
+		bigHeadProp.Setup();
 		
 		bigMouthAnimator = new BigMouthAnimator(resourceFactory);
 		lips = new LipsAppear(resourceFactory);
@@ -40,9 +29,7 @@ class SceneFive : Scene {
 	}
 	
 	public override void Destroy () {
-		GameObject.Destroy(background);
-		GameObject.Destroy(faceLeft);
-		GameObject.Destroy(faceRight);
+		bigHeadProp.Destroy();
 		bigMouthAnimator.Destroy();
 		lips.Destroy();
 	}
