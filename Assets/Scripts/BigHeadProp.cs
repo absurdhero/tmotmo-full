@@ -8,6 +8,8 @@ public class BigHeadProp {
 	public GameObject faceLeftObject { get; private set; }
 	public GameObject faceRightObject { get; private set; }
 	
+	public GameObject faceParent;
+	
 	public Sprite faceLeft {
 		get {
 			return faceLeftObject.GetComponent<Sprite>();
@@ -31,11 +33,18 @@ public class BigHeadProp {
 		leftPosition.y = -6f;
 		faceLeftObject.transform.position = leftPosition;
 		
+		faceParent = new GameObject();
 		faceRightObject = resourceFactory.Create(this, "FaceRight");
-		var rightPosition = faceRightObject.transform.position;
-		rightPosition.x = 1f;
-		rightPosition.y = -6f;
-		faceRightObject.transform.position = rightPosition;
+		faceRightObject.transform.parent = faceParent.transform;
+		faceParent.transform.Translate(1f, Camera.main.ScreenToWorldPoint(new Vector3(0f, faceRight.PixelHeight(), 0f)).y + 3, 0f);
+//		var rightPosition = faceRightObject.transform.position;
+//		rightPosition.x = 1f;
+//		rightPosition.y = -6f;
+//		faceRightObject.transform.position = rightPosition;
+		var rightPosition = faceRightObject.transform.localPosition;
+		rightPosition.x = 0f;
+		rightPosition.y = -Camera.main.ScreenToWorldPoint(new Vector3(0f, faceRight.PixelHeight(), 0f)).y - 9f;
+		faceRightObject.transform.localPosition = rightPosition;
 	}
 	
 	public void Destroy () {

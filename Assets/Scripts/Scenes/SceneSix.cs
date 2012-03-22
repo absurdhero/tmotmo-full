@@ -24,7 +24,7 @@ class SceneSix : Scene {
 	}
 
 	public override void Setup () {
-		timeLength = 8.0f;
+		timeLength = 4.0f;
 		bigHeadProp.Setup();
 		otherBigHeadProp.Setup();
 		
@@ -39,7 +39,7 @@ class SceneSix : Scene {
 		secondRightHeadScroller.moveHeadDownOneScreenLength();
 	}
 
-	public override void Update () {		
+	public override void Update () {
 		for (int i = 0; i < Input.touchCount; i++) {
 			var touch = Input.GetTouch(i);
 			leftHeadTouched |= bigHeadProp.faceLeft.Contains(touch.position);
