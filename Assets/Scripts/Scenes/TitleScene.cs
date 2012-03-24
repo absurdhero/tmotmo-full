@@ -23,7 +23,10 @@ public class TitleScene : Scene {
 	
 	private Cycler cycle_title;
 	
+	private UnityInput input;
+	
 	public TitleScene(SceneManager manager) : base(manager) {
+		input = new UnityInput();
 	}
 	
 	public override void Setup() {
@@ -56,11 +59,11 @@ public class TitleScene : Scene {
 	public override void Update () {
 		bool touchedBuy = false;
 		bool touchedNews = false;
-		bool touched = Input.touchCount > 0;
+		bool touched = input.touchCount > 0;
 		
-		for (int i = 0; i < Input.touchCount; i++) {
+		for (int i = 0; i < input.touchCount; i++) {
 			Debug.Log("TOUCHED");
-			var touch = Input.GetTouch(i);
+			var touch = input.GetTouch(i);
 			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(touch.position);
 			touchedNews |= news.GetComponent<Sprite>().Contains(touch.position);
 	    }

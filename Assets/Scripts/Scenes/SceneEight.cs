@@ -7,8 +7,11 @@ class SceneEight : Scene {
 	
 	Vector3 previousMousePosition;
 
+	private UnityInput input;
+
 	public SceneEight(SceneManager manager) : base(manager) {
 		bigHeadProp = new BigHeadProp(resourceFactory);
+		input = new UnityInput();
 	}
 
 	public override void Setup () {
@@ -39,14 +42,14 @@ class SceneEight : Scene {
 	public void setLocationToTouch() {
 		Vector3 movementDelta = Vector3.zero;
 		
-		if (Application.isEditor && Input.GetMouseButton(0)) {
-			movementDelta = Input.mousePosition - previousMousePosition;
+		if (Application.isEditor && input.GetMouseButton(0)) {
+			movementDelta = input.mousePosition - previousMousePosition;
 		}
-		previousMousePosition = Input.mousePosition;
+		previousMousePosition = input.mousePosition;
 		
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+		if (Input.touchCount > 0 && input.GetTouch(0).phase == TouchPhase.Moved) {
 			if (!bigHeadProp.faceRight.Contains(Input.GetTouch(0).position)) return;
-			movementDelta = new Vector3(Input.GetTouch(0).deltaPosition.x, Input.GetTouch(0).deltaPosition.y, 0f);
+			movementDelta = new Vector3(Input.GetTouch(0).deltaPosition.x, input.GetTouch(0).deltaPosition.y, 0f);
 		}
 		moveToLocation(movementDelta);
 	}

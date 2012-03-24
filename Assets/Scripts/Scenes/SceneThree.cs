@@ -6,8 +6,11 @@ class SceneThree : Scene {
 	
 	public const int MAX_SPLIT = 40;
 	
+	UnityInput input;
+	
 	public SceneThree(SceneManager manager, HospitalRoom room) : base(manager) {
 		this.room = room;
+		input = new UnityInput();
 	}
 
 	public override void Setup() {
@@ -38,23 +41,23 @@ class SceneThree : Scene {
 			room.separateHalves(horizontal_distance);
 		}
 		
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
+		if (Application.isEditor && input.GetMouseButtonUp(0)) {
 			room.separateHalves(MAX_SPLIT);
 		}
 
 	}
 	
 	private bool PinchingGuy() {
-		return Input.touchCount == 2
-			&& (room.guyBounds(50).Contains(Input.GetTouch(0).position)
-			    || room.guyBounds(50).Contains(Input.GetTouch(1).position));
+		return input.touchCount == 2
+			&& (room.guyBoundsPlus(50).Contains(input.GetTouch(0).position)
+			    || room.guyBoundsPlus(50).Contains(input.GetTouch(1).position));
 	}
 	
 	private Vector2 PinchDistance() {
-		if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved) {
-			return Input.GetTouch(1).position - Input.GetTouch(0).position;
+		if (input.touchCount >= 2
+			&& input.hasMoved(0) && input.hasMoved(1)) {
+			return (input.GetTouch(1).position - input.GetTouch(0).position);
 		}
 		return Vector2.zero;
 	}
-	
 }

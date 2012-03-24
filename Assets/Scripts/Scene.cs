@@ -9,6 +9,8 @@ public abstract class Scene : MarshalByRefObject {
 	protected GameObjectFactory<string> resourceFactory;
 	public float rewindTime { get; protected set; }
 
+	private UnityInput input;
+
 	public virtual float TimeLength() {
 		return timeLength;
 	}
@@ -27,6 +29,7 @@ public abstract class Scene : MarshalByRefObject {
 		this.resourceFactory = resourceFactory;
 		completed = false;
 		camera = Camera.main;
+		input = new UnityInput();
 	}
 
 	public abstract void Setup();
@@ -40,9 +43,10 @@ public abstract class Scene : MarshalByRefObject {
 	protected void rewindLoop(float seconds) {
 		rewindTime = seconds;
 	}
+	
 	protected virtual void ConsumeTouches() {
-		for (int i = 0; i < Input.touchCount; i++) {
-			Input.GetTouch(i);
+		for (int i = 0; i < input.touchCount; i++) {
+			input.GetTouch(i);
 		}
 	}
 	

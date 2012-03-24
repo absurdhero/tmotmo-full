@@ -23,7 +23,10 @@ class SceneOne : Scene {
  	// animate both shapes at the same frequency
 	private float shapeSpeed = 0.5f;
 	
+	private UnityInput input;
+	
 	public SceneOne(SceneManager manager) : base(manager) {
+		input = new UnityInput();
 	}
 
 	public override void Setup() {
@@ -65,13 +68,13 @@ class SceneOne : Scene {
 		
 		touched1 = false;
 		touched2 = false;
-		for (int i = 0; i < Input.touchCount; i++) {
-			var touch = Input.GetTouch(i);
+		for (int i = 0; i < input.touchCount; i++) {
+			var touch = input.GetTouch(i);
 			touched1 |= circle.GetComponent<Sprite>().Contains(touch.position);
 			touched2 |= triangle.GetComponent<Sprite>().Contains(touch.position);
 		}
 		
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
+		if (Application.isEditor && input.GetMouseButtonUp(0)) {
 			touched1 = true;
 			touched2 = true;
 		}

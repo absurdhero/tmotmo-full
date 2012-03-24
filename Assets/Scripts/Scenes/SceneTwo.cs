@@ -4,7 +4,10 @@ using System;
 class SceneTwo : Scene {
 	public HospitalRoom room { get; private set; }
 	
+	private UnityInput input;
+	
 	public SceneTwo(SceneManager manager) : base(manager) {
+		input = new UnityInput();
 	}
 
 	public override void Setup() {
@@ -24,15 +27,15 @@ class SceneTwo : Scene {
 
 	public override void Update () {		
 		bool touched = false;
-		for (int i = 0; i < Input.touchCount; i++) {
-			var touch = Input.GetTouch(i);
+		for (int i = 0; i < input.touchCount; i++) {
+			var touch = input.GetTouch(i);
 			if (touch.phase == TouchPhase.Began) {
 				touched |= room.cover.GetComponent<Sprite>().Contains(touch.position);
 			}
 		}
 
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
-			var pos = Input.mousePosition;
+		if (Application.isEditor && input.GetMouseButtonUp(0)) {
+			var pos = input.mousePosition;
 			touched |= room.cover.GetComponent<Sprite>().Contains(pos);
 		}
 	

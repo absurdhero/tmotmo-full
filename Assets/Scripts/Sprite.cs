@@ -137,7 +137,7 @@ public class Sprite : MonoBehaviour {
 		// translate the parent 2 times the sprite height.
 		// implicitly translate the sprite in the opposite direction by the same amount.
 		// I'm not sure why multiplying by two is necessary but it works.
-		parent.transform.Translate(0f,  worldHeight * 2, 0f);
+		parent.transform.Translate(0f, worldHeight * 2, 0f);
 		gameObject.transform.parent = parent.transform;
 		
 		return parent;		

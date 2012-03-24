@@ -7,6 +7,8 @@ class SpeechBubble {
 	GameObject speechBubble;
 	GameObject speechBubbleLeft;
 	GameObject speechBubbleRight;
+	
+	UnityInput input;
 
 	public SpeechBubble(GameObjectFactory<string> resourceFactory, Camera camera, float leftToRightSwitchOverPosition) {
 		this.camera = camera;
@@ -32,6 +34,8 @@ class SpeechBubble {
 		rightTailPos.y = 5.0f;
 		rightTailPos.z = -0.5f;
 		speechBubbleRight.transform.position = rightTailPos;
+		
+		input = new UnityInput();
 	}
 	
 	public bool inTerminalPosition {
@@ -73,9 +77,9 @@ class SpeechBubble {
 	}
 
 	public void setLocationToTouch() {
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
-			if (!speechBubble.GetComponent<Sprite>().Contains(Input.GetTouch(0).position)) return;
-			var movementDelta = new Vector3(Input.GetTouch(0).deltaPosition.x, 0f, 0f);
+		if (input.touchCount > 0 && input.hasMoved(0)) {
+			if (!speechBubble.GetComponent<Sprite>().Contains(input.GetTouch(0).position)) return;
+			var movementDelta = new Vector3(input.GetTouch(0).deltaPosition.x, 0f, 0f);
 			moveToLocation(movementDelta);
 		}
 	}
@@ -83,10 +87,9 @@ class SpeechBubble {
 	public void Update() {
 		setLocationToTouch();
 		
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
+		if (Application.isEditor && input.GetMouseButtonUp(0)) {
 			moveToLocation(new Vector3(40f, 0f, 0f));
 		}
 		chooseTail();
-
 	}
 }

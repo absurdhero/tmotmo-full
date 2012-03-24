@@ -17,10 +17,12 @@ class SceneSix : Scene {
 	HeadScroller lowerLeftHead, upperLeftHead;
 	HeadScroller lowerRightHead, upperRightHead;
 
+	private UnityInput input;
 	
 	public SceneSix(SceneManager manager) : base(manager) {
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		otherBigHeadProp = new BigHeadProp(resourceFactory);
+		input = new UnityInput();
 	}
 
 	public override void Setup () {
@@ -40,15 +42,15 @@ class SceneSix : Scene {
 	}
 
 	public override void Update () {
-		for (int i = 0; i < Input.touchCount; i++) {
-			var touch = Input.GetTouch(i);
+		for (int i = 0; i < input.touchCount; i++) {
+			var touch = input.GetTouch(i);
 			leftHeadTouched |= bigHeadProp.faceLeft.Contains(touch.position);
 			leftHeadTouched |= otherBigHeadProp.faceLeft.Contains(touch.position);
 			rightHeadTouched |= bigHeadProp.faceRight.Contains(touch.position);
 			rightHeadTouched |= otherBigHeadProp.faceRight.Contains(touch.position);
 		}
 		
-		if (Application.isEditor && Input.GetMouseButtonUp(0)) {
+		if (Application.isEditor && input.GetMouseButtonUp(0)) {
 			if (leftHeadTouched) rightHeadTouched = true;
 			leftHeadTouched = true;
 		}

@@ -152,7 +152,7 @@ public class HospitalRoom {
 	}
 	
 	
-	public Rect guyBounds(float inflation) {
+	public Rect guyBoundsPlus(float inflation) {
 		var leftRect = guyLeft.GetComponent<Sprite>().ScreenRect();
 		var rightRect = guyRight.GetComponent<Sprite>().ScreenRect();
 		var rect = new Rect(leftRect.x - inflation,
@@ -171,7 +171,6 @@ public class HospitalRoom {
 	public void separateHalves(float distance) {
 		guySplitDelta = distance - guySplitDistance;
 		guySplitDistance = distance;
-		
 	}
 
 	private void setGuySplit() {
