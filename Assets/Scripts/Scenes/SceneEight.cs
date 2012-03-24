@@ -3,6 +3,7 @@ using System;
 
 class SceneEight : Scene {
 	BigHeadProp bigHeadProp;
+	GameObject faceRightParent;
 	
 	Vector3 previousMousePosition;
 
@@ -14,6 +15,7 @@ class SceneEight : Scene {
 		timeLength = 4.0f;
 		
 		bigHeadProp.Setup();
+		faceRightParent = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
 	}
 
 	public override void Update () {
@@ -21,17 +23,17 @@ class SceneEight : Scene {
 	}
 
 	public override void Destroy () {
+		GameObject.Destroy(faceRightParent);
 		bigHeadProp.Destroy();
 	}
 
 	public void moveToLocation(Vector3 movementDelta) {
-		var parent = bigHeadProp.faceParent;
-		if (parent.transform.rotation.eulerAngles.z >= 45) return;
+		if (faceRightParent.transform.rotation.eulerAngles.z >= 45) return;
 
 		float squareMagnitude = movementDelta.x + movementDelta.y;
 		if (squareMagnitude < 0) return;
 		
-		parent.transform.Rotate(new Vector3(0f, 0f, squareMagnitude));
+		faceRightParent.transform.Rotate(new Vector3(0f, 0f, squareMagnitude));
 	}
 
 	public void setLocationToTouch() {

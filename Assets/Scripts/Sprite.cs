@@ -129,4 +129,29 @@ public class Sprite : MonoBehaviour {
 		var layoutpos = Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f));
 		gameObject.transform.position = new Vector3(layoutpos.x, layoutpos.y, gameObject.transform.position.z) - Center();
 	}
+	
+	public GameObject createPivotOnTopLeftCorner() {
+		var parent = new GameObject("Parent of " + gameObject.name);
+		copyTransformTo(parent);
+
+		// translate the parent 2 times the sprite height.
+		// implicitly translate the sprite in the opposite direction by the same amount.
+		// I'm not sure why multiplying by two is necessary but it works.
+		parent.transform.Translate(0f,  worldHeight * 2, 0f);
+		gameObject.transform.parent = parent.transform;
+		
+		return parent;		
+	}
+	
+	private float worldHeight {
+		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize; }
+	}
+	
+	private void copyTransformTo(GameObject obj) {
+		obj.transform.parent = gameObject.transform.parent;
+		obj.transform.localRotation = gameObject.transform.localRotation;
+		obj.transform.localScale = gameObject.transform.localScale;
+		obj.transform.localPosition = gameObject.transform.localPosition;
+	}
+
 }
