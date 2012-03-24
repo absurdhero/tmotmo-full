@@ -8,6 +8,7 @@ namespace UnityEngine
 		public static Camera current;
 		public float pixelHeight;
 		public float pixelWidth;
+		public float orthographicSize;
 		public float GetScreenWidth () { throw new InvalidOperationException(); }
 		public float GetScreenHeight () { throw new InvalidOperationException(); }
         public Vector3 WorldToScreenPoint(Vector3 v) { throw new InvalidOperationException(); }

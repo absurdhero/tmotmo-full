@@ -26,7 +26,7 @@ namespace Irrelevant
     public void SwitchFrameEachTime() {
       var cycler = new Cycler(frameTime, 3, beginning);
       using (mocks.Record()) {
-        Expect.Call(delegate{sprite.NextTexture();}).Repeat.Twice();
+        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Twice();
       }
       using (mocks.Playback()) {
         cycler.AddSprite(sprite);
@@ -41,7 +41,7 @@ namespace Irrelevant
       var inbetweenFrame = frameTime / 2.0f;
 
       using (mocks.Record()) {
-        Expect.Call(delegate{sprite.NextTexture();}).Repeat.Once();
+        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Once();
       }
       using (mocks.Playback()) {
         cycler.AddSprite(sprite);
@@ -56,7 +56,7 @@ namespace Irrelevant
       int totalCycles = 3;
       var cycler = new Cycler(frameTime, totalCycles, beginning);
       using (mocks.Record()) {
-        Expect.Call(delegate{sprite.NextTexture();}).Repeat.Times(totalCycles);
+        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Times(totalCycles);
       }
       using (mocks.Playback()) {
         cycler.AddSprite(sprite);
@@ -72,7 +72,7 @@ namespace Irrelevant
       int totalCycles = 0;
       var cycler = new Cycler(frameTime, totalCycles, beginning);
       using (mocks.Record()) {
-        Expect.Call(delegate{sprite.NextTexture();}).Repeat.Times(3);
+        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Times(3);
       }
       using (mocks.Playback()) {
         cycler.AddSprite(sprite);

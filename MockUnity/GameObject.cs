@@ -1,7 +1,7 @@
 using System;
 
 namespace UnityEngine {
-    public abstract class GameObject : Object {
+    public class GameObject : Object {
         public Transform transform;
 
 		//public Rigidbody rigidbody;
@@ -26,7 +26,10 @@ namespace UnityEngine {
 			throw new InvalidOperationException();
 		}
 		*/
-
+		
+		public GameObject(string name) {
+		}
+		
 		public Component GetComponent (Type type) { throw new InvalidOperationException(); }
 		public T GetComponent<T> () where T : Component
 		{
