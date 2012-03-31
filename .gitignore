@@ -1,0 +1,4 @@
+.DS_Store
+/*.pidb
+/Library/cache/*
+/Library/previews/*
