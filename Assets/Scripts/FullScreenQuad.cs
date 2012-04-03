@@ -24,12 +24,14 @@ public class FullScreenQuad : MonoBehaviour {
 		var material = new Material(shader);
 		material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
 
-		ImageMaterial img = new ImageMaterial(gameObject, mesh, material);
+		ImageMaterial img = new ImageMaterial(mesh, material);
 		img.SetTexture(texture);
 
 		if(tiled)
 			img.SetUVTiled();
 		else
 			img.SetUVStretched();
+
+		img.BindTo(gameObject);
 	}
 }

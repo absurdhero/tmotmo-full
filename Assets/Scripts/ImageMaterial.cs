@@ -4,12 +4,16 @@ public class ImageMaterial {
 	private Mesh mesh;
 	public Material material { private set; get; }
 
-	public ImageMaterial (GameObject gameObject, Mesh mesh)
-		: this(gameObject, mesh, DefaultMaterial()) {
+	public ImageMaterial (Mesh mesh)
+		: this(mesh, DefaultMaterial()) {
 	}
 	
-	public ImageMaterial (GameObject gameObject, Mesh mesh, Material material) {
+	public ImageMaterial (Mesh mesh, Material material) {
 		this.mesh = mesh;
+		this.material = material;
+	}
+	
+	public void BindTo(GameObject gameObject) {
 		var meshFilter = gameObject.GetComponent<MeshFilter>();
 		if (meshFilter == null) {
 			meshFilter = gameObject.AddComponent<MeshFilter>();
@@ -24,10 +28,8 @@ public class ImageMaterial {
 			meshRenderer.receiveShadows = false;
 			meshRenderer.castShadows = false;
 		} else {
-			material = meshRenderer.sharedMaterial;
+			this.material = meshRenderer.sharedMaterial;
 		}
-		
-		this.material = material;
 	}
 	
 	public void SetTexture(Texture2D texture) {

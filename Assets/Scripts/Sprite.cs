@@ -48,8 +48,10 @@ public class Sprite : MonoBehaviour {
 	}
 
 	void Start () {
-		imageMaterial = new ImageMaterial(gameObject, mesh);
+		imageMaterial = new ImageMaterial(mesh);
 		imageMaterial.SetUVTiled();
+		imageMaterial.SetTexture(textures[0]);
+		imageMaterial.BindTo(gameObject);
 	}
 	
 	void Update() {
