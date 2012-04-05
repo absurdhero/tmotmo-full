@@ -32,6 +32,6 @@ public class FullScreenQuad : MonoBehaviour {
 		else
 			img.SetUVStretched();
 
-		img.BindTo(gameObject);
+		img.RenderTo(gameObject);
 	}
 }

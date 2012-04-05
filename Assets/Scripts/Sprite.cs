@@ -51,7 +51,7 @@ public class Sprite : MonoBehaviour {
 		imageMaterial = new ImageMaterial(mesh);
 		imageMaterial.SetUVTiled();
 		imageMaterial.SetTexture(textures[0]);
-		imageMaterial.BindTo(gameObject);
+		imageMaterial.RenderTo(gameObject);
 	}
 	
 	void Update() {
@@ -138,15 +138,15 @@ public class Sprite : MonoBehaviour {
 
 		// translate the parent 2 times the sprite height.
 		// implicitly translate the sprite in the opposite direction by the same amount.
-		// I'm not sure why multiplying by two is necessary but it works.
-		parent.transform.Translate(0f, worldHeight * 2, 0f);
+		parent.transform.Translate(0f, worldHeight, 0f);
 		gameObject.transform.parent = parent.transform;
 		
 		return parent;		
 	}
 	
 	private float worldHeight {
-		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize; }
+		// This is multiplied by two because orthographicSize is half the screen height
+		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }
 	}
 	
 	private void copyTransformTo(GameObject obj) {

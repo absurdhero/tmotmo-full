@@ -13,7 +13,7 @@ public class ImageMaterial {
 		this.material = material;
 	}
 	
-	public void BindTo(GameObject gameObject) {
+	public void RenderTo(GameObject gameObject) {
 		var meshFilter = gameObject.GetComponent<MeshFilter>();
 		if (meshFilter == null) {
 			meshFilter = gameObject.AddComponent<MeshFilter>();
