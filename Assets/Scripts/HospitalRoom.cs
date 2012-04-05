@@ -65,18 +65,14 @@ public class HospitalRoom {
 									  (int) camera.pixelHeight / 2 - rightSprite.PixelHeight() / 2);
 		
 		eyes = resourceFactory.Create(this, "EyesOpening");
-		var pos = eyes.transform.position;
-		pos.x = -0.55f;
-		pos.y = 3.65f;
-		pos.z -= 1;
-		eyes.transform.position = pos;
+		eyes.GetComponent<Sprite>().setWorldPosition(-5.5f, 36.5f, -1f);
 	}
 	
 	public void addZzz() {
 		zzz = resourceFactory.Create(this, "Zzz");
 		var pos = zzz.transform.position;
-		pos.x = 5;
-		pos.y = 6;
+		pos.x = 50;
+		pos.y = 60;
 		zzz.transform.position = pos;
 		zzzAnimator = new ZzzAnimator(zzz);
 	}
@@ -118,8 +114,8 @@ public class HospitalRoom {
 
 		footBoard = resourceFactory.Create(this, "Footboard");
 		var pos = footBoard.transform.position;
-		pos.y = -9.2f;
-		pos.x = -4.4875f;
+		pos.y = -92f;
+		pos.x = -44.875f;
 		pos.z = -1;
 		footBoard.transform.position = pos;
 	}
@@ -127,8 +123,8 @@ public class HospitalRoom {
 	private void addClipBoard() {
 		clipBoard = resourceFactory.Create(this, "ClipBoard");
 		var pos = clipBoard.transform.position;
-		pos.y = -8.0f;
-		pos.x = -1.2f;
+		pos.y = -80f;
+		pos.x = -12f;
 		pos.z = -1;
 		clipBoard.transform.position = pos;
 	}
@@ -136,8 +132,8 @@ public class HospitalRoom {
 	public void addHeartRate() {
 		heartRate = resourceFactory.Create(this, "HeartRate");
 		var pos = heartRate.transform.position;
-		pos.y = 1.7f;
-		pos.x = -11.5f;
+		pos.y = 17f;
+		pos.x = -115f;
 		heartRate.transform.position = pos;
 		
 		// Repeat 7 frame animation every 2 seconds

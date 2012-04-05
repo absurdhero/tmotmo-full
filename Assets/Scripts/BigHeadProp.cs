@@ -28,14 +28,14 @@ public class BigHeadProp {
 
 		faceLeftObject = resourceFactory.Create(this, "FaceLeft");
 		var leftPosition = faceLeftObject.transform.position;
-		leftPosition.x = -5f;
-		leftPosition.y = -6f;
+		leftPosition.x = -50f;
+		leftPosition.y = -60f;
 		faceLeftObject.transform.position = leftPosition;
 		
 		faceRightObject = resourceFactory.Create(this, "FaceRight");
 		var rightPosition = faceRightObject.transform.position;
-		rightPosition.x = 1f;
-		rightPosition.y = -6f;
+		rightPosition.x = 10f;
+		rightPosition.y = -60f;
 		faceRightObject.transform.position = rightPosition;
 	}
 	

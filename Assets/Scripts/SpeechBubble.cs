@@ -19,28 +19,32 @@ class SpeechBubble {
 		speechBubbleRight.active = false;
 		
 		var bubblePos = speechBubble.transform.position;
-		bubblePos.x = -8f;
-		bubblePos.y = 6f;
+		bubblePos.x = -80f;
+		bubblePos.y = 60f;
 		speechBubble.transform.position = bubblePos;
 		
 		var leftTailPos = speechBubbleLeft.transform.position;
-		leftTailPos.x = -5.5f;
-		leftTailPos.y = 5.0f;
-		leftTailPos.z = -0.5f;
+		leftTailPos.x = -55f;
+		leftTailPos.y = 50f;
+		leftTailPos.z = -5f;
 		speechBubbleLeft.transform.position = leftTailPos;
 
 		var rightTailPos = speechBubbleRight.transform.position;
-		rightTailPos.x = -5.5f;
-		rightTailPos.y = 5.0f;
-		rightTailPos.z = -0.5f;
+		rightTailPos.x = -55f;
+		rightTailPos.y = 50f;
+		rightTailPos.z = -5f;
 		speechBubbleRight.transform.position = rightTailPos;
 		
 		input = new UnityInput();
 	}
 	
+	private float terminalPosition {
+		get { return camera.orthographicSize / 5f; }
+	}
+	
 	public bool inTerminalPosition {
 		get {
-			return speechBubble.transform.position.x >= 2f;
+			return speechBubble.transform.position.x >= terminalPosition;
 		}
 	}
 	
@@ -52,9 +56,10 @@ class SpeechBubble {
 
 	public void snapToEnd() {
 		var bubblePos = speechBubble.transform.position;
-		speechBubble.transform.position = new Vector3(2f, bubblePos.y, bubblePos.z);
+		speechBubble.transform.position = new Vector3(terminalPosition, bubblePos.y, bubblePos.z);
 		var bubbleRightPos = speechBubbleRight.transform.position;
-		speechBubbleRight.transform.position = new Vector3(4.5f, bubbleRightPos.y, bubbleRightPos.z);
+		float terminalTailPosition = camera.orthographicSize / 2.22f;
+		speechBubbleRight.transform.position = new Vector3(terminalTailPosition, bubbleRightPos.y, bubbleRightPos.z); 
 	}
 
 	public void chooseTail() {

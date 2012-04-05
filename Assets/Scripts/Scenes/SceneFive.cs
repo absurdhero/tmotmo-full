@@ -40,9 +40,9 @@ class SceneFive : Scene {
 		public LipsAppear(GameObjectFactory<string> resourceFactory) : base(0.5f) {
 			lips = resourceFactory.Create("SceneFive/Lips");
 			var lipsPosition = lips.transform.position;
-			lipsPosition.x = -6f;
-			lipsPosition.y = -5f;
-			lipsPosition.z = -1f;
+			lipsPosition.x = -60f;
+			lipsPosition.y = -50f;
+			lipsPosition.z = -10f;
 			lips.transform.position = lipsPosition;
 			lips.active = false;
 		}
@@ -76,17 +76,17 @@ class SceneFive : Scene {
 		public BigMouthAnimator(GameObjectFactory<string> resourceFactory) : base(0.25f) {
 			var mouthLeftGameObject = resourceFactory.Create("SceneFive/MouthLeft");
 			var leftPosition = mouthLeftGameObject.transform.position;
-			leftPosition.x = -2.95f;
-			leftPosition.y = -5.6f;
-			leftPosition.z = -0.5f;
+			leftPosition.x = -29.5f;
+			leftPosition.y = -56f;
+			leftPosition.z = -5f;
 			mouthLeftGameObject.transform.position = leftPosition;
 			mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
 
 			var mouthRightGameObject = resourceFactory.Create("SceneFive/MouthRight");
 			var rightPosition = mouthRightGameObject.transform.position;
-			rightPosition.x = 1f;
-			rightPosition.y = -5.6f;
-			rightPosition.z = -0.5f;
+			rightPosition.x = 10f;
+			rightPosition.y = -56f;
+			rightPosition.z = -5f;
 			mouthRightGameObject.transform.position = rightPosition;
 			mouthRight = mouthRightGameObject.GetComponent<Sprite>();
 		}

@@ -128,10 +128,18 @@ public class Sprite : MonoBehaviour {
 	
 	/* In viewport space, 0 and 1 are the edges of the screen. */
 	public void setCenterToViewportCoord(Camera camera, float x, float y) {
-		var layoutpos = Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f));
+		var layoutpos = snapToPixel(Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f)));
 		gameObject.transform.position = new Vector3(layoutpos.x, layoutpos.y, gameObject.transform.position.z) - Center();
 	}
 	
+	public void setWorldPosition(float x, float y, float z) {
+		setWorldPosition(new Vector3(x, y, z));
+	}
+
+	public void setWorldPosition(Vector3 pos) {
+		gameObject.transform.position = snapToPixel(pos);
+	}
+
 	public GameObject createPivotOnTopLeftCorner() {
 		var parent = new GameObject("Parent of " + gameObject.name);
 		copyTransformTo(parent);
@@ -147,6 +155,18 @@ public class Sprite : MonoBehaviour {
 	private float worldHeight {
 		// This is multiplied by two because orthographicSize is half the screen height
 		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }
+	}
+	
+	private Vector3 snapToPixel(Vector3 pos) {
+		Vector3 newpos;
+		float pixelRatio = (Camera.main.orthographicSize * 2) / Camera.main.pixelHeight;
+		
+		newpos.x = Mathf.Round(pos.x / pixelRatio) * pixelRatio;
+		newpos.y = Mathf.Round(pos.y / pixelRatio) * pixelRatio;
+		newpos.z = pos.z;
+		Debug.Log ("before: " + pos.y);
+		Debug.Log ("after:  " + newpos.y);
+		return newpos;
 	}
 	
 	private void copyTransformTo(GameObject obj) {

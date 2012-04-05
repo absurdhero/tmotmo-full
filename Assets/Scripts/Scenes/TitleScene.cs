@@ -44,7 +44,7 @@ public class TitleScene : Scene {
 		// Programmer needs swizzling, badly.
 		title.transform.position = new Vector3(layoutpos.x, layoutpos.y, title.transform.position.z);
 		// Anchor the subtitle an absolute distance from wherever the title ended up
-		subtitle.transform.position = title.transform.position + titleSprite.Center() + new Vector3(1.5f, -2f, -0.1f);
+		subtitle.transform.position = title.transform.position + titleSprite.Center() + new Vector3(15f, -20f, -1f);
 		
 		// place buttons in the bottom corners
 		MoveToScreenXY(news, 4, 4);

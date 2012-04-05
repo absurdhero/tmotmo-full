@@ -38,13 +38,13 @@ class SceneFour : Scene {
 		hospitalRoom.Update();
 		mouthMovement.Update(Time.time);
 		
+		speechBubble.Update();
+
 		if(speechBubble.inTerminalPosition) {
 			speechBubble.snapToEnd();
 			endScene();
 			return;
-		}
-		
-		speechBubble.Update();
+		}		
 	}
 		
 	private void addMouth() {
@@ -54,15 +54,15 @@ class SceneFour : Scene {
 		rightMouth.active = false;
 		
 		var leftPos = leftMouth.transform.position;
-		leftPos.x = -2.4f;
-		leftPos.y = 2.4f;
-		leftPos.z = -0.4f;
+		leftPos.x = -24f;
+		leftPos.y = 24f;
+		leftPos.z = -4f;
 		leftMouth.transform.position = leftPos;
 		
 		var rightPos = rightMouth.transform.position;
-		rightPos.x = 2.8f;
-		rightPos.y = 2.4f;
-		rightPos.z = -0.4f;
+		rightPos.x = 28f;
+		rightPos.y = 24f;
+		rightPos.z = -4f;
 		rightMouth.transform.position = rightPos;
 	}
 	
