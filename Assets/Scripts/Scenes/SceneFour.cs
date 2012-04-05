@@ -53,17 +53,8 @@ class SceneFour : Scene {
 		leftMouth.active = false;
 		rightMouth.active = false;
 		
-		var leftPos = leftMouth.transform.position;
-		leftPos.x = -24f;
-		leftPos.y = 24f;
-		leftPos.z = -4f;
-		leftMouth.transform.position = leftPos;
-		
-		var rightPos = rightMouth.transform.position;
-		rightPos.x = 28f;
-		rightPos.y = 24f;
-		rightPos.z = -4f;
-		rightMouth.transform.position = rightPos;
+		leftMouth.GetComponent<Sprite>().setWorldPosition(-24f, 24f, -4f);
+		rightMouth.GetComponent<Sprite>().setWorldPosition(28f, 24f, -4f);		
 	}
 	
 	class MouthAnimator : Repeater {

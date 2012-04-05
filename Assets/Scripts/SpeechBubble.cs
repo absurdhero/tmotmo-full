@@ -18,22 +18,9 @@ class SpeechBubble {
 		speechBubbleRight = resourceFactory.Create(this, "BubbleTailRight");
 		speechBubbleRight.active = false;
 		
-		var bubblePos = speechBubble.transform.position;
-		bubblePos.x = -80f;
-		bubblePos.y = 60f;
-		speechBubble.transform.position = bubblePos;
-		
-		var leftTailPos = speechBubbleLeft.transform.position;
-		leftTailPos.x = -55f;
-		leftTailPos.y = 50f;
-		leftTailPos.z = -5f;
-		speechBubbleLeft.transform.position = leftTailPos;
-
-		var rightTailPos = speechBubbleRight.transform.position;
-		rightTailPos.x = -55f;
-		rightTailPos.y = 50f;
-		rightTailPos.z = -5f;
-		speechBubbleRight.transform.position = rightTailPos;
+		speechBubble.GetComponent<Sprite>().setWorldPosition(-80f, 60f, -1f);
+		speechBubbleLeft.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
+		speechBubbleRight.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		
 		input = new UnityInput();
 	}

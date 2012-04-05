@@ -39,11 +39,7 @@ class SceneFive : Scene {
 		
 		public LipsAppear(GameObjectFactory<string> resourceFactory) : base(0.5f) {
 			lips = resourceFactory.Create("SceneFive/Lips");
-			var lipsPosition = lips.transform.position;
-			lipsPosition.x = -60f;
-			lipsPosition.y = -50f;
-			lipsPosition.z = -10f;
-			lips.transform.position = lipsPosition;
+			lips.GetComponent<Sprite>().setWorldPosition(-60f, -50f, -10f);
 			lips.active = false;
 		}
 
@@ -75,20 +71,12 @@ class SceneFive : Scene {
 		
 		public BigMouthAnimator(GameObjectFactory<string> resourceFactory) : base(0.25f) {
 			var mouthLeftGameObject = resourceFactory.Create("SceneFive/MouthLeft");
-			var leftPosition = mouthLeftGameObject.transform.position;
-			leftPosition.x = -29.5f;
-			leftPosition.y = -56f;
-			leftPosition.z = -5f;
-			mouthLeftGameObject.transform.position = leftPosition;
 			mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
+			mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
 
 			var mouthRightGameObject = resourceFactory.Create("SceneFive/MouthRight");
-			var rightPosition = mouthRightGameObject.transform.position;
-			rightPosition.x = 10f;
-			rightPosition.y = -56f;
-			rightPosition.z = -5f;
-			mouthRightGameObject.transform.position = rightPosition;
 			mouthRight = mouthRightGameObject.GetComponent<Sprite>();
+			mouthRight.setWorldPosition(10f, -56f, -5f);
 		}
 		
 		public override void OnTick() {

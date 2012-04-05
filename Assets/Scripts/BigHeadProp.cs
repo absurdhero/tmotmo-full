@@ -27,16 +27,10 @@ public class BigHeadProp {
 		background = resourceFactory.Create(this, "PurpleQuad");
 
 		faceLeftObject = resourceFactory.Create(this, "FaceLeft");
-		var leftPosition = faceLeftObject.transform.position;
-		leftPosition.x = -50f;
-		leftPosition.y = -60f;
-		faceLeftObject.transform.position = leftPosition;
+		faceLeft.setWorldPosition(-50f, -60f, -1f);
 		
 		faceRightObject = resourceFactory.Create(this, "FaceRight");
-		var rightPosition = faceRightObject.transform.position;
-		rightPosition.x = 10f;
-		rightPosition.y = -60f;
-		faceRightObject.transform.position = rightPosition;
+		faceRight.setWorldPosition(10f, -60f, -1f);
 	}
 	
 	public void Destroy () {

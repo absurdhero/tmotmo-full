@@ -70,10 +70,7 @@ public class HospitalRoom {
 	
 	public void addZzz() {
 		zzz = resourceFactory.Create(this, "Zzz");
-		var pos = zzz.transform.position;
-		pos.x = 50;
-		pos.y = 60;
-		zzz.transform.position = pos;
+		zzz.GetComponent<Sprite>().setWorldPosition(50f, 60f, -1f);
 		zzzAnimator = new ZzzAnimator(zzz);
 	}
 	
@@ -113,28 +110,17 @@ public class HospitalRoom {
 		addClipBoard();
 
 		footBoard = resourceFactory.Create(this, "Footboard");
-		var pos = footBoard.transform.position;
-		pos.y = -92f;
-		pos.x = -44.875f;
-		pos.z = -1;
-		footBoard.transform.position = pos;
+		footBoard.GetComponent<Sprite>().setWorldPosition(-44.875f, -92f, -1f);
 	}
 	
 	private void addClipBoard() {
 		clipBoard = resourceFactory.Create(this, "ClipBoard");
-		var pos = clipBoard.transform.position;
-		pos.y = -80f;
-		pos.x = -12f;
-		pos.z = -1;
-		clipBoard.transform.position = pos;
+		clipBoard.GetComponent<Sprite>().setWorldPosition(-12f, -80f, -1f);
 	}
 	
 	public void addHeartRate() {
 		heartRate = resourceFactory.Create(this, "HeartRate");
-		var pos = heartRate.transform.position;
-		pos.y = 17f;
-		pos.x = -115f;
-		heartRate.transform.position = pos;
+		heartRate.GetComponent<Sprite>().setWorldPosition(-115f, 17f, -1f);
 		
 		// Repeat 7 frame animation every 2 seconds
 		// That's 30bpm which might mean he is dying!

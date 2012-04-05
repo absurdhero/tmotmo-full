@@ -164,8 +164,6 @@ public class Sprite : MonoBehaviour {
 		newpos.x = Mathf.Round(pos.x / pixelRatio) * pixelRatio;
 		newpos.y = Mathf.Round(pos.y / pixelRatio) * pixelRatio;
 		newpos.z = pos.z;
-		Debug.Log ("before: " + pos.y);
-		Debug.Log ("after:  " + newpos.y);
 		return newpos;
 	}
 	

@@ -80,6 +80,7 @@ class SceneOne : Scene {
 		}
 		
 		if (touched1 && touched2) {
+			Handheld.Vibrate();
 			endScene();
 		} else {
 			AnimateShapes();
