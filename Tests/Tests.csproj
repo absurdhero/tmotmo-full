@@ -91,6 +91,24 @@
     <Compile Include="..\Assets\Scripts\SpeechBubble.cs">
       <Link>SpeechBubble.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Scripts\BigHeadProp.cs">
+      <Link>BigHeadProp.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\UnityInput.cs">
+      <Link>UnityInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneEight.cs">
+      <Link>Scenes\SceneEight.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneFive.cs">
+      <Link>Scenes\SceneFive.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneSeven.cs">
+      <Link>Scenes\SceneSeven.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneSix.cs">
+      <Link>Scenes\SceneSix.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
