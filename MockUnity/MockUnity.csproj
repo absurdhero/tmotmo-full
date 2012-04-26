@@ -63,5 +63,7 @@
     <Compile Include="Object.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Quaternion.cs" />
+    <Compile Include="Mathf.cs" />
+    <Compile Include="Handheld.cs" />
   </ItemGroup>
 </Project>
