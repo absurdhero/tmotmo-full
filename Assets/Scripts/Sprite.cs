@@ -126,6 +126,10 @@ public class Sprite : MonoBehaviour {
 		gameObject.transform.position = Camera.main.ScreenToWorldPoint(pos);
 	}
 	
+	public Vector3 getScreenPosition() {
+		return Camera.main.WorldToScreenPoint(gameObject.transform.position);
+	}
+	
 	/* In viewport space, 0 and 1 are the edges of the screen. */
 	public void setCenterToViewportCoord(Camera camera, float x, float y) {
 		var layoutpos = snapToPixel(Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f)));

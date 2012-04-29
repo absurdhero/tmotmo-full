@@ -55,7 +55,7 @@ class SceneThree : Scene {
 	
 	private Vector2 PinchDistance() {
 		if (input.touchCount >= 2
-			&& input.hasMoved(0) && input.hasMoved(1)) {
+			&& (input.hasMoved(0) || input.hasMoved(1))) {
 			return (input.GetTouch(1).position - input.GetTouch(0).position);
 		}
 		return Vector2.zero;
