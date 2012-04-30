@@ -19,6 +19,18 @@ namespace UnityEngine {
 				throw new InvalidOperationException(); 
 			}
 		}
+		
+		public override bool Equals (object other)
+		{
+			if (!(other is Quaternion)) return false;
+			var v = (Quaternion) other;
+			return x == v.x && y == v.y && z == v.z && w == v.w;
+		}
+		
+		public override int GetHashCode ()
+		{
+			return (x.GetHashCode() * 2) ^ y.GetHashCode() ^ z.GetHashCode() ^ w.GetHashCode();
+		}
 	}
 }
 

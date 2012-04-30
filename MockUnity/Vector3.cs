@@ -1,10 +1,9 @@
 namespace UnityEngine
 {
-//[DefaultMember("Item")]
 public struct Vector3
 {
   // Fields
-  public static float kEpsilon;
+  public static float kEpsilon = 0.0000000001f;
   public float x;
   public float y;
   public float z;
@@ -58,7 +57,7 @@ public struct Vector3
 //  public Vector3 normalized { get; }
 //  public float magnitude { get; }
   public static Vector3 zero = new Vector3(0f, 0f, 0f);
-//  public static Vector3 one { get; }
+  public static Vector3 one = new Vector3(1f, 1f, 1f);
 //  public static Vector3 forward { get; }
 //  public static Vector3 back { get; }
 //  public static Vector3 up { get; }
@@ -78,11 +77,9 @@ public struct Vector3
 
 		public override int GetHashCode ()
 		{
-			return base.GetHashCode();
+			return (x + y + z).GetHashCode();
         }
         
-        private const float epsilon = 0.0000000001f;
-
 		public static Vector3 operator + (Vector3 a, Vector3 b)
 		{
 			return new Vector3 (a.x + b.x, a.y + b.y, a.z + b.z);
@@ -109,11 +106,11 @@ public struct Vector3
 		}
 		public static bool operator == (Vector3 lhs, Vector3 rhs)
 		{
-			return Vector3.SqrMagnitude (lhs - rhs) < epsilon;
+			return Vector3.SqrMagnitude (lhs - rhs) < kEpsilon;
 		}
 		public static bool operator != (Vector3 lhs, Vector3 rhs)
 		{
-			return Vector3.SqrMagnitude (lhs - rhs) >= epsilon;
+			return Vector3.SqrMagnitude (lhs - rhs) >= kEpsilon;
 		}
 	}
   

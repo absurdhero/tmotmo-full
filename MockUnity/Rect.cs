@@ -26,9 +26,9 @@ public struct Rect
 //  public float width { get; set; }
 //  public float height { get; set; }
 //  public float left { get; }
-//  public float right { get; }
+  public float right { get { return left + width; } }
 //  public float top { get; }
-//  public float bottom { get; }
+  public float bottom { get { return top - height; } }
 //  public float xMin { get; set; }
 //  public float yMin { get; set; }
 //  public float xMax { get; set; }

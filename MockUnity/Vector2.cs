@@ -24,7 +24,7 @@ public class Vector2
   public void Normalize() {throw new InvalidOperationException(); }
 //  public virtual string ToString() {throw new InvalidOperationException(); }
 //  public string ToString(string format) {throw new InvalidOperationException(); }
-//  public virtual int GetHashCode() {throw new InvalidOperationException(); }
+  public override int GetHashCode() { return (x + y).GetHashCode(); }
 //  public virtual bool Equals(object other) {throw new InvalidOperationException(); }
   public static float Dot(Vector2 lhs, Vector2 rhs) {throw new InvalidOperationException(); }
   public static float Angle(Vector2 from, Vector2 to) {throw new InvalidOperationException(); }
