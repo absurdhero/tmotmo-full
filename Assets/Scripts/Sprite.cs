@@ -15,17 +15,29 @@ public class Sprite : MonoBehaviour {
 	private bool texture_dirty = true;
 
 	private Mesh mesh;
-	private ImageMaterial imageMaterial;
+	public ImageMaterial imageMaterial { get; private set; }
 	
 	public Material material { get { return imageMaterial.material; } }
+
+	///Avoid creating a new mesh and material by reusing existing ones
+	public void InitializeWithExisting(Mesh mesh, Material material) {
+		this.mesh = mesh;
+		imageMaterial = new ImageMaterial(mesh, material);
+	}
 	
-	void Awake() {
-		Camera cam = Camera.main;
+	public void Awake() {
+		if (textures == null) return;
 		// if width/height were not specified, base it on the first texture
 		if (this.width == 0 || this.height == 0) {
 			width = textures[0].width;
 			height = textures[0].height;
 		}
+		
+		if (mesh == null) createMesh();
+	}
+
+	private void createMesh() {
+		Camera cam = Camera.main;
 
 		// calculate world points that allow the texture width/height to
 		// display pixel perfect on the screen
@@ -47,10 +59,12 @@ public class Sprite : MonoBehaviour {
 		mesh.triangles = new int[] {0, 2, 1, 1, 2, 3};		
 	}
 
-	void Start () {
-		imageMaterial = new ImageMaterial(mesh);
-		imageMaterial.SetUVTiled();
-		imageMaterial.SetTexture(textures[0]);
+	public void Start () {
+		if (imageMaterial == null) {
+			imageMaterial = new ImageMaterial(mesh);
+			imageMaterial.SetUVTiled();
+			imageMaterial.SetTexture(textures[0]);
+		}
 		imageMaterial.RenderTo(gameObject);
 	}
 	
@@ -82,9 +96,7 @@ public class Sprite : MonoBehaviour {
 		texture_index = index;
 	}
 	
-	///  <summary>
 	/// Center of sprite in World space
-	/// </summary>
 	public Vector3 Center() {
 		Vector3 sum = Vector3.zero;
 		foreach(Vector3 v in mesh.vertices) {
@@ -119,11 +131,15 @@ public class Sprite : MonoBehaviour {
 		return ScreenRect().Contains(new Vector2(position.x, position.y));
 	}
 
-	public void setScreenPosition(int x, int y) {
+	public void setScreenPosition(float x, float y) {
 		Vector3 pos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 		pos.x = x;
 		pos.y = y;
 		gameObject.transform.position = Camera.main.ScreenToWorldPoint(pos);
+	}
+	
+	public void setScreenPosition(int x, int y) {
+		setScreenPosition((float) x, (float) y);
 	}
 	
 	public Vector3 getScreenPosition() {

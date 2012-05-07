@@ -1,11 +1,14 @@
 using UnityEngine;
+using System;
 
 public class SceneNine : Scene {
+	public Confetti confetti;
+
 	private UnityInput input;
 	private TodoList todoList;
 
-
-	public SceneNine(SceneManager manager) : base(manager) {
+	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
+		this.confetti = confetti;
 		input = new UnityInput();
 		todoList = new TodoList(resourceFactory);
 	}
@@ -20,6 +23,7 @@ public class SceneNine : Scene {
 	}
 
 	public override void Destroy () {
+		confetti.Destroy();
 		todoList.Destroy();
 	}
 
@@ -34,7 +38,7 @@ public class SceneNine : Scene {
 		public void Setup() {
 			background = resourceFactory.Create("TodoList/GreenQuad");
 		}
-		
+
 		public void Update(float time) {
 		}
 		

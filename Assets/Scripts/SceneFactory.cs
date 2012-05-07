@@ -46,7 +46,7 @@ public class SceneFactory : MarshalByRefObject {
 		case "SceneSeven":
 			return new SceneEight(sceneManager);
 		case "SceneEight":
-			return new SceneNine(sceneManager);
+			return new SceneNine(sceneManager, ((SceneEight) scene).confetti);
 		}
 		
 		throw new InvalidOperationException();

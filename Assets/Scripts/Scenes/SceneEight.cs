@@ -2,16 +2,19 @@ using UnityEngine;
 using System;
 
 class SceneEight : Scene {
+	public Confetti confetti;
+
 	BigHeadProp bigHeadProp;
 	GameObject faceRightParent;
 	
 	Vector3 previousMousePosition;
 
 	private UnityInput input;
-
+	
 	public SceneEight(SceneManager manager) : base(manager) {
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
+		confetti = new Confetti(resourceFactory);
 	}
 
 	public override void Setup () {
@@ -22,6 +25,18 @@ class SceneEight : Scene {
 	}
 
 	public override void Update () {
+		if (fullyTilted() && !confetti.pouring) {
+			confetti.Pour();
+		}
+		
+		if (confetti.pouring) {
+			confetti.Update(Time.time);
+		}
+		
+		if (confetti.finishedPouring) {
+			endScene();
+		}
+
 		if(completed) return;
 		setLocationToTouch();
 	}
@@ -47,14 +62,17 @@ class SceneEight : Scene {
 	}
 	
 	void moveToLocation(Vector3 movementDelta) {
-		if (faceRightParent.transform.rotation.eulerAngles.z >= 45) {
-			endScene();
-			return;
-		}
+		if (fullyTilted()) return;
 
 		float squareMagnitude = movementDelta.x + movementDelta.y;
 		if (squareMagnitude < 0) return;
 		
 		faceRightParent.transform.Rotate(new Vector3(0f, 0f, squareMagnitude));
 	}
+
+	bool fullyTilted() {
+		return faceRightParent.transform.rotation.eulerAngles.z >= 45;
+	}
+	
+
 }

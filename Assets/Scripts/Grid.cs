@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class Grid {
-	float cellHeight;
-	float cellWidth;
+	public float cellHeight { get; private set; }
+	public float cellWidth { get; private set; }
 	float horizontalOffset = 0f;
 	float verticalOffset = 0f;
 	
