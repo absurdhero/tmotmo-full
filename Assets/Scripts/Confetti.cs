@@ -22,6 +22,7 @@ public class Confetti {
 	}
 		
 	public void Destroy() {
+		if (confetti == null) return;
 		foreach (var piece in confetti) {
 			GameObject.Destroy(piece);
 		}

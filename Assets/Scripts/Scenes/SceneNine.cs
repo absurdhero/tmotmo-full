@@ -14,7 +14,7 @@ public class SceneNine : Scene {
 	}
 
 	public override void Setup () {
-		timeLength = 4.0f;
+		timeLength = 2.0f;
 		todoList.Setup();
 	}
 

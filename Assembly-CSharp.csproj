@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_0;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_IOS;UNITY_IPHONE;ENABLE_GENERICS;ENABLE_TERRAIN;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\BigHeadProp.cs" />
+     <Compile Include="Assets\Scripts\Confetti.cs" />
+     <Compile Include="Assets\Scripts\Cycler.cs" />
+     <Compile Include="Assets\Scripts\DelayedCycler.cs" />
+     <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
+     <Compile Include="Assets\Scripts\GameObjectFactory.cs" />
+     <Compile Include="Assets\Scripts\Grid.cs" />
+     <Compile Include="Assets\Scripts\HospitalRoom.cs" />
+     <Compile Include="Assets\Scripts\ImageMaterial.cs" />
+     <Compile Include="Assets\Scripts\Layout.cs" />
+     <Compile Include="Assets\Scripts\LoopTracker.cs" />
+     <Compile Include="Assets\Scripts\Repeater.cs" />
+     <Compile Include="Assets\Scripts\Scene.cs" />
+     <Compile Include="Assets\Scripts\SceneFactory.cs" />
+     <Compile Include="Assets\Scripts\SceneManager.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneEight.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneEleven.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneFive.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneFour.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneNine.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneOne.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneSeven.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneSix.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneTen.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneThree.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
+     <Compile Include="Assets\Scripts\Scenes\TitleScene.cs" />
+     <Compile Include="Assets\Scripts\Sounds.cs" />
+     <Compile Include="Assets\Scripts\SpeechBubble.cs" />
+     <Compile Include="Assets\Scripts\Sprite.cs" />
+     <Compile Include="Assets\Scripts\UnityInput.cs" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
+     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
