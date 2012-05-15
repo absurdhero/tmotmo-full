@@ -142,12 +142,16 @@ public class Sprite : MonoBehaviour {
 		setScreenPosition((float) x, (float) y);
 	}
 	
+	public void setScreenPosition(Vector3 position) {
+		setScreenPosition(position.x, position.y);
+	}
+	
 	public Vector3 getScreenPosition() {
 		return Camera.main.WorldToScreenPoint(gameObject.transform.position);
 	}
 	
 	/* In viewport space, 0 and 1 are the edges of the screen. */
-	public void setCenterToViewportCoord(Camera camera, float x, float y) {
+	public void setCenterToViewportCoord(float x, float y) {
 		var layoutpos = snapToPixel(Camera.main.ViewportToWorldPoint(new Vector3(x, y, 0.0f)));
 		gameObject.transform.position = new Vector3(layoutpos.x, layoutpos.y, gameObject.transform.position.z) - Center();
 	}
@@ -158,6 +162,10 @@ public class Sprite : MonoBehaviour {
 
 	public void setWorldPosition(Vector3 pos) {
 		gameObject.transform.position = snapToPixel(pos);
+	}
+	
+	public void setDepth(float z) {
+		gameObject.transform.Translate(Vector3.back * z);
 	}
 
 	public GameObject createPivotOnTopLeftCorner() {

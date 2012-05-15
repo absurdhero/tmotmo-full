@@ -38,12 +38,12 @@ class SceneOne : Scene {
 		circle = resourceFactory.Create(this, "Circle");
 		triangle = resourceFactory.Create(this, "Triangle");
 
-		same.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.35f, 0.66f);
-		notSame.GetComponent<Sprite>().setCenterToViewportCoord(Camera.main, 0.7f, 0.66f);
+		same.GetComponent<Sprite>().setCenterToViewportCoord(0.35f, 0.66f);
+		notSame.GetComponent<Sprite>().setCenterToViewportCoord(0.7f, 0.66f);
 		var circleSprite = circle.GetComponent<Sprite>();
 		var triangleSprite = triangle.GetComponent<Sprite>();
-		circleSprite.setCenterToViewportCoord(Camera.main, 0.3f, 0.33f);
-		triangleSprite.setCenterToViewportCoord(Camera.main, 0.7f, 0.33f);
+		circleSprite.setCenterToViewportCoord(0.3f, 0.33f);
+		triangleSprite.setCenterToViewportCoord(0.7f, 0.33f);
 		
 		// hide the triangle to start
 		triangle.active = false;

@@ -101,7 +101,7 @@ public class HospitalRoom {
 		}
 		cover = resourceFactory.Create(this, "Cover");
 		var coverSprite = cover.GetComponent<Sprite>();
-		coverSprite.setCenterToViewportCoord(camera, 0.515f, 0.34f);
+		coverSprite.setCenterToViewportCoord(0.515f, 0.34f);
 		
 	}
 	
