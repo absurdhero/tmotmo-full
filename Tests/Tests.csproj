@@ -116,6 +116,21 @@
     <Compile Include="..\Assets\Scripts\Scenes\SceneNine.cs">
       <Link>Scenes\SceneNine.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Scripts\Confetti.cs">
+      <Link>Confetti.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneEleven.cs">
+      <Link>Scenes\SceneEleven.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneTen.cs">
+      <Link>Scenes\SceneTen.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Animatable.cs">
+      <Link>Animatable.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Mover.cs">
+      <Link>Mover.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

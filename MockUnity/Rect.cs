@@ -3,12 +3,16 @@ using System;
 namespace UnityEngine
 {
 
-public struct Rect
+public class Rect
 {
   public float left, top, width, height;
   
   // Constructors
-  public Rect(float left, float top, float width, float height) {this.left = left; this.top = top; this.width = width; this.height = height; }
+  public Rect(float left, float top, float width, float height) {
+			this.left = left; this.top = top; this.width = width; this.height = height; 
+			this.xMax = this.xMin = this.yMax = this.yMin = 0.0f;
+		}
+	
 //  public Rect(Rect source);
 
   // Methods
@@ -29,10 +33,10 @@ public struct Rect
   public float right { get { return left + width; } }
 //  public float top { get; }
   public float bottom { get { return top - height; } }
-//  public float xMin { get; set; }
-//  public float yMin { get; set; }
-//  public float xMax { get; set; }
-//  public float yMax { get; set; }
+  public float xMin { get; set; }
+  public float yMin { get; set; }
+  public float xMax { get; set; }
+  public float yMax { get; set; }
 }
 
 }
