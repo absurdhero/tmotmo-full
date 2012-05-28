@@ -167,6 +167,10 @@ public class Sprite : MonoBehaviour {
 	public void setDepth(float z) {
 		gameObject.transform.Translate(Vector3.back * z);
 	}
+	
+	public void move(Vector3 pixels) {
+		setScreenPosition(getScreenPosition() + pixels);
+	}
 
 	public GameObject createPivotOnTopLeftCorner() {
 		var parent = new GameObject("Parent of " + gameObject.name);

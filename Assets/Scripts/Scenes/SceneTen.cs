@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SceneTen : Scene {
 	VideoClipAnimator videoAnimator;
@@ -43,9 +43,9 @@ public class SceneTen : Scene {
 		Sprite wiresSprite { get { return wires.GetComponent<Sprite>(); }}
 		Sprite wireShadowSprite { get { return wireShadow.GetComponent<Sprite>(); }}
 		
-		Vector2 stompDistance = new Vector2(60f, 80f);
-		Vector3 stompDisplacement = new Vector3(10, 10, 0);
-		bool stomped = false;
+		Animatable pedalStomped, pedalUnStomped, stompFoot, retractFoot;
+		Animatable[] animatables;
+		
 		const int firstCrackFrame = 3;
 
 		
@@ -57,7 +57,7 @@ public class SceneTen : Scene {
 			background = resourceFactory.Create("SceneTen/GreenBackground");
 			shoe = resourceFactory.Create("SceneTen/Shoe");
 			shoe.transform.localScale = Vector3.one * 2;
-			shoe.GetComponent<Sprite>().setScreenPosition(0, 50);
+			shoe.GetComponent<Sprite>().setScreenPosition(0, 164);
 			amp = resourceFactory.Create("SceneTen/Amp");
 			amp.GetComponent<Sprite>().setScreenPosition(130, 50);
 			amp.transform.localScale = Vector3.one * 2;
@@ -67,26 +67,31 @@ public class SceneTen : Scene {
 			wireShadow = resourceFactory.Create("SceneTen/WireShadow");
 			wireShadow.GetComponent<Sprite>().setScreenPosition(30, 30);
 			wireShadow.transform.localScale = Vector3.one * 2;
+			
+			pedalStomped = new PedalStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
+			pedalUnStomped = new PedalUnStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
+			stompFoot = new StompFoot(new List<Sprite> {shoeSprite});
+			retractFoot = new RetractFoot(new List<Sprite> {shoeSprite});
+			animatables = new[] {pedalStomped, pedalUnStomped, stompFoot, retractFoot};
+				
 		}
 		
 		public void beginCracks() {
 			glassCracks = resourceFactory.Create("SceneTen/GlassCracks");
 			glassCracks.transform.localScale = Vector3.one * 2;
 			glassSprite.setScreenPosition(0, 0);
-			glassSprite.setDepth(3f);
+			glassSprite.setDepth(0f);
 		}
 		
 		public override void OnTick() {
-			if (currentTick < 11) {
-				float movementMagnitude = Mathf.Sin(currentTick * Mathf.PI / 4f);
-				moveShoe(movementMagnitude);
-				pushAmp(movementMagnitude);
-				
-				if (currentTick == ticks) {
-					video.Show();
-				}
+			foreach(var animatable in animatables) {
+				animatable.animate(currentTick);
 			}
-			
+
+			if (currentTick == ticks) {
+				video.Show();
+			}
+
 			if (currentTick == firstCrackFrame) {
 				beginCracks();
 			}
@@ -96,27 +101,7 @@ public class SceneTen : Scene {
 			}
 		}
 
-		private void moveShoe(float movementMagnitude) {
-			int x = (int)(stompDistance.x * movementMagnitude);
-			int y = (int) (Camera.main.pixelHeight - stompDistance.y * movementMagnitude - 156);
-			shoeSprite.setScreenPosition(x, y);
-		}
 
-		private void pushAmp(float movementMagnitude) {
-			if (movementMagnitude == 1.0f) {
-				stomped = true;
-				ampSprite.setScreenPosition(ampSprite.getScreenPosition() + stompDisplacement);
-				wiresSprite.setScreenPosition(wiresSprite.getScreenPosition() + stompDisplacement);
-				wireShadowSprite.setScreenPosition(wireShadowSprite.getScreenPosition() + stompDisplacement);
-			} 
-			if (movementMagnitude != 1.0f && stomped) {
-				ampSprite.setScreenPosition(ampSprite.getScreenPosition() - stompDisplacement);
-				wiresSprite.setScreenPosition(wiresSprite.getScreenPosition() - stompDisplacement);
-				wireShadowSprite.setScreenPosition(wireShadowSprite.getScreenPosition() - stompDisplacement);
-				stomped = false;
-			}
-		}
-		
 		public void Destroy() {
 			GameObject.Destroy(amp);
 			GameObject.Destroy(shoe);
@@ -125,6 +110,30 @@ public class SceneTen : Scene {
 			GameObject.Destroy(wires);
 			GameObject.Destroy(background);
 		}
+	}
+
+	class PedalStomped : Mover {
+		static readonly Vector3 stompDisplacement = new Vector3(10, -10);
+
+		public PedalStomped(ICollection<Sprite> sprites) : base(sprites, stompDisplacement, 4, 4) {}
+	}
+
+	class PedalUnStomped : Mover {
+		static readonly Vector3 unstompDisplacement = new Vector3(-10, 10);
+
+		public PedalUnStomped(ICollection<Sprite> sprites) : base(sprites, unstompDisplacement, 6, 6) {}
+	}
+	
+	class StompFoot : Mover {
+		static readonly Vector3 descent = new Vector3(30f, -40f);
+
+		public StompFoot(ICollection<Sprite> sprites) : base(sprites, descent, 0, 4) {}
+	}
+
+	class RetractFoot : Mover {
+		static readonly Vector3 ascent = new Vector3(-30f, 40f);
+
+		public RetractFoot(ICollection<Sprite> sprites) : base(sprites, ascent, 4, 8) {}
 	}
 
 	class VideoClipAnimator : Repeater {
