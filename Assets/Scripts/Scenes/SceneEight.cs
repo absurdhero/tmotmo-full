@@ -26,7 +26,7 @@ class SceneEight : Scene {
 
 	public override void Update () {
 		if (fullyTilted() && !confetti.pouring) {
-			confetti.Pour();
+			confetti.Pour(Time.time);
 		}
 		
 		if (confetti.pouring) {
