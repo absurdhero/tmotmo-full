@@ -1,11 +1,14 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 class SceneEight : Scene {
 	public Confetti confetti;
 
 	BigHeadProp bigHeadProp;
 	GameObject faceRightParent;
+	MouthAnimator mouthAnimator;
+	Sprite mouthLeft, mouthRight;
 	
 	Vector3 previousMousePosition;
 
@@ -22,9 +25,22 @@ class SceneEight : Scene {
 		
 		bigHeadProp.Setup();
 		faceRightParent = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
+
+		var mouthLeftGameObject = resourceFactory.Create("TodoList/MouthLeft-ItsInside");
+		mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
+		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
+
+		var mouthRightGameObject = resourceFactory.Create("TodoList/MouthRight-ItsInside");
+		mouthRightGameObject.transform.parent = faceRightParent.transform;
+		mouthRight = mouthRightGameObject.GetComponent<Sprite>();
+		mouthRight.setWorldPosition(10f, -56f, -5f);
+
+		mouthAnimator = new MouthAnimator(mouthLeft, mouthRight);
 	}
 
 	public override void Update () {
+		mouthAnimator.Update(Time.time);
+		
 		if (fullyTilted() && !confetti.pouring) {
 			confetti.Pour(Time.time);
 		}
@@ -44,6 +60,7 @@ class SceneEight : Scene {
 	public override void Destroy () {
 		GameObject.Destroy(faceRightParent);
 		bigHeadProp.Destroy();
+		mouthAnimator.Destroy();
 	}
 
 	void setLocationToTouch() {
@@ -74,5 +91,112 @@ class SceneEight : Scene {
 		return faceRightParent.transform.rotation.eulerAngles.z >= 45;
 	}
 	
+	class MouthAnimator : Repeater {
+		Sprite mouthLeft;
+		Sprite mouthRight;
+		int sceneFrame = 0;
+		
+		const int totalFramesInScene = 24;		
+		
+		// the speed is eight note triplets because of the lilting rhythm of the lyrics
+		public MouthAnimator(Sprite mouthLeft, Sprite mouthRight) : base(0.16666666f) {
+			this.mouthLeft = mouthLeft;
+			this.mouthRight = mouthRight;
+		}
+		
+		public override void OnTick() {
+			var sprites = getSpritesFor(sceneFrame);
 
+			foreach(var sprite in sprites) {
+				sprite.Animate();
+			}
+
+			incrementFrame();
+		}
+		
+		private ICollection<Sprite> getSpritesFor(int sceneFrame) {
+			if (sceneFrame == 0) return initialMouthFrame();
+			if (sceneFrame >= 2 && sceneFrame <= 3) return sayIts();
+			if (sceneFrame >= 4 && sceneFrame <= 6) return sayInside();
+			if (sceneFrame >= 9 && sceneFrame <= 10) return saySo();
+			if (sceneFrame >= 12 && sceneFrame <= 16) return sayUnder();
+			if (sceneFrame >= 17 && sceneFrame <= 19) return sayStand();
+			
+			return new List<Sprite>();
+		}
+		
+		public void Destroy() {
+			GameObject.Destroy(mouthLeft.gameObject);
+			GameObject.Destroy(mouthRight.gameObject);
+		}
+		
+		private void incrementFrame() {
+			sceneFrame = (sceneFrame + 1) % totalFramesInScene;
+		}
+		
+
+		private ICollection<Sprite> initialMouthFrame()
+		{
+			setMouthFrame(15);
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayIts() {
+			if (sceneFrame == 1)	{
+				setMouthFrame(0);
+			}
+			else nextMouthFrame();
+			
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayInside() {
+			if (sceneFrame == 4)	{
+				setMouthFrame(2);
+			}
+			else if (sceneFrame == 6) {
+				setMouthFrame(2);
+			}
+			else if (sceneFrame == 7) {
+				setMouthFrame(4);
+			}
+			else nextMouthFrame();
+			
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> saySo() {
+			if (sceneFrame == 9)	{
+				setMouthFrame(5);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private ICollection<Sprite> sayUnder() {
+			if (sceneFrame == 12) {
+				setMouthFrame(7);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private ICollection<Sprite> sayStand() {
+			if (sceneFrame == 17) {
+				setMouthFrame(11);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private void setMouthFrame(int index) {
+			mouthLeft.setFrame(index);
+			mouthRight.setFrame(index);
+		}
+		
+		private void nextMouthFrame() {
+			mouthLeft.nextFrame();
+			mouthRight.nextFrame();
+		}
+	}
 }
