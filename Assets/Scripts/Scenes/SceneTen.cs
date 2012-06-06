@@ -2,33 +2,28 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class SceneTen : Scene {
-	VideoClipAnimator videoAnimator;
 	StompAnimator stompAnimator;
 	
 	public SceneTen(SceneManager manager) : base(manager) {
 	}
 	
 	public override void Setup () {
-		timeLength = 8.0f;
+		timeLength = 2.0f;
 		endScene();
 		
-		videoAnimator = new VideoClipAnimator(resourceFactory);
-		stompAnimator = new StompAnimator(resourceFactory, videoAnimator);
+		stompAnimator = new StompAnimator(resourceFactory);
 	}
 
 	public override void Update () {
-		stompAnimator.Update(Time.time);		
-		videoAnimator.Update(Time.time);
+		stompAnimator.Update(Time.time);
 	}
 
 	public override void Destroy () {
 		stompAnimator.Destroy();
-		videoAnimator.Destroy();
 	}
 	
 	class StompAnimator : Repeater {
 		GameObjectFactory<string> resourceFactory;
-		VideoClipAnimator video;
 		
 		GameObject amp;
 		GameObject shoe;
@@ -49,9 +44,8 @@ public class SceneTen : Scene {
 		const int firstCrackFrame = 3;
 
 		
-		public StompAnimator(GameObjectFactory<string> resourceFactory, VideoClipAnimator video) : base(0.125f, 16) {
+		public StompAnimator(GameObjectFactory<string> resourceFactory) : base(0.125f, 16) {
 			this.resourceFactory = resourceFactory;
-			this.video = video;
 
 			// double the scale on all of these because the art is half-size
 			background = resourceFactory.Create("SceneTen/GreenBackground");
@@ -86,10 +80,6 @@ public class SceneTen : Scene {
 		public override void OnTick() {
 			foreach(var animatable in animatables) {
 				animatable.animate(currentTick);
-			}
-
-			if (currentTick == ticks) {
-				video.Show();
 			}
 
 			if (currentTick == firstCrackFrame) {
@@ -134,52 +124,6 @@ public class SceneTen : Scene {
 		static readonly Vector3 ascent = new Vector3(-30f, 40f);
 
 		public RetractFoot(ICollection<Sprite> sprites) : base(sprites, ascent, 4, 8) {}
-	}
-
-	class VideoClipAnimator : Repeater {
-		GameObjectFactory<string> resourceFactory;
-		GameObject pedalMockup;
-		GameObject videoClip;
-
-		Sprite videoSprite;
-		float delayUntilRotoscope = 1.666f;
-		float epsilon = 0.0001f;
-
-		
-		public VideoClipAnimator(GameObjectFactory<string> resourceFactory) : base(0.3333333f, 5+19) {
-			this.resourceFactory = resourceFactory;
-			pedalMockup = resourceFactory.Create("SceneTen/PedalMockup");
-			pedalMockup.active = false;
-			if (delayUntilRotoscope == 0) createVideoClip();
-		}
-		
-		public void Show() {
-			pedalMockup.active = true;
-		}
-		
-		public override void OnTick() {
-			if (delayUntilRotoscope > epsilon) {
-				delayUntilRotoscope -= interval;
-
-				if (delayUntilRotoscope <= epsilon) {
-					createVideoClip();
-				}
-				return;
-			}
-
-			videoSprite.DrawNextFrame();
-		}
-		
-		public void Destroy() {
-			GameObject.Destroy(videoClip);
-			GameObject.Destroy(pedalMockup);
-		}
-		
-		private void createVideoClip() {
-			videoClip = resourceFactory.Create("SceneTen/SideGuitarClip");
-			videoSprite = videoClip.GetComponent<Sprite>();
-			videoSprite.setScreenPosition(0, 0);
-		}
 	}
 
 }
