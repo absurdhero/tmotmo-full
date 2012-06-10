@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class SceneEleven : Scene {
-	VideoClipAnimator videoAnimator;
+	Metronome videoSpeed;
+	GameObject videoClip;
+	Sprite videoSprite;
 
 	public SceneEleven(SceneManager manager) : base(manager) {
 	}
@@ -11,35 +13,21 @@ public class SceneEleven : Scene {
 		timeLength = 6.0f;
 		endScene();
 
-		videoAnimator = new VideoClipAnimator(resourceFactory);
+		videoSpeed = new Metronome(Time.time, 0.33333333f);
+
+		videoClip = resourceFactory.Create("SceneTen/SideGuitarClip");
+		videoClip.active = true;
+		videoSprite = videoClip.GetComponent<Sprite>();
+		videoSprite.setScreenPosition(0, 0);
 	}
 
 	public override void Update () {
-		videoAnimator.Update(Time.time);
+		if (videoSpeed.isNextTick(Time.time)) {
+			videoSprite.DrawNextFrame();
+		}
 	}
 
 	public override void Destroy () {
-		videoAnimator.Destroy();
-	}
-	
-	class VideoClipAnimator : Repeater {
-		GameObject videoClip;
-
-		Sprite videoSprite;
-
-		public VideoClipAnimator(GameObjectFactory<string> resourceFactory) : base(0.3333333f, 5+19) {
-			videoClip = resourceFactory.Create("SceneTen/SideGuitarClip");
-			videoClip.active = true;
-			videoSprite = videoClip.GetComponent<Sprite>();
-			videoSprite.setScreenPosition(0, 0);
-		}
-		
-		public override void OnTick() {
-			videoSprite.DrawNextFrame();
-		}
-		
-		public void Destroy() {
-			GameObject.Destroy(videoClip);
-		}
+		GameObject.Destroy(videoClip);
 	}
 }

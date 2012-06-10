@@ -2,30 +2,6 @@ using System;
 using UnityEngine;
 
 public class Confetti {
-	class Ticker {
-		float startTime;
-		float interval;
-		int lastNewTick = -1;
-
-		public Ticker(float startTime, float interval) {
-			this.startTime = startTime;
-			this.interval = interval;
-		}
-
-		public int currentTick(float currentTime) {
-			return (int) ((currentTime - startTime) / interval);
-		}
-		
-		public bool isNextTick(float time) {
-			var tick = currentTick(time);
-			if (lastNewTick < tick) {
-				lastNewTick = tick;
-				return true;
-			}
-			return false;
-		}
-	}
-
 	GameObjectFactory<string> resourceFactory;
 	GameObject[] confetti;
 	float[] dropSpeeds;
@@ -35,7 +11,7 @@ public class Confetti {
 	public bool finishedPouring { get; private set; }
 	
 	float startedPouring;
-	Ticker pouringFrequency;
+	Metronome pouringFrequency;
 	
 	public Confetti(GameObjectFactory<string> resourceFactory) {
 		this.resourceFactory = resourceFactory;
@@ -47,7 +23,7 @@ public class Confetti {
 
 		pouring = true;
 		startedPouring = time;
-		pouringFrequency = new Ticker(time, 0.125f);
+		pouringFrequency = new Metronome(time, 0.125f);
 	}
 		
 	private const int verticalFloor = 10;
