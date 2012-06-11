@@ -65,5 +65,6 @@
     <Compile Include="Quaternion.cs" />
     <Compile Include="Mathf.cs" />
     <Compile Include="Handheld.cs" />
+    <Compile Include="Random.cs" />
   </ItemGroup>
 </Project>
