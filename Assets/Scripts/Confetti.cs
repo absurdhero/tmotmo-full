@@ -49,6 +49,13 @@ public class Confetti {
 			}
 		}
 	}
+	
+	public void Deactivate() {
+		if (confetti == null) return;
+		foreach (var piece in confetti) {
+			piece.active = false;
+		}
+	}
 
 	public void Destroy() {
 		if (confetti == null) return;

@@ -44,10 +44,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Animatable.cs" />
      <Compile Include="Assets\Scripts\BigHeadProp.cs" />
      <Compile Include="Assets\Scripts\Confetti.cs" />
      <Compile Include="Assets\Scripts\Cycler.cs" />
      <Compile Include="Assets\Scripts\DelayedCycler.cs" />
+     <Compile Include="Assets\Scripts\Dragger.cs" />
      <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
      <Compile Include="Assets\Scripts\GameObjectFactory.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
@@ -55,6 +57,8 @@
      <Compile Include="Assets\Scripts\ImageMaterial.cs" />
      <Compile Include="Assets\Scripts\Layout.cs" />
      <Compile Include="Assets\Scripts\LoopTracker.cs" />
+     <Compile Include="Assets\Scripts\Metronome.cs" />
+     <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\Repeater.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
      <Compile Include="Assets\Scripts\SceneFactory.cs" />
@@ -69,6 +73,7 @@
      <Compile Include="Assets\Scripts\Scenes\SceneSix.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTen.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneThree.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneTwelve.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
      <Compile Include="Assets\Scripts\Scenes\TitleScene.cs" />
      <Compile Include="Assets\Scripts\Sounds.cs" />

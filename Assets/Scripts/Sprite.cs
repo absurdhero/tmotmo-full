@@ -172,6 +172,10 @@ public class Sprite : MonoBehaviour {
 		setScreenPosition(getScreenPosition() + pixels);
 	}
 
+	public void move(float x, float y) {
+		move(new Vector3(x, y));
+	}
+
 	public GameObject createPivotOnTopLeftCorner() {
 		var parent = new GameObject("Parent of " + gameObject.name);
 		copyTransformTo(parent);

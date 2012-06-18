@@ -12,7 +12,7 @@ public class SceneNine : Scene {
 		this.confetti = confetti;
 		input = new UnityInput();
 		background = resourceFactory.Create("TodoList/GreenQuad");
-		todoList = new TodoList(resourceFactory);
+		todoList = new TodoList(resourceFactory, confetti);
 	}
 
 	public override void Setup () {
@@ -22,6 +22,10 @@ public class SceneNine : Scene {
 
 	public override void Update () {
 		todoList.Update(Time.time);
+
+		if (todoList.piecesAreSpreadOut()) {
+			endScene();
+		}
 	}
 
 	public override void Destroy () {
@@ -32,6 +36,7 @@ public class SceneNine : Scene {
 
 	public class TodoList {
 		GameObjectFactory<string> resourceFactory;
+		Confetti confetti;
 
 		const int VERTICAL_STOP_POSITION = 35;
 		const int SCROLL_SPEED = 20;
@@ -44,10 +49,13 @@ public class SceneNine : Scene {
 		Sprite tornListRightSprite { get { return tornListRight.GetComponent<Sprite>(); } }
 		Sprite tornListBottomSprite { get { return tornListBottom.GetComponent<Sprite>(); } }
 		
+		Dragger leftDrag, rightDrag, bottomDrag;
+		
 		bool tearable = false;
 		
-		public TodoList(GameObjectFactory<string> resourceFactory) {
+		public TodoList(GameObjectFactory<string> resourceFactory, Confetti confetti) {
 			this.resourceFactory = resourceFactory;
+			this.confetti = confetti;
 		}
 		
 		public void Setup() {
@@ -58,7 +66,9 @@ public class SceneNine : Scene {
 
 		public void Update(float time) {
 			if (tearable) {
-				receiveTearingInput();
+				tornListLeftSprite.move(leftDrag.movementIfDragged());
+				tornListRightSprite.move(rightDrag.movementIfDragged());
+				tornListBottomSprite.move(bottomDrag.movementIfDragged());
 				return;
 			}
 			if (intactTodoListSprite.getScreenPosition().y >= VERTICAL_STOP_POSITION) {
@@ -73,6 +83,9 @@ public class SceneNine : Scene {
 		
 		public void Destroy() {
 			GameObject.Destroy(intactTodoList);
+			GameObject.Destroy(tornListLeft);
+			GameObject.Destroy(tornListRight);
+			GameObject.Destroy(tornListBottom);
 		}
 
 		public void replaceListWithTornPieces() {
@@ -85,17 +98,28 @@ public class SceneNine : Scene {
 			tornListLeft.transform.position = intactTodoList.transform.position;
 			tornListRight.transform.position = intactTodoList.transform.position;
 			tornListBottom.transform.position = intactTodoList.transform.position;
+			
+			leftDrag = new Dragger(tornListLeftSprite);
+			rightDrag = new Dragger(tornListRightSprite);
+			bottomDrag = new Dragger(tornListBottomSprite);
 
 			tornListLeftSprite.move(-10, 85);
 			tornListRightSprite.move(104, 110);
 			tornListBottomSprite.move(10, 0);
 			
 			intactTodoList.active = false;
-		}
-		
-		private void receiveTearingInput() {
 			
+			confetti.Deactivate();
 		}
 
+		public bool piecesAreSpreadOut() {
+			if (!tearable) return false;
+			
+			if (leftDrag.totalDragDistance().magnitude > 50
+				&& rightDrag.totalDragDistance().magnitude > 50
+				&& bottomDrag.totalDragDistance().magnitude > 50)
+				return true;
+			return false;
+		}
 	}
 }

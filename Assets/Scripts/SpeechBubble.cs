@@ -8,6 +8,7 @@ class SpeechBubble {
 	GameObject speechBubbleLeft;
 	GameObject speechBubbleRight;
 	
+	Dragger dragger;
 	UnityInput input;
 
 	public SpeechBubble(GameObjectFactory<string> resourceFactory, Camera camera, float leftToRightSwitchOverPosition) {
@@ -22,6 +23,7 @@ class SpeechBubble {
 		speechBubbleLeft.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		speechBubbleRight.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		
+		dragger = new Dragger(speechBubble.GetComponent<Sprite>());
 		input = new UnityInput();
 	}
 	
@@ -67,17 +69,9 @@ class SpeechBubble {
 		var currentBubbleRightTailPosition = camera.WorldToScreenPoint(speechBubbleRight.transform.position);
 		speechBubbleRight.transform.position = camera.ScreenToWorldPoint(currentBubbleRightTailPosition + movementDelta);
 	}
-
-	public void setLocationToTouch() {
-		if (input.touchCount > 0 && input.hasMoved(0)) {
-			if (!speechBubble.GetComponent<Sprite>().Contains(input.GetTouch(0).position)) return;
-			var movementDelta = new Vector3(input.GetTouch(0).deltaPosition.x, 0f, 0f);
-			moveToLocation(movementDelta);
-		}
-	}
 	
 	public void Update() {
-		setLocationToTouch();
+		moveToLocation(dragger.movementIfDragged());
 		
 		if (Application.isEditor && input.GetMouseButtonUp(0)) {
 			moveToLocation(new Vector3(40f, 0f, 0f));
