@@ -5,7 +5,15 @@ public class Confetti {
 	GameObject[] confetti;
 	float[] dropSpeeds;
 	Vector3 initialConfettiPosition = new Vector3(0f, 25f, 0f);
-		
+	
+	const int gridLength = 10;
+	const int numberOfPieces = 100;
+	
+	Grid confettiGrid = new Grid(16f, 16f) {
+				HorizontalOffset = 8f	
+	};
+	
+	private const int verticalFloor = 10;
 	public bool pouring { get; private set; }
 	public bool finishedPouring { get; private set; }
 	
@@ -23,8 +31,37 @@ public class Confetti {
 		startedPouring = time;
 		pouringAnimationFrequency = new Metronome(time, 0.125f);
 	}
+	
+	
+	public void ensureConfettiWasPoured() {
+		if (finishedPouring) return;
 		
-	private const int verticalFloor = 10;
+		// fast forward quickly to the end of the 4 second pouring sequence
+		var time = Time.time - 4f;
+		if (!pouring) Pour(time);
+		for(float t = time; t <= time + 4f; t += pouringAnimationFrequency.interval) {
+			Update(t);
+		}
+	}
+	
+	public void followTodoList(float verticalScrollSpeed, int frameCount) {
+		const int delay = 2;
+		int rowsToMove = Mathf.Min(frameCount-delay, gridLength);
+
+//		// get your ducks in a row
+//		for (int column = 0; column < gridLength; column++) {
+//			var piece = confetti[column * 10 + rowsToMove-1];
+//			var sprite = piece.GetComponent<Sprite>();
+//			sprite.setScreenPosition(sprite.getScreenPosition().x, 0);
+//		}
+		
+		for (int row = 0; row < rowsToMove; row++) {
+			for (int column = 0; column < gridLength; column++) {
+				var piece = confetti[column * 10 + row];
+				piece.GetComponent<Sprite>().move(0f, verticalScrollSpeed);
+			}
+		}
+	}
 
 	public void Update(float time) {
 		float timeSinceStart = time - startedPouring;
@@ -63,20 +100,16 @@ public class Confetti {
 	}
 	
 	void createConfettiPieces() {
-		var confettiGrid = new Grid(16f, 16f) {
-				HorizontalOffset = 8f	
-			};
-			
-		confetti = new GameObject[100];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		confetti = new GameObject[numberOfPieces];
+		for (int i = 0; i < gridLength; i++) {
+			for (int j = 0; j < gridLength; j++) {
 				var n = i * 10 + j;
 				confetti[n] = createConfettiPiece();
 				var sprite = confetti[n].GetComponent<Sprite>();
 				sprite.imageMaterial.SetUVToGridCell(confettiGrid, i, j % 16);
 				// line up pieces horizontally in 10 columns 16 pixels apart
 				// but vertically, slant them a bit so they line up with the slanted head
-				sprite.move(new Vector3(16 * i, 4 * (10 - i)));
+				sprite.move(new Vector3(confettiGrid.cellWidth * i, 4 * (10 - i)));
 			}
 		}			
 	}
@@ -87,7 +120,7 @@ public class Confetti {
 	 * a factor of two for a good visual effect.
 	 */
 	void setRandomFallSpeeds() {
-		dropSpeeds = new float[100];
+		dropSpeeds = new float[numberOfPieces];
 		UnityEngine.Random.seed = 1;
 		for(int i = 0; i < dropSpeeds.Length; i++) {
 			dropSpeeds[i] = 6f + (8f * UnityEngine.Random.value);

@@ -1,6 +1,6 @@
 class Metronome {
 	float startTime;
-	float interval;
+	public float interval { get; private set; }
 	int lastNewTick = -1;
 
 	public Metronome(float startTime, float interval) {

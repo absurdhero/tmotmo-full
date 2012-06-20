@@ -62,6 +62,7 @@ public class SceneNine : Scene {
 			intactTodoList = resourceFactory.Create("TodoList/todo");
 			intactTodoListSprite.setScreenPosition(200, -intactTodoListSprite.height);
 			metronome = new Metronome(Time.time, 0.125f);
+			confetti.ensureConfettiWasPoured();
 		}
 
 		public void Update(float time) {
@@ -71,13 +72,16 @@ public class SceneNine : Scene {
 				tornListBottomSprite.move(bottomDrag.movementIfDragged());
 				return;
 			}
+			
 			if (intactTodoListSprite.getScreenPosition().y >= VERTICAL_STOP_POSITION) {
 				replaceListWithTornPieces();
+				confetti.Deactivate();
 				return;
 			}
 			
 			if (metronome.isNextTick(time)) {
 				intactTodoListSprite.move(0, SCROLL_SPEED);
+				confetti.followTodoList(SCROLL_SPEED, metronome.currentTick(time));
 			}
 		}
 		
@@ -107,9 +111,7 @@ public class SceneNine : Scene {
 			tornListRightSprite.move(104, 110);
 			tornListBottomSprite.move(10, 0);
 			
-			intactTodoList.active = false;
-			
-			confetti.Deactivate();
+			intactTodoList.active = false;			
 		}
 
 		public bool piecesAreSpreadOut() {
