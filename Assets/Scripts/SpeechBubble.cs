@@ -23,8 +23,8 @@ class SpeechBubble {
 		speechBubbleLeft.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		speechBubbleRight.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		
-		dragger = new Dragger(speechBubble.GetComponent<Sprite>());
 		input = new UnityInput();
+		dragger = new Dragger(input, speechBubble.GetComponent<Sprite>());
 	}
 	
 	private float terminalPosition {

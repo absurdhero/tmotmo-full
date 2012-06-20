@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 
 public class Confetti {
-	GameObjectFactory<string> resourceFactory;
 	GameObject[] confetti;
 	float[] dropSpeeds;
 	Vector3 initialConfettiPosition = new Vector3(0f, 25f, 0f);
@@ -11,10 +10,9 @@ public class Confetti {
 	public bool finishedPouring { get; private set; }
 	
 	float startedPouring;
-	Metronome pouringFrequency;
+	Metronome pouringAnimationFrequency;
 	
-	public Confetti(GameObjectFactory<string> resourceFactory) {
-		this.resourceFactory = resourceFactory;
+	public Confetti() {
 	}
 		
 	public void Pour(float time) {
@@ -23,7 +21,7 @@ public class Confetti {
 
 		pouring = true;
 		startedPouring = time;
-		pouringFrequency = new Metronome(time, 0.125f);
+		pouringAnimationFrequency = new Metronome(time, 0.125f);
 	}
 		
 	private const int verticalFloor = 10;
@@ -41,7 +39,7 @@ public class Confetti {
 	}
 
 	void animateFallingPieces(float time) {
-		if (pouringFrequency.isNextTick(time)) {
+		if (pouringAnimationFrequency.isNextTick(time)) {
 			for (int i = 0; i < confetti.Length; i++) {
 				var sprite = confetti[i].GetComponent<Sprite>();
 				if (sprite.getScreenPosition().y > verticalFloor)

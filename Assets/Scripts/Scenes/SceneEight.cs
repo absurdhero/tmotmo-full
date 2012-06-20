@@ -17,7 +17,7 @@ class SceneEight : Scene {
 	public SceneEight(SceneManager manager) : base(manager) {
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
-		confetti = new Confetti(resourceFactory);
+		confetti = new Confetti();
 	}
 
 	public override void Setup () {

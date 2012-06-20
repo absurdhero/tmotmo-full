@@ -4,13 +4,11 @@ using System;
 public class SceneNine : Scene {
 	public Confetti confetti;
 
-	private UnityInput input;
 	GameObject background;
 	private TodoList todoList;
 
 	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
 		this.confetti = confetti;
-		input = new UnityInput();
 		background = resourceFactory.Create("TodoList/GreenQuad");
 		todoList = new TodoList(resourceFactory, confetti);
 	}
@@ -36,6 +34,7 @@ public class SceneNine : Scene {
 
 	public class TodoList {
 		GameObjectFactory<string> resourceFactory;
+		UnityInput input;
 		Confetti confetti;
 
 		const int VERTICAL_STOP_POSITION = 35;
@@ -54,6 +53,7 @@ public class SceneNine : Scene {
 		bool tearable = false;
 		
 		public TodoList(GameObjectFactory<string> resourceFactory, Confetti confetti) {
+			this.input = new UnityInput();
 			this.resourceFactory = resourceFactory;
 			this.confetti = confetti;
 		}
@@ -99,9 +99,9 @@ public class SceneNine : Scene {
 			tornListRight.transform.position = intactTodoList.transform.position;
 			tornListBottom.transform.position = intactTodoList.transform.position;
 			
-			leftDrag = new Dragger(tornListLeftSprite);
-			rightDrag = new Dragger(tornListRightSprite);
-			bottomDrag = new Dragger(tornListBottomSprite);
+			leftDrag = new Dragger(input, tornListLeftSprite);
+			rightDrag = new Dragger(input, tornListRightSprite);
+			bottomDrag = new Dragger(input, tornListBottomSprite);
 
 			tornListLeftSprite.move(-10, 85);
 			tornListRightSprite.move(104, 110);
@@ -115,9 +115,9 @@ public class SceneNine : Scene {
 		public bool piecesAreSpreadOut() {
 			if (!tearable) return false;
 			
-			if (leftDrag.totalDragDistance().magnitude > 50
-				&& rightDrag.totalDragDistance().magnitude > 50
-				&& bottomDrag.totalDragDistance().magnitude > 50)
+			if (leftDrag.totalDragDistance().x < -50
+				&& rightDrag.totalDragDistance().x > 50
+				&& bottomDrag.totalDragDistance().y < -50)
 				return true;
 			return false;
 		}

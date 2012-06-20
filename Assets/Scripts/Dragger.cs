@@ -6,10 +6,10 @@ public class Dragger {
 	Sprite sprite;
 	Vector3 startPosition;
 	
-	public Dragger(Sprite sprite) {
+	public Dragger(UnityInput input, Sprite sprite) {
+		this.input = input;
 		this.sprite = sprite;
 		this.startPosition = sprite.getScreenPosition();
-		input = new UnityInput();		
 	}
 	
 	/// if the sprite was dragged, return move amount in screen coordinates.
