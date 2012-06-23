@@ -32,7 +32,7 @@ class SceneOne : Scene {
 	public override void Setup() {
 		timeLength = 8.0f;
 		
-		background = resourceFactory.Create("TitleScreen/BackgroundQuad");
+		background = resourceFactory.Create("TitleScene/BackgroundQuad");
 		same = resourceFactory.Create(this, "Same");
 		notSame = resourceFactory.Create(this, "NotSame");
 		circle = resourceFactory.Create(this, "Circle");

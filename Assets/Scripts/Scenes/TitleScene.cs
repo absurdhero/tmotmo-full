@@ -30,11 +30,11 @@ public class TitleScene : Scene {
 	}
 	
 	public override void Setup() {
-		background = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/BackgroundQuad"));
-		title = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/Title"));
-		subtitle = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/Subtitle"));
-		news = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/News"));
-		buyMusic = (GameObject)GameObject.Instantiate(Resources.Load("TitleScreen/Buy Music"));
+		background = resourceFactory.Create(this, "BackgroundQuad");
+		title = resourceFactory.Create(this, "Title");
+		subtitle = resourceFactory.Create(this, "Subtitle");
+		news = resourceFactory.Create(this, "News");
+		buyMusic = resourceFactory.Create(this, "Buy Music");
 
 		Camera cam = Camera.main;
 		Sprite titleSprite = title.GetComponent<Sprite>();
