@@ -26,11 +26,11 @@ class SceneEight : Scene {
 		bigHeadProp.Setup();
 		faceRightParent = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
 
-		var mouthLeftGameObject = resourceFactory.Create("TodoList/MouthLeft-ItsInside");
+		var mouthLeftGameObject = resourceFactory.Create(this, "MouthLeft-ItsInside");
 		mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
 		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
 
-		var mouthRightGameObject = resourceFactory.Create("TodoList/MouthRight-ItsInside");
+		var mouthRightGameObject = resourceFactory.Create(this, "MouthRight-ItsInside");
 		mouthRightGameObject.transform.parent = faceRightParent.transform;
 		mouthRight = mouthRightGameObject.GetComponent<Sprite>();
 		mouthRight.setWorldPosition(10f, -56f, -5f);
