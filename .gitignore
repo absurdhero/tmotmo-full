@@ -1,5 +1,7 @@
 .DS_Store
-/*.pidb
+*.pidb
 /Library/cache/*
 /Library/previews/*
 Tests/test-results
+MockUnity/bin/
+
