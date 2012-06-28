@@ -109,7 +109,7 @@ public class Confetti {
 				sprite.imageMaterial.SetUVToGridCell(confettiGrid, i, j % 16);
 				// line up pieces horizontally in 10 columns 16 pixels apart
 				// but vertically, slant them a bit so they line up with the slanted head
-				sprite.move(new Vector3(confettiGrid.cellWidth * i, 4 * (10 - i)));
+				sprite.move(new Vector3(12 * i + 20, 4 * (10 - i)));
 			}
 		}			
 	}
