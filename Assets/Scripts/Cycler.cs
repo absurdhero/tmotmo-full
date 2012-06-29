@@ -59,4 +59,8 @@ public class Cycler
 	public float Length() {
 		return interval * cycles;
 	}
+	
+	public bool Complete() {
+		return currentCycle >= cycles;
+	}
 }

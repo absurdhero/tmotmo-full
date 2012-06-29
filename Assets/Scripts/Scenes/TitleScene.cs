@@ -19,9 +19,10 @@ public class TitleScene : Scene {
 	public GameObject subtitle;
 	public GameObject news;
 	public GameObject buyMusic;
+	public GameObject startButton;
 	public GameObject background;
 	
-	private Cycler cycle_title;
+	private Cycler cycle_title, cycle_start;
 	
 	private UnityInput input;
 	
@@ -35,6 +36,7 @@ public class TitleScene : Scene {
 		subtitle = resourceFactory.Create(this, "Subtitle");
 		news = resourceFactory.Create(this, "News");
 		buyMusic = resourceFactory.Create(this, "Buy Music");
+		startButton = resourceFactory.Create(this, "TapToStart");
 
 		Camera cam = Camera.main;
 		Sprite titleSprite = title.GetComponent<Sprite>();
@@ -45,6 +47,11 @@ public class TitleScene : Scene {
 		title.transform.position = new Vector3(layoutpos.x, layoutpos.y, title.transform.position.z);
 		// Anchor the subtitle an absolute distance from wherever the title ended up
 		subtitle.transform.position = title.transform.position + titleSprite.Center() + new Vector3(15f, -20f, -1f);
+		
+		// add blinking start text below title 
+		startButton.GetComponent<Sprite>().setCenterToViewportCoord(0.5f, 0.4f);
+		cycle_start = new Cycler(0.4f);
+		cycle_start.AddSprite(startButton);
 		
 		// place buttons in the bottom corners
 		MoveToScreenXY(news, 4, 4);
@@ -62,14 +69,13 @@ public class TitleScene : Scene {
 		bool touched = input.touchCount > 0;
 		
 		for (int i = 0; i < input.touchCount; i++) {
-			Debug.Log("TOUCHED");
 			var touch = input.GetTouch(i);
 			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(touch.position);
 			touchedNews |= news.GetComponent<Sprite>().Contains(touch.position);
 	    }
 		
 		if (touchedBuy) {
-			Application.OpenURL("http://apple.com/itunes");
+			Application.OpenURL("http://itunes.apple.com/us/album/same-not-same-ep/id533347009");
 			ConsumeTouches();
 		}
 		else if (touchedNews) {
@@ -80,6 +86,10 @@ public class TitleScene : Scene {
 			endScene();
 		}
 
+		if (cycle_title.Complete()) {
+			cycle_start.Update(Time.time);
+		}
+
 		cycle_title.Update(Time.time);
 	}
 
@@ -88,6 +98,7 @@ public class TitleScene : Scene {
 		GameObject.Destroy(subtitle);
 		GameObject.Destroy(news);
 		GameObject.Destroy(buyMusic);
+		GameObject.Destroy(startButton);
 		GameObject.Destroy(background);
 	}
 }
