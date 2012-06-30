@@ -48,10 +48,9 @@ public class TitleScene : Scene {
 		// Anchor the subtitle an absolute distance from wherever the title ended up
 		subtitle.transform.position = title.transform.position + titleSprite.Center() + new Vector3(15f, -20f, -1f);
 		
-		// add blinking start text below title 
+		// add blinking start text below title but don't display it yet
 		startButton.GetComponent<Sprite>().setCenterToViewportCoord(0.5f, 0.4f);
-		cycle_start = new Cycler(0.4f);
-		cycle_start.AddSprite(startButton);
+		startButton.active = false;
 		
 		// place buttons in the bottom corners
 		MoveToScreenXY(news, 4, 4);
@@ -87,7 +86,7 @@ public class TitleScene : Scene {
 		}
 
 		if (cycle_title.Complete()) {
-			cycle_start.Update(Time.time);
+			animateStartButton();
 		}
 
 		cycle_title.Update(Time.time);
@@ -100,6 +99,15 @@ public class TitleScene : Scene {
 		GameObject.Destroy(buyMusic);
 		GameObject.Destroy(startButton);
 		GameObject.Destroy(background);
+	}
+
+	private void animateStartButton() {
+		if (cycle_start == null) {
+			cycle_start = new Cycler(0.4f, 2);
+			cycle_start.AddSprite(startButton);
+			startButton.active = true;
+		}
+		cycle_start.Update(Time.time);
 	}
 }
 
