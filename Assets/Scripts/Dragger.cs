@@ -13,7 +13,7 @@ public class Dragger {
 	}
 	
 	/// if the sprite was dragged, return move amount in screen coordinates.
-	/// the zero vector is dragging happened outside of the sprite
+	/// return the zero vector if dragging happened outside of the sprite
 	public Vector3 movementIfDragged() {
 		if (input.touchCount > 0 && input.hasMoved(0)) {
 			var touch = input.GetTouch(0);

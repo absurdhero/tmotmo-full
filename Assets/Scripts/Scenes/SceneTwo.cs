@@ -25,24 +25,13 @@ class SceneTwo : Scene {
 		//room.Destroy();
 	}
 
-	public override void Update () {		
-		bool touched = false;
-		for (int i = 0; i < input.touchCount; i++) {
-			var touch = input.GetTouch(i);
-			if (touch.phase == TouchPhase.Began) {
-				touched |= room.cover.GetComponent<Sprite>().Contains(touch.position);
-			}
-		}
+	public override void Update () {
+		var touch = new TouchSensor(input);
 
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			var pos = input.mousePosition;
-			touched |= room.cover.GetComponent<Sprite>().Contains(pos);
-		}
-	
-		if (touched) {
+		if (touch.insideSprite(room.cover.GetComponent<Sprite>())) {
 			room.openEyes();
 		}
-		
+
 		if (room.eyesTotallyOpen && !completed) {
 			room.removeCover();
 			room.doubleHeartRate();
