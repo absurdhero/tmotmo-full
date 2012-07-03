@@ -7,6 +7,32 @@ using UnityEngine;
  * resized if the texture is changed to one of a different size.
  */
 public class Sprite : MonoBehaviour {
+
+	public static Sprite create(object obj, string textureName) {
+		var resourcePrefix = obj.GetType().ToString();
+		return create(resourcePrefix + "/" + textureName);
+	}
+
+	public static Sprite create(string texturePath) {
+		return create((Texture2D) Resources.Load(texturePath));
+	}
+
+	public static Sprite create(Texture2D texture) {
+		var spriteObject = new GameObject(texture.name + " sprite");
+		var sprite = spriteObject.AddComponent<Sprite>();
+
+		sprite.height = texture.height;
+		sprite.width = texture.width;
+		sprite.textures = new Texture2D[] {
+				texture
+			};
+
+		sprite.Awake();
+		sprite.Start();
+
+		return sprite;
+	}
+
 	public Texture2D[] textures;
 	public int height = 0;
 	public int width = 0;
@@ -18,7 +44,12 @@ public class Sprite : MonoBehaviour {
 	public ImageMaterial imageMaterial { get; private set; }
 	
 	public Material material { get { return imageMaterial.material; } }
-
+	
+	/// Destroys the underlying GameObject
+	public static void Destroy(Sprite sprite) {
+		GameObject.Destroy(sprite.gameObject);
+	}
+	
 	///Avoid creating a new mesh and material by reusing existing ones
 	public void InitializeWithExisting(Mesh mesh, Material material) {
 		this.mesh = mesh;
@@ -73,6 +104,10 @@ public class Sprite : MonoBehaviour {
 			imageMaterial.SetTexture(textures[texture_index]);
 			texture_dirty = false;
 		}
+	}
+	
+	public void visible(bool enable) {
+		this.gameObject.active = enable;
 	}
 	
 	public bool LastTexture() {
