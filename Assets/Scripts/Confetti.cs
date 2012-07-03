@@ -100,11 +100,13 @@ public class Confetti {
 	}
 	
 	void createConfettiPieces() {
+		var texture =  (Texture2D) Resources.Load("TodoList/glitch");
+
 		confetti = new GameObject[numberOfPieces];
 		for (int i = 0; i < gridLength; i++) {
 			for (int j = 0; j < gridLength; j++) {
 				var n = i * 10 + j;
-				confetti[n] = createConfettiPiece();
+				confetti[n] = createConfettiPiece(texture);
 				var sprite = confetti[n].GetComponent<Sprite>();
 				sprite.imageMaterial.SetUVToGridCell(confettiGrid, i, j % 16);
 				// line up pieces horizontally in 10 columns 16 pixels apart
@@ -127,14 +129,14 @@ public class Confetti {
 		}
 	}
 
-	GameObject createConfettiPiece() {
+	GameObject createConfettiPiece(Texture2D texture) {
 		var piece = new GameObject("glitch confetti");
 		piece.transform.position = initialConfettiPosition;
 		var sprite = piece.AddComponent<Sprite>();
 		sprite.height = 16;
 		sprite.width = 16;
 		sprite.textures = new Texture2D[] {
-				(Texture2D)Resources.Load("TodoList/glitch")
+				texture
 			};
 		sprite.Awake();
 		sprite.Start();	
