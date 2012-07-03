@@ -32,6 +32,7 @@ public interface Texture2D : Texture
 
   // Properties
   int mipmapCount { get; }
+  string name { get; }
   //TextureFormat format { get; }
 }
 

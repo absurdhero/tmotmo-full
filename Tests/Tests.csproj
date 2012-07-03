@@ -137,6 +137,15 @@
     <Compile Include="..\Assets\Scripts\Scenes\SceneTwelve.cs">
       <Link>Scenes\SceneTwelve.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Scripts\Dragger.cs">
+      <Link>Dragger.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\TouchSensor.cs">
+      <Link>TouchSensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneThirteen.cs">
+      <Link>Scenes\SceneThirteen.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

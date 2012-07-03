@@ -7,6 +7,10 @@ namespace UnityEngine
 		public static float Round (float f) {
 			throw new NotImplementedException();
 		}
+		
+		public static int Min (int a, int b) {
+			throw new NotImplementedException();
+		}
 	}
 }
 

@@ -30,7 +30,6 @@ public class SceneTwelve : Scene {
 		topHand.setScreenPosition(150, 66);
 		
 		bottomArm = Sprite.create(this, "hand_base");
-		bottomArm = bottomArm.GetComponent<Sprite>();
 		bottomArm.setScreenPosition(120, -20);
 		bottomArm.setDepth(0);
 

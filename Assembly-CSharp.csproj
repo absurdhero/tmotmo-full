@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Scenes\SceneSeven.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneSix.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTen.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneThirteen.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneThree.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTwelve.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scripts\Sounds.cs" />
      <Compile Include="Assets\Scripts\SpeechBubble.cs" />
      <Compile Include="Assets\Scripts\Sprite.cs" />
+     <Compile Include="Assets\Scripts\TouchSensor.cs" />
      <Compile Include="Assets\Scripts\UnityInput.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
