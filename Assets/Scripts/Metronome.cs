@@ -15,9 +15,13 @@ class Metronome {
 	public bool isNextTick(float time) {
 		var tick = currentTick(time);
 		if (lastNewTick < tick) {
-			lastNewTick = tick;
+			lastNewTick++;
 			return true;
 		}
 		return false;
+	}
+
+	public int nextTick() {
+		return lastNewTick;
 	}
 }

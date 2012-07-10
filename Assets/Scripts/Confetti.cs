@@ -6,8 +6,8 @@ public class Confetti {
 	float[] dropSpeeds;
 	Vector3 initialConfettiPosition = new Vector3(0f, 25f, 0f);
 	
-	const int gridLength = 10;
-	const int numberOfPieces = 100;
+	public const int gridLength = 10;
+	public const int numberOfPieces = 100;
 	
 	Grid confettiGrid = new Grid(16f, 16f) {
 				HorizontalOffset = 8f	
@@ -44,21 +44,16 @@ public class Confetti {
 		}
 	}
 	
-	public void followTodoList(float verticalScrollSpeed, int frameCount) {
+	public void expandSideways(float horizontalScrollSpeed, int frameCount) {
 		const int delay = 2;
-		int rowsToMove = Mathf.Min(frameCount-delay, gridLength);
+		int columnsToMove = Mathf.Min(frameCount-delay, gridLength / 2);
 
-//		// get your ducks in a row
-//		for (int column = 0; column < gridLength; column++) {
-//			var piece = confetti[column * 10 + rowsToMove-1];
-//			var sprite = piece.GetComponent<Sprite>();
-//			sprite.setScreenPosition(sprite.getScreenPosition().x, 0);
-//		}
-		
-		for (int row = 0; row < rowsToMove; row++) {
-			for (int column = 0; column < gridLength; column++) {
+		for (int column = 0; column < columnsToMove; column++) {
+			for (int row = 0; row < gridLength; row++) {
 				var piece = confetti[column * 10 + row];
-				piece.GetComponent<Sprite>().move(0f, verticalScrollSpeed);
+				int direction = 1;
+				if (row < 5) direction = -1;
+				piece.GetComponent<Sprite>().move(direction * horizontalScrollSpeed, 0f);
 			}
 		}
 	}
@@ -144,4 +139,7 @@ public class Confetti {
 		return piece;
 	}
 
+	public void hidePiece(int pieceIndex) {
+		confetti[pieceIndex].GetComponent<Sprite>().visible(false);
+	}
 }

@@ -25,7 +25,7 @@ public class SceneTen : Scene {
 	}
 	
 	public override void Setup () {
-		timeLength = 2.0f;
+		timeLength = 1.0f;
 		endScene();
 		
 		// double the scale on all of these because the art is half-size
@@ -49,7 +49,7 @@ public class SceneTen : Scene {
 		retractFoot = new RetractFoot(new List<Sprite> {shoeSprite});
 		animatables = new[] {pedalStomped, pedalUnStomped, stompFoot, retractFoot};
 		
-		stompSpeed = new Metronome(Time.time, 0.125f);
+		stompSpeed = new Metronome(Time.time, 0.1f);
 	}
 
 	public override void Update () {

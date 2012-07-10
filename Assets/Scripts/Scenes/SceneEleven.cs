@@ -10,7 +10,7 @@ public class SceneEleven : Scene {
 	}
 	
 	public override void Setup () {
-		timeLength = 6.0f;
+		timeLength = 5f;
 		endScene();
 
 		videoSpeed = new Metronome(Time.time, 0.33333333f);
@@ -19,6 +19,7 @@ public class SceneEleven : Scene {
 		videoClip.active = true;
 		videoSprite = videoClip.GetComponent<Sprite>();
 		videoSprite.setScreenPosition(0, 0);
+
 	}
 
 	public override void Update () {

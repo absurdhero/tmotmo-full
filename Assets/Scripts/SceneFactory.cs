@@ -5,7 +5,7 @@ using UnityEngine;
 public class SceneFactory : MarshalByRefObject {
 	SceneManager sceneManager;
 	
-	Type LAST_SCENE = typeof(SceneTwelve);
+	Type LAST_SCENE = typeof(SceneThirteen);
 
 	public SceneFactory (SceneManager sceneManager) {
 		this.sceneManager = sceneManager;
@@ -53,6 +53,8 @@ public class SceneFactory : MarshalByRefObject {
 			return new SceneEleven(sceneManager);
 		case "SceneEleven":
 			return new SceneTwelve(sceneManager);
+		case "SceneTwelve":
+			return new SceneThirteen(sceneManager);
 		}
 		
 		throw new InvalidOperationException();

@@ -58,10 +58,13 @@ public struct Vector3
 //  public float magnitude { get; }
   public static Vector3 zero = new Vector3(0f, 0f, 0f);
   public static Vector3 one = new Vector3(1f, 1f, 1f);
-//  public static Vector3 forward { get; }
+  public static Vector3 forward = new Vector3(0f, 0f, 1f);
   public static Vector3 back = new Vector3(0f, 0f, -1f);
-//  public static Vector3 up { get; }
+  public static Vector3 up = new Vector3(0f, 1f, 0f);
   public static Vector3 down = new Vector3(0f, -1f, 0f);
+  public static Vector3 right = new Vector3(1f, 0f, 0f);
+  public static Vector3 left = new Vector3(-1f, 0f, 0f);
+
 //  public static Vector3 left { get; }
 //  public static Vector3 right { get; }
 //  public static Vector3 fwd { get; }

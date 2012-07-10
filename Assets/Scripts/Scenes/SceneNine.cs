@@ -3,125 +3,77 @@ using System;
 
 public class SceneNine : Scene {
 	public Confetti confetti;
+	ScrollLetters spreadConfetti;
+	Sprite todoList;
 
 	GameObject background;
-	private TodoList todoList;
 
 	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
 		this.confetti = confetti;
 		background = resourceFactory.Create("TodoList/GreenQuad");
-		todoList = new TodoList(resourceFactory, confetti);
 	}
 
 	public override void Setup () {
-		timeLength = 2.0f;
-		todoList.Setup();
+		timeLength = 4.0f;
+		endScene();
+
+		spreadConfetti = new ScrollLetters(confetti);
+		spreadConfetti.Setup();
+
+		todoList = Sprite.create("TodoList/todo");
+		todoList.setCenterToViewportCoord(0.5f, 0.5f);
+		todoList.setDepth(-1);
 	}
 
 	public override void Update () {
-		todoList.Update(Time.time);
-
-		if (todoList.piecesAreSpreadOut()) {
-			endScene();
-		}
+		spreadConfetti.Update(Time.time);
 	}
 
 	public override void Destroy () {
 		confetti.Destroy();
 		GameObject.Destroy(background);
-		todoList.Destroy();
+		spreadConfetti.Destroy();
+		Sprite.Destroy(todoList);
 	}
 
-	public class TodoList {
-		GameObjectFactory<string> resourceFactory;
-		UnityInput input;
+	public class ScrollLetters {
 		Confetti confetti;
+		ScrollingLetters scrollingLetters;
 
 		const int VERTICAL_STOP_POSITION = 35;
 		const int SCROLL_SPEED = 20;
 
 		Metronome metronome;
-		GameObject intactTodoList;
-		Sprite intactTodoListSprite { get { return intactTodoList.GetComponent<Sprite>(); } }
-		GameObject tornListLeft, tornListRight, tornListBottom;
-		Sprite tornListLeftSprite { get { return tornListLeft.GetComponent<Sprite>(); } }
-		Sprite tornListRightSprite { get { return tornListRight.GetComponent<Sprite>(); } }
-		Sprite tornListBottomSprite { get { return tornListBottom.GetComponent<Sprite>(); } }
 		
-		Dragger leftDrag, rightDrag, bottomDrag;
-		
-		bool tearable = false;
-		
-		public TodoList(GameObjectFactory<string> resourceFactory, Confetti confetti) {
-			this.input = new UnityInput();
-			this.resourceFactory = resourceFactory;
+		public ScrollLetters(Confetti confetti) {
 			this.confetti = confetti;
 		}
 		
 		public void Setup() {
-			intactTodoList = resourceFactory.Create("TodoList/todo");
-			intactTodoListSprite.setScreenPosition(200, -intactTodoListSprite.height);
 			metronome = new Metronome(Time.time, 0.125f);
 			confetti.ensureConfettiWasPoured();
+			scrollingLetters = new ScrollingLetters();
+			scrollingLetters.Setup();
 		}
 
 		public void Update(float time) {
-			if (tearable) {
-				tornListLeftSprite.move(leftDrag.movementIfDragged());
-				tornListRightSprite.move(rightDrag.movementIfDragged());
-				tornListBottomSprite.move(bottomDrag.movementIfDragged());
-				return;
-			}
-			
-			if (intactTodoListSprite.getScreenPosition().y >= VERTICAL_STOP_POSITION) {
-				replaceListWithTornPieces();
-				confetti.Deactivate();
-				return;
-			}
 			
 			if (metronome.isNextTick(time)) {
-				intactTodoListSprite.move(0, SCROLL_SPEED);
-				confetti.followTodoList(SCROLL_SPEED, metronome.currentTick(time));
+				hidePiecesForTick(metronome.nextTick());
+				scrollingLetters.Update(time);
+			}
+		}
+		
+		private void hidePiecesForTick(int currentTick) {
+			for(int i = 0; i < Confetti.gridLength; i++) {
+				int pieceNum = i * Confetti.gridLength + currentTick;
+				if (pieceNum >= Confetti.numberOfPieces) return;
+				confetti.hidePiece(pieceNum);
 			}
 		}
 		
 		public void Destroy() {
-			GameObject.Destroy(intactTodoList);
-			GameObject.Destroy(tornListLeft);
-			GameObject.Destroy(tornListRight);
-			GameObject.Destroy(tornListBottom);
-		}
-
-		public void replaceListWithTornPieces() {
-			tearable = true;
-			
-			tornListLeft = resourceFactory.Create("TodoList/tornListLeft");
-			tornListRight = resourceFactory.Create("TodoList/tornListRight");
-			tornListBottom = resourceFactory.Create("TodoList/tornListBottom");
-			
-			tornListLeft.transform.position = intactTodoList.transform.position;
-			tornListRight.transform.position = intactTodoList.transform.position;
-			tornListBottom.transform.position = intactTodoList.transform.position;
-			
-			leftDrag = new Dragger(input, tornListLeftSprite);
-			rightDrag = new Dragger(input, tornListRightSprite);
-			bottomDrag = new Dragger(input, tornListBottomSprite);
-
-			tornListLeftSprite.move(-10, 85);
-			tornListRightSprite.move(104, 110);
-			tornListBottomSprite.move(10, 0);
-			
-			intactTodoList.active = false;			
-		}
-
-		public bool piecesAreSpreadOut() {
-			if (!tearable) return false;
-			
-			if (leftDrag.totalDragDistance().x < -50
-				&& rightDrag.totalDragDistance().x > 50
-				&& bottomDrag.totalDragDistance().y < -50)
-				return true;
-			return false;
+			scrollingLetters.Destroy();
 		}
 	}
 }
