@@ -21,7 +21,7 @@ class Metronome {
 		return false;
 	}
 
-	public int nextTick() {
-		return lastNewTick;
+	public int nextTick {
+		get { return lastNewTick; }
 	}
 }

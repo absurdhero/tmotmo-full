@@ -14,7 +14,7 @@ public class SceneNine : Scene {
 	}
 
 	public override void Setup () {
-		timeLength = 4.0f;
+		timeLength = 2.0f;
 		endScene();
 
 		spreadConfetti = new ScrollLetters(confetti);
@@ -59,7 +59,7 @@ public class SceneNine : Scene {
 		public void Update(float time) {
 			
 			if (metronome.isNextTick(time)) {
-				hidePiecesForTick(metronome.nextTick());
+				hidePiecesForTick(metronome.nextTick);
 				scrollingLetters.Update(time);
 			}
 		}

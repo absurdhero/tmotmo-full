@@ -36,13 +36,13 @@ public class ScrollingLetters {
 		letterAtlas = (Texture2D) Resources.Load("TodoList/ksLetters");
 
 		createLetterRow(0);
-		scrollingFrequency = new Metronome(Time.time, 0.25f);
+		scrollingFrequency = new Metronome(Time.time, 0.125f);
 	}
 
 	public void Update(float time) {
 		if (scrollingFrequency.isNextTick(time)) {
 			scrollLetters(time);
-			if (scrollingFrequency.nextTick() > 5) {
+			if (scrollingFrequency.nextTick > 5) {
 				scrollSides(time);
 			}
 		}		
@@ -50,7 +50,7 @@ public class ScrollingLetters {
 	}
 
 	void scrollLetters(float time) {
-		var row = scrollingFrequency.nextTick() + 1;
+		var row = scrollingFrequency.nextTick + 1;
 		if (row < numRows) {
 			createLetterRow(row);
 			for (int i = 0; i < letters.Length; i++) {
@@ -61,7 +61,7 @@ public class ScrollingLetters {
 	}
 	
 	void scrollSides(float time) {
-		var column = scrollingFrequency.nextTick() - numRows;
+		var column = scrollingFrequency.nextTick - numRows;
 		if (column < numColumns) {
 			createLeftAndRightColumns(column);
 			for (int i = 0; i < leftLetters.Length; i++) {
