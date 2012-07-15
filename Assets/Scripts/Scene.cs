@@ -32,6 +32,7 @@ public abstract class Scene : MarshalByRefObject {
 		input = new UnityInput();
 	}
 
+	public virtual void LoadAssets() {}
 	public abstract void Setup();
 	public abstract void Update();
 	public abstract void Destroy();

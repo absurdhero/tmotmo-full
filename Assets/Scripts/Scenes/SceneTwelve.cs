@@ -22,42 +22,75 @@ public class SceneTwelve : Scene {
 		touchSensor = new TouchSensor(new UnityInput());
 	}
 	
+	public override void LoadAssets() {
+		background = resourceFactory.Create(this, "TealBackground");
+		bottomDither = resourceFactory.Create(this, "BottomDither");
+
+		topHand = Sprite.create(this, "top_hand");
+		bottomPalm = Sprite.create(this, "hand_base_top");
+		bottomWrist = Sprite.create(this, "hand_base_bottom");
+		bottomHandFingers = Sprite.create(this, "bottom_hand_fingers");
+		
+		indexClosed = Sprite.create(this, "index_closed");
+		indexOpen = Sprite.create(this, "index_open");
+		middleFingerOpen = Sprite.create(this, "middle_finger_open");
+		otherFingerOpen = Sprite.create(this, "other_finger_open");
+		littleFingerOpen = Sprite.create(this, "little_finger_open");
+		thumbOpen = Sprite.create(this, "thumb_open");
+		
+		background.active = false;
+		bottomDither.active = false;
+
+		topHand.visible(false);
+		bottomPalm.visible(false);
+		bottomWrist.visible(false);
+		bottomHandFingers.visible(false);
+
+		indexClosed.visible(false);
+		indexOpen.visible(false);
+		middleFingerOpen.visible(false);
+		otherFingerOpen.visible(false);
+		littleFingerOpen.visible(false);
+		thumbOpen.visible(false);
+	}
+	
 	public override void Setup () {
 		timeLength = 8.0f;
 		
-		background = resourceFactory.Create(this, "TealBackground");
-		bottomDither = resourceFactory.Create(this, "BottomDither");
-		
-		topHand = Sprite.create(this, "top_hand");
+		background.active = true;
+		bottomDither.active = true;
+		topHand.visible(true);
+		bottomPalm.visible(true);
+		bottomWrist.visible(true);
+		bottomHandFingers.visible(true);
+
+		indexClosed.visible(true);
+		indexOpen.visible(true);
+		middleFingerOpen.visible(true);
+		otherFingerOpen.visible(true);
+		littleFingerOpen.visible(true);
+		thumbOpen.visible(true);
+
 		topHand.setScreenPosition(150, 66);
 		
-		bottomPalm = Sprite.create(this, "hand_base_top");
 		bottomPalm.setScreenPosition(100, -10);
 		bottomPalm.setDepth(0);
 		
-		bottomWrist = Sprite.create(this, "hand_base_bottom");
 		bottomWrist.setScreenPosition(100, -10);
 		bottomWrist.setDepth(0);
 		
-		bottomHandFingers = Sprite.create(this, "bottom_hand_fingers");
 		bottomHandFingers.setScreenPosition(143, 82);
 		bottomHandFingers.setDepth(3);
 		
 		armSwinger = new ArmSwinger(Time.time, bottomWrist, bottomHandFingers);
 		
-		indexClosed = Sprite.create(this, "index_closed");
 		indexClosed.setScreenPosition(186, 52);
 		indexClosed.setDepth(2);
 
-		indexOpen = Sprite.create(this, "index_open");
 		indexOpen.setScreenPosition(190, 9);
-		middleFingerOpen = Sprite.create(this, "middle_finger_open");
 		middleFingerOpen.setScreenPosition(258, 22);
-		otherFingerOpen = Sprite.create(this, "other_finger_open");
 		otherFingerOpen.setScreenPosition(283, 42);
-		littleFingerOpen = Sprite.create(this, "little_finger_open");
 		littleFingerOpen.setScreenPosition(300, 70);
-		thumbOpen = Sprite.create(this, "thumb_open");
 		thumbOpen.setScreenPosition(110, 80);
 		
 		openFingers = new Sprite[] { thumbOpen, indexOpen, middleFingerOpen, otherFingerOpen, littleFingerOpen };

@@ -20,10 +20,4 @@ public class ResourceFactory : GameObjectFactory<string> {
 		var resourcePrefix = obj.GetType().ToString();
 		return resourcePrefix +"/" + name;
 	}
-
-
-
-
 }
-
-

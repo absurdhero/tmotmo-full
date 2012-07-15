@@ -19,5 +19,6 @@ namespace UnityEngine
 		public void Translate(float x, float y, float z) { throw new InvalidOperationException(); }
 
 		public void Rotate(Vector3 v) { throw new InvalidOperationException(); }
+		public void Rotate(float x, float y, float z) { throw new InvalidOperationException(); }
     }
 }

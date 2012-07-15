@@ -7,11 +7,42 @@ public class SceneFactory : MarshalByRefObject {
 	
 	Type LAST_SCENE = typeof(SceneThirteen);
 
+	bool scenesInstantiated = false;
+	Scene[] scenes;
+
 	public SceneFactory (SceneManager sceneManager) {
 		this.sceneManager = sceneManager;
+		scenes = new Scene[14];
+	}
+
+	private void ensureScenesInstantiated() {
+		if (scenesInstantiated) return;
+
+		scenes[0] = new TitleScene(sceneManager);
+		scenes[1] = new SceneOne(sceneManager);
+		scenes[2] = new SceneTwo(sceneManager);
+		var sceneTwo = new SceneTwo(sceneManager);
+		scenes[2] = sceneTwo;
+		var sceneThree = new SceneThree(sceneManager, sceneTwo.room);
+		scenes[3] = sceneThree;
+		var sceneFour = new SceneFour(sceneManager, sceneThree.room);
+		scenes[4] = sceneFour;
+		scenes[5] = new SceneFive(sceneManager);
+		scenes[6] = new SceneSix(sceneManager);
+		scenes[7] = new SceneSeven(sceneManager);
+		var sceneEight = new SceneEight(sceneManager);
+		scenes[8] = sceneEight;
+		scenes[9] = new SceneNine(sceneManager, sceneEight.confetti);
+		scenes[10] = new SceneTen(sceneManager);
+		scenes[11] = new SceneEleven(sceneManager);
+		scenes[12] = new SceneTwelve(sceneManager);
+		scenes[13] = new SceneThirteen(sceneManager);
+
+		scenesInstantiated = true;
 	}
 	
 	public Scene GetFirstScene() {
+		ensureScenesInstantiated();
 		return new TitleScene(sceneManager);
 	}
 
@@ -26,37 +57,19 @@ public class SceneFactory : MarshalByRefObject {
 	}
 
 	public Scene GetSceneAfter(Scene scene) {
+		ensureScenesInstantiated();
 		if (scene == null) return GetFirstScene();
 
-		switch (scene.GetType().ToString()) {
-		case "TitleScene":
-			return new SceneOne(sceneManager);
-		case "SceneOne":
-			return new SceneTwo(sceneManager);
-		case "SceneTwo":
-			return new SceneThree(sceneManager, ((SceneTwo) scene).room);
-		case "SceneThree":
-			return new SceneFour(sceneManager, ((SceneThree) scene).room);
-		case "SceneFour":
-			return new SceneFive(sceneManager);
-		case "SceneFive":
-			return new SceneSix(sceneManager);
-		case "SceneSix":
-			return new SceneSeven(sceneManager);
-		case "SceneSeven":
-			return new SceneEight(sceneManager);
-		case "SceneEight":
-			return new SceneNine(sceneManager, ((SceneEight) scene).confetti);
-		case "SceneNine":
-			return new SceneTen(sceneManager);
-		case "SceneTen":
-			return new SceneEleven(sceneManager);
-		case "SceneEleven":
-			return new SceneTwelve(sceneManager);
-		case "SceneTwelve":
-			return new SceneThirteen(sceneManager);
+		int sceneIndex = Array.FindIndex<Scene>(scenes, s => s.GetType() == scene.GetType());
+		if (sceneIndex > scenes.Length)
+			throw new InvalidOperationException();
+		return scenes[sceneIndex + 1];
+	}
+
+	public void PreloadAssets() {
+		ensureScenesInstantiated();
+		foreach(var scene in scenes) {
+			scene.LoadAssets();
 		}
-		
-		throw new InvalidOperationException();
-	}	
+	}
 }

@@ -19,6 +19,7 @@ public class SceneManager {
 		if(sceneFactory == null) {
 			sceneFactory = new SceneFactory(this);
 		}
+		sceneFactory.PreloadAssets();
 		this.sceneFactory = sceneFactory;
 		this.loopTracker = loopTracker;
 		

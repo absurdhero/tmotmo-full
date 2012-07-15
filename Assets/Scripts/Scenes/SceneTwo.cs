@@ -8,11 +8,13 @@ class SceneTwo : Scene {
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
 		input = new UnityInput();
+		room = new HospitalRoom(resourceFactory, camera);
 	}
 
 	public override void Setup() {
 		timeLength = 8.0f;
-		room = new HospitalRoom(resourceFactory, camera);
+
+		room.createBackground();
 		room.addZzz();
 		room.addHeartRate();
 		room.addFootboard();

@@ -31,8 +31,11 @@ public class HospitalRoom {
 		
 	public HospitalRoom(GameObjectFactory<string> resourceFactory, Camera camera) {
 		this.resourceFactory = resourceFactory;
-		room = resourceFactory.Create(this, "HospitalRoomQuad");
 		this.camera = camera;
+	}
+
+	public void createBackground() {
+		room = resourceFactory.Create(this, "HospitalRoomQuad");
 	}
 	
 	private void DestroyIfNotNull(GameObject gobj) {

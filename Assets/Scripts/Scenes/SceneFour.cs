@@ -16,14 +16,16 @@ class SceneFour : Scene {
 	public SceneFour(SceneManager manager, HospitalRoom room) : base(manager) {
 		this.hospitalRoom = room;
 	}
+	
+	public override void LoadAssets() {
+		addMouth();
+	}
 
 	public override void Setup() {
 		timeLength = 4.0f;
-		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
 		
+		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
 		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
-
-		addMouth();
 		mouthMovement = new MouthAnimator(leftMouth, rightMouth);
 	}
 

@@ -29,14 +29,28 @@ class SceneOne : Scene {
 		input = new UnityInput();
 	}
 
-	public override void Setup() {
-		timeLength = 8.0f;
-		
+	public override void LoadAssets() {
 		background = resourceFactory.Create("TitleScene/BackgroundQuad");
 		same = resourceFactory.Create(this, "Same");
 		notSame = resourceFactory.Create(this, "NotSame");
 		circle = resourceFactory.Create(this, "Circle");
 		triangle = resourceFactory.Create(this, "Triangle");
+
+		background.active = false;
+		same.active = false;
+		notSame.active = false;
+		circle.active = false;
+		triangle.active = false;
+	}
+
+	public override void Setup() {
+		timeLength = 8.0f;
+
+		background.active = true;
+		same.active = true;
+		notSame.active = true;
+		circle.active = true;
+		triangle.active = true;
 
 		same.GetComponent<Sprite>().setCenterToViewportCoord(0.35f, 0.66f);
 		notSame.GetComponent<Sprite>().setCenterToViewportCoord(0.7f, 0.66f);

@@ -11,18 +11,22 @@ class SceneSeven : Scene {
 		bigHeadProp = new BigHeadProp(resourceFactory);
 	}
 
+	public override void LoadAssets() {
+		mouthLeft = resourceFactory.Create(this, "MouthLeft-WeNeedThisTaste").GetComponent<Sprite>();
+		mouthRight = resourceFactory.Create(this, "MouthRight-WeNeedThisTaste").GetComponent<Sprite>();
+		mouthLeft.visible(false);
+		mouthRight.visible(false);
+	}
+
 	public override void Setup () {
 		timeLength = 4.0f;
 		endScene();
 		
 		bigHeadProp.Setup();
 
-		var mouthLeftGameObject = resourceFactory.Create(this, "MouthLeft-WeNeedThisTaste");
-		mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
+		mouthLeft.visible(true);
+		mouthRight.visible(true);
 		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
-
-		var mouthRightGameObject = resourceFactory.Create(this, "MouthRight-WeNeedThisTaste");
-		mouthRight = mouthRightGameObject.GetComponent<Sprite>();
 		mouthRight.setWorldPosition(10f, -56f, -5f);
 
 		mouthAnimator = new MouthAnimator(mouthLeft, mouthRight);

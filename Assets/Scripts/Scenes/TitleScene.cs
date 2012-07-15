@@ -29,7 +29,7 @@ public class TitleScene : Scene {
 	public TitleScene(SceneManager manager) : base(manager) {
 		input = new UnityInput();
 	}
-	
+
 	public override void Setup() {
 		background = resourceFactory.Create(this, "BackgroundQuad");
 		title = resourceFactory.Create(this, "Title");

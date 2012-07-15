@@ -12,6 +12,10 @@ class SceneFive : Scene {
 		bigHeadProp = new BigHeadProp(resourceFactory);
 
 	}
+	
+	public override void LoadAssets() {
+		lips = new LipsAppear(resourceFactory);
+	}
 
 	public override void Setup () {
 		timeLength = 4.0f;
@@ -20,7 +24,6 @@ class SceneFive : Scene {
 		bigHeadProp.Setup();
 		
 		bigMouthAnimator = new BigMouthAnimator(resourceFactory);
-		lips = new LipsAppear(resourceFactory);
 	}
 
 	public override void Update () {

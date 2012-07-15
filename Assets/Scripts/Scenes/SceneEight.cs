@@ -20,20 +20,26 @@ class SceneEight : Scene {
 		confetti = new Confetti();
 	}
 
+	public override void LoadAssets() {
+		mouthLeft = resourceFactory.Create(this, "MouthLeft-ItsInside").GetComponent<Sprite>();
+		mouthRight = resourceFactory.Create(this, "MouthRight-ItsInside").GetComponent<Sprite>();
+		mouthLeft.visible(false);
+		mouthRight.visible(false);
+	}
+
 	public override void Setup () {
 		timeLength = 4.0f;
 		
 		bigHeadProp.Setup();
 		faceRightParent = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
 
-		var mouthLeftGameObject = resourceFactory.Create(this, "MouthLeft-ItsInside");
-		mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
 		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
-
-		var mouthRightGameObject = resourceFactory.Create(this, "MouthRight-ItsInside");
-		mouthRightGameObject.transform.parent = faceRightParent.transform;
-		mouthRight = mouthRightGameObject.GetComponent<Sprite>();
+		
+		mouthRight.gameObject.transform.parent = faceRightParent.transform;
 		mouthRight.setWorldPosition(10f, -56f, -5f);
+		
+		mouthLeft.visible(true);
+		mouthRight.visible(true);
 
 		mouthAnimator = new MouthAnimator(mouthLeft, mouthRight);
 	}
@@ -126,8 +132,8 @@ class SceneEight : Scene {
 		}
 		
 		public void Destroy() {
-			GameObject.Destroy(mouthLeft.gameObject);
-			GameObject.Destroy(mouthRight.gameObject);
+			Sprite.Destroy(mouthLeft);
+			Sprite.Destroy(mouthRight);
 		}
 		
 		private void incrementFrame() {

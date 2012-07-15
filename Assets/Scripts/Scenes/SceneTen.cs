@@ -24,25 +24,40 @@ public class SceneTen : Scene {
 	public SceneTen(SceneManager manager) : base(manager) {
 	}
 	
+	public override void LoadAssets() {
+		background = resourceFactory.Create(this, "GreenBackground");
+		shoe = resourceFactory.Create("SceneTen/Shoe");
+		amp = resourceFactory.Create(this, "Amp");
+		wires = resourceFactory.Create(this, "Wires");
+		wireShadow = resourceFactory.Create(this, "WireShadow");
+
+		background.active = false;
+		shoe.active = false;
+		amp.active = false;
+		wires.active = false;
+		wireShadow.active = false;
+	}
+
 	public override void Setup () {
 		timeLength = 1.0f;
 		endScene();
 		
 		// double the scale on all of these because the art is half-size
-		background = resourceFactory.Create(this, "GreenBackground");
-		shoe = resourceFactory.Create("SceneTen/Shoe");
 		shoe.transform.localScale = Vector3.one * 2;
 		shoe.GetComponent<Sprite>().setScreenPosition(0, 164);
-		amp = resourceFactory.Create(this, "Amp");
 		amp.GetComponent<Sprite>().setScreenPosition(130, 50);
 		amp.transform.localScale = Vector3.one * 2;
-		wires = resourceFactory.Create(this, "Wires");
 		wires.GetComponent<Sprite>().setScreenPosition(30, 30);
 		wires.transform.localScale = Vector3.one * 2;			
-		wireShadow = resourceFactory.Create(this, "WireShadow");
 		wireShadow.GetComponent<Sprite>().setScreenPosition(30, 30);
 		wireShadow.transform.localScale = Vector3.one * 2;
 		
+		background.active = true;
+		shoe.active = true;
+		amp.active = true;
+		wires.active = true;
+		wireShadow.active = true;
+
 		pedalStomped = new PedalStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
 		pedalUnStomped = new PedalUnStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
 		stompFoot = new StompFoot(new List<Sprite> {shoeSprite});

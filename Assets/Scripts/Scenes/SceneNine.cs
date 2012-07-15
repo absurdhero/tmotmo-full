@@ -10,12 +10,13 @@ public class SceneNine : Scene {
 
 	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
 		this.confetti = confetti;
-		background = resourceFactory.Create("TodoList/GreenQuad");
 	}
 
 	public override void Setup () {
 		timeLength = 2.0f;
 		endScene();
+
+		background = resourceFactory.Create("TodoList/GreenQuad");
 
 		spreadConfetti = new ScrollLetters(confetti);
 		spreadConfetti.Setup();
