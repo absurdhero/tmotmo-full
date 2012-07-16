@@ -17,6 +17,10 @@ public class SceneTwelve : Scene {
 	
 	bool gripReleased = false;
 	Metronome armMovement;
+	
+	GameObject wrapCamObject;
+	Sprite guyWithArmOut, otherArm;
+	bool showingFallingGuy = false;
 
 	public SceneTwelve(SceneManager manager) : base(manager) {
 		touchSensor = new TouchSensor(new UnityInput());
@@ -52,6 +56,14 @@ public class SceneTwelve : Scene {
 		otherFingerOpen.visible(false);
 		littleFingerOpen.visible(false);
 		thumbOpen.visible(false);
+		
+		// second part of the scene: zoomed out
+		guyWithArmOut = Sprite.create(this, "guy_armout");
+		otherArm = Sprite.create(this, "other_arm");
+
+		guyWithArmOut.visible(false);
+		otherArm.visible(false);
+
 	}
 	
 	public override void Setup () {
@@ -82,7 +94,7 @@ public class SceneTwelve : Scene {
 		bottomHandFingers.setScreenPosition(143, 82);
 		bottomHandFingers.setDepth(3);
 		
-		armSwinger = new ArmSwinger(Time.time, bottomWrist, bottomHandFingers);
+		armSwinger = new ArmSwinger(Time.time, bottomWrist);
 		
 		indexClosed.setScreenPosition(186, 52);
 		indexClosed.setDepth(2);
@@ -95,15 +107,33 @@ public class SceneTwelve : Scene {
 		
 		openFingers = new Sprite[] { thumbOpen, indexOpen, middleFingerOpen, otherFingerOpen, littleFingerOpen };
 		initializeOpenFingers(openFingers);
+
+		wrapCamObject = new GameObject("vertial wrap Camera");
 	}
 
 	public override void Update () {
+		if (showingFallingGuy) {
+			if (armMovement.isNextTick(Time.time)) {
+				guyWithArmOut.move(0, 20);
+				otherArm.move(0, -20);
+				if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
+					guyWithArmOut.move(0, -Camera.main.pixelHeight);
+				}
+				if (otherArm.getScreenPosition().y <= 0) {
+					otherArm.move(0, Camera.main.pixelHeight);
+				}
+			}
+			return;
+		}
+		
 		armSwinger.Update();
 		
 		if (gripReleased) {
 			if (armMovement.currentTick(Time.time) > 2) {
 				// cut to guy falling
 				hideLargeSceneProps();
+				showFallingGuy();
+				endScene();
 			}
 			if (armMovement.isNextTick(Time.time)) {
 				moveTopArmUp();
@@ -151,6 +181,11 @@ public class SceneTwelve : Scene {
 		foreach(var finger in openFingers) {
 			Sprite.Destroy(finger);
 		}
+
+		Sprite.Destroy(guyWithArmOut);
+		Sprite.Destroy(otherArm);
+		GameObject.Destroy(wrapCamObject);
+
 	}
 	
 	private void hideLargeSceneProps() {
@@ -163,6 +198,33 @@ public class SceneTwelve : Scene {
 		}
 	}
 	
+	private void showFallingGuy() {
+		showingFallingGuy = true;
+
+		// construct additional camera that is positioned above the screen to show vertical wrapping
+		wrapCamObject.AddComponent<Camera>();
+		var wrapCam = wrapCamObject.GetComponent<Camera>();
+		wrapCam.depth = 0;
+		wrapCam.cullingMask = 2;
+		wrapCam.clearFlags = CameraClearFlags.Depth;
+		wrapCam.orthographic = true;
+		wrapCam.orthographicSize = 100;
+		wrapCam.transform.Translate(0, 200, -10);
+		//wrapCam.pixelRect = new Rect(0, 0, 480, 334);
+		
+		// put sprites in their own layer so the other camera doesn't render the background
+		guyWithArmOut.gameObject.layer = 1;
+		otherArm.gameObject.layer = 1;
+
+		background.active = true;
+		bottomDither.active = true;
+
+		guyWithArmOut.setScreenPosition(180, 0);
+		guyWithArmOut.visible(true);
+		otherArm.setScreenPosition(0, 0);
+		otherArm.visible(true);
+	}
+	
 	private void initializeOpenFingers(Sprite[] openFingers) {
 		foreach(var finger in openFingers) {
 			finger.setDepth(3); // put it on top of the hand
@@ -171,18 +233,16 @@ public class SceneTwelve : Scene {
 	}
 	
 	class ArmSwinger {
-		private const int swingLength = 16;
-		private const float swingIncrement = 0.2f;
+		private const int swingLength = 8;
+		private const float swingIncrement = 0.4f;
 
 		bool swinging;
-		float startedSwinging;
-		Sprite bottomArm, bottomHand;
+		Sprite bottomArm;
 		GameObject swingPivot;
 		Metronome swingInterval;
 		
-		public ArmSwinger(float startTime, Sprite bottomArm, Sprite bottomHand) {
+		public ArmSwinger(float startTime, Sprite bottomArm) {
 			this.bottomArm = bottomArm;
-			this.bottomHand = bottomHand;
 			swingPivot = bottomArm.createPivotOnTopLeftCorner();
 			
 			swingInterval = new Metronome(startTime, 0.1f);
@@ -190,19 +250,18 @@ public class SceneTwelve : Scene {
 		
 		public void swing(float time) {
 			swinging = true;
-			startedSwinging = time;
+			swingInterval = new Metronome(Time.time, 0.1f);
 		}
 		
 		public void Update() {
 			if (swinging && swingInterval.isNextTick(Time.time)) {
 				if (swingInterval.nextTick < swingLength)
 					swingPivot.transform.Rotate(0f, 0f, swingIncrement);
-				if (swingInterval.nextTick >= swingLength && swingInterval.nextTick < swingLength * 2)
+				else if (swingInterval.nextTick >= swingLength && swingInterval.nextTick < swingLength * 2)
 					swingPivot.transform.Rotate(0f, 0f, -swingIncrement);
-				if (swingInterval.nextTick == swingLength * 2) {
+				else if (swingInterval.nextTick == swingLength * 2) {
 					swinging = false;
 					swingInterval = new Metronome(Time.time, 0.1f);
-					startedSwinging = Time.time;
 				}
 
 			}
