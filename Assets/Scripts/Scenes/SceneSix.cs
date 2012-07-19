@@ -3,51 +3,38 @@ using System;
 
 class SceneSix : Scene {
 	BigHeadProp bigHeadProp;
-	BigHeadProp otherBigHeadProp;
+	OffsetCamera wrapCam;
 	
 	HeadScroller firstLeftHeadScroller;
-	HeadScroller secondLeftHeadScroller;
 	HeadScroller firstRightHeadScroller;
-	HeadScroller secondRightHeadScroller;
 	
 	Vector3 initialHeadPosition;
 	
 	bool leftHeadTouched, rightHeadTouched;
 	
-	HeadScroller lowerLeftHead, upperLeftHead;
-	HeadScroller lowerRightHead, upperRightHead;
-
 	private UnityInput input;
 	
 	public SceneSix(SceneManager manager) : base(manager) {
 		bigHeadProp = new BigHeadProp(resourceFactory);
-		otherBigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
 	}
 
 	public override void Setup () {
 		timeLength = 4.0f;
 		bigHeadProp.Setup();
-		otherBigHeadProp.Setup();
+		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
 		
 		initialHeadPosition = bigHeadProp.faceLeftObject.transform.position;
 		
 		firstLeftHeadScroller = new HeadScroller(bigHeadProp.faceLeftObject, 3.0f);
-		secondLeftHeadScroller = new HeadScroller(otherBigHeadProp.faceLeftObject, 3.0f);
-		secondLeftHeadScroller.moveHeadDownOneScreenLength();
-
 		firstRightHeadScroller = new HeadScroller(bigHeadProp.faceRightObject, 5.0f);
-		secondRightHeadScroller = new HeadScroller(otherBigHeadProp.faceRightObject, 5.0f);
-		secondRightHeadScroller.moveHeadDownOneScreenLength();
 	}
 
 	public override void Update () {
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
 			leftHeadTouched |= bigHeadProp.faceLeft.Contains(touch.position);
-			leftHeadTouched |= otherBigHeadProp.faceLeft.Contains(touch.position);
 			rightHeadTouched |= bigHeadProp.faceRight.Contains(touch.position);
-			rightHeadTouched |= otherBigHeadProp.faceRight.Contains(touch.position);
 		}
 		
 		if (Application.isEditor && input.GetMouseButtonUp(0)) {
@@ -57,49 +44,30 @@ class SceneSix : Scene {
 		
 		if(!leftHeadTouched) {
 			firstLeftHeadScroller.Update();
-			secondLeftHeadScroller.Update();			
 		}
 		
 		if(!rightHeadTouched) {
 			firstRightHeadScroller.Update();
-			secondRightHeadScroller.Update();
 		}
 		
 		if (leftHeadTouched && rightHeadTouched) {
-			if(!completed) {
-				if (firstLeftHeadScroller.currentVerticalPosition < secondLeftHeadScroller.currentVerticalPosition) {
-					lowerLeftHead = firstLeftHeadScroller;
-					upperLeftHead = secondLeftHeadScroller;
-				} else {				
-					lowerLeftHead = secondLeftHeadScroller;
-					upperLeftHead = firstLeftHeadScroller;
-				}
-				if (firstRightHeadScroller.currentVerticalPosition < secondRightHeadScroller.currentVerticalPosition) {
-					lowerRightHead = firstRightHeadScroller;
-					upperRightHead = secondRightHeadScroller;
-				} else {				
-					lowerRightHead = secondRightHeadScroller;
-					upperRightHead = firstRightHeadScroller;
-				}
-			}
-			
 			endScene();
 
-			lowerLeftHead.gotoTargetBeforeEnd(initialHeadPosition.y, sceneManager.timeLeftInCurrentLoop());
-			upperLeftHead.gotoTargetBeforeEnd(initialHeadPosition.y - upperLeftHead.cameraWorldHeight, sceneManager.timeLeftInCurrentLoop());
-			lowerRightHead.gotoTargetBeforeEnd(initialHeadPosition.y, sceneManager.timeLeftInCurrentLoop());
-			upperRightHead.gotoTargetBeforeEnd(initialHeadPosition.y - upperRightHead.cameraWorldHeight, sceneManager.timeLeftInCurrentLoop());
+			firstLeftHeadScroller.gotoTargetBeforeEnd(initialHeadPosition.y, sceneManager.timeLeftInCurrentLoop());
+			firstRightHeadScroller.gotoTargetBeforeEnd(initialHeadPosition.y, sceneManager.timeLeftInCurrentLoop());
 		}
 	}
 
 	public override void Destroy () {
 		bigHeadProp.Destroy();
-		otherBigHeadProp.Destroy();
+		wrapCam.Destroy();
 	}
 	
 	class HeadScroller {
 		GameObject head;
 		float scrollTime;
+		
+		Sprite headSprite { get { return head.GetComponent<Sprite>(); } }
 		
 		public float currentVerticalPosition { get { return head.transform.position.y; } }
 		
@@ -117,7 +85,7 @@ class SceneSix : Scene {
 			Vector3 headPosition = head.transform.position;
 			headPosition.y += speed;
 			if (verticalPosition > Camera.main.pixelHeight) {
-				float positionAtBottomOfScreen = -Camera.main.pixelHeight;
+				float positionAtBottomOfScreen = 0;
 				headPosition.y = Camera.main.ScreenToWorldPoint(new Vector3(0, positionAtBottomOfScreen, 0)).y;
 			}
 			return headPosition.y;
@@ -145,12 +113,6 @@ class SceneSix : Scene {
 			headPosition.y = verticalPosition;
 			head.transform.position = headPosition;
 		}
-		
-		public void moveHeadDownOneScreenLength() {
-			Vector3 pos = head.transform.position;
-			pos.y -= cameraWorldHeight;
-			head.transform.position = pos;
-		}
 
 		float pixelsToMove
 		{
@@ -169,9 +131,7 @@ class SceneSix : Scene {
 		
 		public float verticalPosition {
 			get {
-					Vector3 headPosition = head.transform.position;
-					headPosition.y += pixelsToMove;
-					return Camera.main.WorldToScreenPoint(headPosition).y;
+				return headSprite.getScreenPosition().y + pixelsToMove;
 			}
 		}
 		

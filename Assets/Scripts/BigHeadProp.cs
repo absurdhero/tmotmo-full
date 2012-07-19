@@ -27,9 +27,11 @@ public class BigHeadProp {
 		background = resourceFactory.Create(this, "PurpleQuad");
 
 		faceLeftObject = resourceFactory.Create(this, "FaceLeft");
+		faceLeftObject.layer = 1;
 		faceLeft.setWorldPosition(-50f, -60f, -1f);
-		
+
 		faceRightObject = resourceFactory.Create(this, "FaceRight");
+		faceRightObject.layer = 1;
 		faceRight.setWorldPosition(10f, -60f, -1f);
 	}
 	
