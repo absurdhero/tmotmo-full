@@ -39,7 +39,7 @@ public class SceneTen : Scene {
 	}
 
 	public override void Setup () {
-		timeLength = 1.0f;
+		timeLength = 1.5f;
 		endScene();
 		
 		// double the scale on all of these because the art is half-size
@@ -117,13 +117,13 @@ public class SceneTen : Scene {
 	}
 	
 	class StompFoot : Mover {
-		static readonly Vector3 descent = new Vector3(30f, -40f);
+		static readonly Vector3 descent = new Vector3(30f, -30f);
 
 		public StompFoot(ICollection<Sprite> sprites) : base(sprites, descent, 0, 4) {}
 	}
 
 	class RetractFoot : Mover {
-		static readonly Vector3 ascent = new Vector3(-30f, 40f);
+		static readonly Vector3 ascent = new Vector3(-30f, 30f);
 
 		public RetractFoot(ICollection<Sprite> sprites) : base(sprites, ascent, 4, 8) {}
 	}

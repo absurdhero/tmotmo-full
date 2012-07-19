@@ -41,7 +41,6 @@ public class SceneNine : Scene {
 		Confetti confetti;
 		ScrollingLetters scrollingLetters;
 
-		const int VERTICAL_STOP_POSITION = 35;
 		const int SCROLL_SPEED = 20;
 
 		Metronome metronome;
