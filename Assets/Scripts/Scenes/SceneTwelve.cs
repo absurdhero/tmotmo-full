@@ -18,7 +18,7 @@ public class SceneTwelve : Scene {
 	bool gripReleased = false;
 	Metronome armMovement;
 	
-	GameObject wrapCamObject;
+	OffsetCamera wrapCam;
 	Sprite guyWithArmOut, otherArm;
 	bool showingFallingGuy = false;
 
@@ -107,8 +107,6 @@ public class SceneTwelve : Scene {
 		
 		openFingers = new Sprite[] { thumbOpen, indexOpen, middleFingerOpen, otherFingerOpen, littleFingerOpen };
 		initializeOpenFingers(openFingers);
-
-		wrapCamObject = new GameObject("vertial wrap Camera");
 	}
 
 	public override void Update () {
@@ -184,8 +182,7 @@ public class SceneTwelve : Scene {
 
 		Sprite.Destroy(guyWithArmOut);
 		Sprite.Destroy(otherArm);
-		GameObject.Destroy(wrapCamObject);
-
+		wrapCam.Destroy();
 	}
 	
 	private void hideLargeSceneProps() {
@@ -202,15 +199,7 @@ public class SceneTwelve : Scene {
 		showingFallingGuy = true;
 
 		// construct additional camera that is positioned above the screen to show vertical wrapping
-		wrapCamObject.AddComponent<Camera>();
-		var wrapCam = wrapCamObject.GetComponent<Camera>();
-		wrapCam.depth = 0;
-		wrapCam.cullingMask = 2;
-		wrapCam.clearFlags = CameraClearFlags.Depth;
-		wrapCam.orthographic = true;
-		wrapCam.orthographicSize = 100;
-		wrapCam.transform.Translate(0, 200, -10);
-		//wrapCam.pixelRect = new Rect(0, 0, 480, 334);
+		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
 		
 		// put sprites in their own layer so the other camera doesn't render the background
 		guyWithArmOut.gameObject.layer = 1;
