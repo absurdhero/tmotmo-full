@@ -30,6 +30,10 @@ public class LoopTracker : MarshalByRefObject {
 		PlayRepetition();
 	}
 	
+	public void ChangeLoopLength(float loopLength) {
+		loopEnd = loopStart + loopLength;
+	}
+
 	public void Rewind(float seconds) {
 		loopStart -= seconds;
 		loopEnd -= seconds;

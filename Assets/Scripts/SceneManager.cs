@@ -85,6 +85,10 @@ public class SceneManager {
 		return loopTracker.TimeLeftInCurrentLoop();
 	}
 
+	public void changeSceneLength(float length) {
+		loopTracker.ChangeLoopLength(length);
+	}
+
 	void GameOver() {
 		Debug.Log("game over");
 		currentScene.Destroy();

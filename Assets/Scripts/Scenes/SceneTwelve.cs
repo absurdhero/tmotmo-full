@@ -121,6 +121,7 @@ public class SceneTwelve : Scene {
 						endScene();
 						armIsMovingAway = false;
 						scrollFall();
+						sceneManager.changeSceneLength(16f);
 					}
 				} else {
 					scrollFall();
