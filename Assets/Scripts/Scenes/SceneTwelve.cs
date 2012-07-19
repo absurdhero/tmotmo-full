@@ -21,6 +21,7 @@ public class SceneTwelve : Scene {
 	OffsetCamera wrapCam;
 	Sprite guyWithArmOut, otherArm;
 	bool showingFallingGuy = false;
+	bool armIsMovingAway = false;
 
 	public SceneTwelve(SceneManager manager) : base(manager) {
 		touchSensor = new TouchSensor(new UnityInput());
@@ -111,14 +112,18 @@ public class SceneTwelve : Scene {
 
 	public override void Update () {
 		if (showingFallingGuy) {
-			if (armMovement.isNextTick(Time.time)) {
-				guyWithArmOut.move(0, 20);
-				otherArm.move(0, -20);
-				if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
-					guyWithArmOut.move(0, -Camera.main.pixelHeight);
-				}
-				if (otherArm.getScreenPosition().y <= 0) {
-					otherArm.move(0, Camera.main.pixelHeight);
+			if(armMovement.isNextTick(Time.time)) {
+				if (armIsMovingAway) {
+					if (otherArm.getScreenPosition().x > 0) {
+						otherArm.move(-10, -5);
+					}
+					if (otherArm.getScreenPosition().x <= 0) {
+						endScene();
+						armIsMovingAway = false;
+						scrollFall();
+					}
+				} else {
+					scrollFall();
 				}
 			}
 			return;
@@ -131,7 +136,6 @@ public class SceneTwelve : Scene {
 				// cut to guy falling
 				hideLargeSceneProps();
 				showFallingGuy();
-				endScene();
 			}
 			if (armMovement.isNextTick(Time.time)) {
 				moveTopArmUp();
@@ -157,6 +161,17 @@ public class SceneTwelve : Scene {
 			}
 			
 			nextFinger++;
+		}
+	}
+
+	private void scrollFall() {
+		guyWithArmOut.move(0, 20);
+		otherArm.move(0, -20);
+		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
+			guyWithArmOut.move(0, -Camera.main.pixelHeight);
+		}
+		if (otherArm.getScreenPosition().y <= 0) {
+			otherArm.move(0, Camera.main.pixelHeight);
 		}
 	}
 
@@ -197,6 +212,7 @@ public class SceneTwelve : Scene {
 	
 	private void showFallingGuy() {
 		showingFallingGuy = true;
+		armIsMovingAway = true;
 
 		// construct additional camera that is positioned above the screen to show vertical wrapping
 		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
@@ -208,9 +224,9 @@ public class SceneTwelve : Scene {
 		background.active = true;
 		bottomDither.active = true;
 
-		guyWithArmOut.setScreenPosition(180, 0);
+		guyWithArmOut.setScreenPosition(180, -30);
 		guyWithArmOut.visible(true);
-		otherArm.setScreenPosition(0, 0);
+		otherArm.setScreenPosition(100, -70);
 		otherArm.visible(true);
 	}
 	
