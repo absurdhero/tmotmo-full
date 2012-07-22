@@ -35,8 +35,9 @@ public class SceneFactory : MarshalByRefObject {
 		scenes[9] = new SceneNine(sceneManager, sceneEight.confetti);
 		scenes[10] = new SceneTen(sceneManager);
 		scenes[11] = new SceneEleven(sceneManager);
-		scenes[12] = new SceneTwelve(sceneManager);
-		scenes[13] = new SceneThirteen(sceneManager);
+		var sceneTwelve = new SceneTwelve(sceneManager);
+		scenes[12] = sceneTwelve;
+		scenes[13] = new SceneThirteen(sceneManager, sceneTwelve.fallingGuyProp);
 
 		scenesInstantiated = true;
 	}

@@ -2,31 +2,30 @@ using UnityEngine;
 
 public class SceneTwelve : Scene {
 	GameObject background, bottomDither;
-	
+
 	Sprite topHand, bottomPalm, bottomWrist;
-	
+
 	Sprite bottomHandFingers, indexOpen, indexClosed, littleFingerOpen,
 		   middleFingerOpen, otherFingerOpen, thumbOpen;
-	
+
 	Sprite[] openFingers;
 	int nextFinger = 0;
-	
+
 	ArmSwinger armSwinger;
 
 	TouchSensor touchSensor;
-	
+
 	bool gripReleased = false;
 	Metronome armMovement;
-	
-	OffsetCamera wrapCam;
-	Sprite guyWithArmOut, otherArm;
+
 	bool showingFallingGuy = false;
-	bool armIsMovingAway = false;
+	public FallingGuyProp fallingGuyProp { get; private set; }
 
 	public SceneTwelve(SceneManager manager) : base(manager) {
 		touchSensor = new TouchSensor(new UnityInput());
+		fallingGuyProp = new FallingGuyProp();
 	}
-	
+
 	public override void LoadAssets() {
 		background = resourceFactory.Create(this, "TealBackground");
 		bottomDither = resourceFactory.Create(this, "BottomDither");
@@ -35,14 +34,14 @@ public class SceneTwelve : Scene {
 		bottomPalm = Sprite.create(this, "hand_base_top");
 		bottomWrist = Sprite.create(this, "hand_base_bottom");
 		bottomHandFingers = Sprite.create(this, "bottom_hand_fingers");
-		
+
 		indexClosed = Sprite.create(this, "index_closed");
 		indexOpen = Sprite.create(this, "index_open");
 		middleFingerOpen = Sprite.create(this, "middle_finger_open");
 		otherFingerOpen = Sprite.create(this, "other_finger_open");
 		littleFingerOpen = Sprite.create(this, "little_finger_open");
 		thumbOpen = Sprite.create(this, "thumb_open");
-		
+
 		background.active = false;
 		bottomDither.active = false;
 
@@ -57,19 +56,14 @@ public class SceneTwelve : Scene {
 		otherFingerOpen.visible(false);
 		littleFingerOpen.visible(false);
 		thumbOpen.visible(false);
-		
+
 		// second part of the scene: zoomed out
-		guyWithArmOut = Sprite.create(this, "guy_armout");
-		otherArm = Sprite.create(this, "other_arm");
-
-		guyWithArmOut.visible(false);
-		otherArm.visible(false);
-
+		fallingGuyProp.LoadAssets();
 	}
-	
+
 	public override void Setup () {
 		timeLength = 8.0f;
-		
+
 		background.active = true;
 		bottomDither.active = true;
 		topHand.visible(true);
@@ -85,18 +79,18 @@ public class SceneTwelve : Scene {
 		thumbOpen.visible(true);
 
 		topHand.setScreenPosition(150, 66);
-		
+
 		bottomPalm.setScreenPosition(100, -10);
 		bottomPalm.setDepth(0);
-		
+
 		bottomWrist.setScreenPosition(100, -10);
 		bottomWrist.setDepth(0);
-		
+
 		bottomHandFingers.setScreenPosition(143, 82);
 		bottomHandFingers.setDepth(3);
-		
-		armSwinger = new ArmSwinger(Time.time, bottomWrist);
-		
+
+		armSwinger = new ArmSwinger(Time.time, bottomWrist.createPivotOnTopLeftCorner());
+
 		indexClosed.setScreenPosition(186, 52);
 		indexClosed.setDepth(2);
 
@@ -105,33 +99,24 @@ public class SceneTwelve : Scene {
 		otherFingerOpen.setScreenPosition(283, 42);
 		littleFingerOpen.setScreenPosition(300, 70);
 		thumbOpen.setScreenPosition(110, 80);
-		
+
 		openFingers = new Sprite[] { thumbOpen, indexOpen, middleFingerOpen, otherFingerOpen, littleFingerOpen };
 		initializeOpenFingers(openFingers);
 	}
 
 	public override void Update () {
 		if (showingFallingGuy) {
-			if(armMovement.isNextTick(Time.time)) {
-				if (armIsMovingAway) {
-					if (otherArm.getScreenPosition().x > 0) {
-						otherArm.move(-10, -5);
-					}
-					if (otherArm.getScreenPosition().x <= 0) {
-						endScene();
-						armIsMovingAway = false;
-						scrollFall();
-						sceneManager.changeSceneLength(16f);
-					}
-				} else {
-					scrollFall();
-				}
+			var armWasNotToTheLeft = !fallingGuyProp.armIsOnLeftOfScreen();
+			fallingGuyProp.updateFallingGuy(armMovement);
+			if(armWasNotToTheLeft && fallingGuyProp.armIsOnLeftOfScreen()) {
+				sceneManager.changeSceneLength(16f);
+				endScene();
 			}
 			return;
 		}
-		
+
 		armSwinger.Update();
-		
+
 		if (gripReleased) {
 			if (armMovement.currentTick(Time.time) > 2) {
 				// cut to guy falling
@@ -149,30 +134,19 @@ public class SceneTwelve : Scene {
 			armMovement = new Metronome(Time.time, 0.1f);
 			return;
 		}
-		
+
 		if (touchSensor.insideSprite(topHand)) {
 			openFingers[nextFinger].visible(true);
-			
+
 			if (nextFinger < 4) {
 				armSwinger.swing(Time.time);
 			}
-			
+
 			if (openFingers[nextFinger] == indexOpen) {
 				indexClosed.visible(false);
 			}
-			
-			nextFinger++;
-		}
-	}
 
-	private void scrollFall() {
-		guyWithArmOut.move(0, 20);
-		otherArm.move(0, -20);
-		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
-			guyWithArmOut.move(0, -Camera.main.pixelHeight);
-		}
-		if (otherArm.getScreenPosition().y <= 0) {
-			otherArm.move(0, Camera.main.pixelHeight);
+			nextFinger++;
 		}
 	}
 
@@ -195,12 +169,8 @@ public class SceneTwelve : Scene {
 		foreach(var finger in openFingers) {
 			Sprite.Destroy(finger);
 		}
-
-		Sprite.Destroy(guyWithArmOut);
-		Sprite.Destroy(otherArm);
-		wrapCam.Destroy();
 	}
-	
+
 	private void hideLargeSceneProps() {
 		topHand.visible(false);
 		bottomPalm.visible(false);
@@ -210,55 +180,38 @@ public class SceneTwelve : Scene {
 			finger.visible(false);
 		}
 	}
-	
+
 	private void showFallingGuy() {
 		showingFallingGuy = true;
-		armIsMovingAway = true;
-
-		// construct additional camera that is positioned above the screen to show vertical wrapping
-		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
-		
-		// put sprites in their own layer so the other camera doesn't render the background
-		guyWithArmOut.gameObject.layer = 1;
-		otherArm.gameObject.layer = 1;
-
-		background.active = true;
-		bottomDither.active = true;
-
-		guyWithArmOut.setScreenPosition(180, -30);
-		guyWithArmOut.visible(true);
-		otherArm.setScreenPosition(100, -70);
-		otherArm.visible(true);
+		fallingGuyProp.Setup();
 	}
-	
+
 	private void initializeOpenFingers(Sprite[] openFingers) {
 		foreach(var finger in openFingers) {
 			finger.setDepth(3); // put it on top of the hand
 			finger.visible(false);
 		}
 	}
-	
+
 	class ArmSwinger {
 		private const int swingLength = 8;
 		private const float swingIncrement = 0.4f;
 
+		Metronome swingInterval;
+		GameObject swingPivot;
 		bool swinging;
 		Sprite bottomArm;
-		GameObject swingPivot;
-		Metronome swingInterval;
-		
-		public ArmSwinger(float startTime, Sprite bottomArm) {
-			this.bottomArm = bottomArm;
-			swingPivot = bottomArm.createPivotOnTopLeftCorner();
-			
+
+		public ArmSwinger(float startTime, GameObject swingPivot) {
 			swingInterval = new Metronome(startTime, 0.1f);
+			this.swingPivot = swingPivot;
 		}
-		
+
 		public void swing(float time) {
 			swinging = true;
 			swingInterval = new Metronome(Time.time, 0.1f);
 		}
-		
+
 		public void Update() {
 			if (swinging && swingInterval.isNextTick(Time.time)) {
 				if (swingInterval.nextTick < swingLength)

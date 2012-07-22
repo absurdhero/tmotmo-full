@@ -1,4 +1,4 @@
-class Metronome {
+public class Metronome {
 	float startTime;
 	public float interval { get; private set; }
 	int lastNewTick = -1;
