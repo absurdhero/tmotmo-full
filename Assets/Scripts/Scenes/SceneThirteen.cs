@@ -26,10 +26,11 @@ public class SceneThirteen : Scene {
 
 		animation = new Metronome(Time.time, 0.1f);
 		fallingGuyProp.Setup();
+		fallingGuyProp.ensureArmIsOnLeftOfScreen();
 	}
 
 	public override void Update () {
-		fallingGuyProp.updateFallingGuy(animation);
+		fallingGuyProp.updateFallingGuyAndMoveApart(animation, Time.time);
 	}
 
 	public override void Destroy () {

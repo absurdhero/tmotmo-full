@@ -35,7 +35,7 @@ public class FallingGuyProp {
 	}
 
 	public void updateFallingGuy(Metronome metronome) {
-		if(metronome.isNextTick(Time.time)) {
+		if (metronome.isNextTick(Time.time)) {
 			if (!armIsMovingAway) {
 				scrollFall();
 			} else {
@@ -49,11 +49,31 @@ public class FallingGuyProp {
 			}
 		}
 	}
+	
+	public void updateFallingGuyAndMoveApart(Metronome metronome, float time) {
+		if (metronome.isNextTick(time)) {
+			scrollFall();
+			if (metronome.currentTick(time) < 30) {
+				moveArmsApart();
+			}
+		}
+	}
 
 	public bool armIsOnLeftOfScreen() {
 		return otherArm.getScreenPosition().x <= 0;
 	}
-
+	
+	public void ensureArmIsOnLeftOfScreen() {
+		if (!armIsOnLeftOfScreen()) {
+			otherArm.move(-100, 0);
+		}
+	}
+	
+	public void moveArmsApart() {
+		otherArm.move(-1, 0);
+		guyWithArmOut.move(5, 0);
+	}
+	
 	private void scrollFall() {
 		guyWithArmOut.move(0, 20);
 		otherArm.move(0, -20);
