@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class FallingGuyProp {
 	OffsetCamera wrapCam;
-	Sprite guyWithArmOut, otherArm;
+	public Sprite guyWithArmOut { get; private set; }
+	public Sprite otherArm { get; private set; }
 	bool armIsMovingAway = false;
+	bool leftSideStopped, rightSideStopped;
 
 	public FallingGuyProp() {
 	}
@@ -37,7 +39,8 @@ public class FallingGuyProp {
 	public void updateFallingGuy(Metronome metronome) {
 		if (metronome.isNextTick(Time.time)) {
 			if (!armIsMovingAway) {
-				scrollFall();
+				if (!leftSideStopped) scrollLeftSide();
+				if (!rightSideStopped) scrollRightSide();
 			} else {
 				if (!armIsOnLeftOfScreen()) {
 					otherArm.move(-10, -5);
@@ -74,15 +77,31 @@ public class FallingGuyProp {
 		guyWithArmOut.move(5, 0);
 	}
 	
-	private void scrollFall() {
-		guyWithArmOut.move(0, 20);
+	public void stopLefSide() {
+		leftSideStopped = true;
+	}
+	
+	public void stopRightSide() {
+		rightSideStopped = true;
+	}
+
+	private void scrollLeftSide() {
 		otherArm.move(0, -20);
-		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
-			guyWithArmOut.move(0, -Camera.main.pixelHeight);
-		}
 		if (otherArm.getScreenPosition().y <= 0) {
 			otherArm.move(0, Camera.main.pixelHeight);
 		}
+	}
+	
+	private void scrollRightSide() {
+		guyWithArmOut.move(0, 20);
+		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
+			guyWithArmOut.move(0, -Camera.main.pixelHeight);
+		}
+	}
+	
+	private void scrollFall() {
+		scrollLeftSide();
+		scrollRightSide();
 	}
 
 	public void Destroy() {

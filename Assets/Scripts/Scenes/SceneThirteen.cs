@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SceneThirteen : Scene {
 	GameObject background, bottomDither;
-	FallingGuyProp fallingGuyProp;
+	public FallingGuyProp fallingGuyProp { get; private set; }
 	Metronome animation;
 
 	public SceneThirteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
@@ -36,6 +36,5 @@ public class SceneThirteen : Scene {
 	public override void Destroy () {
 		GameObject.Destroy(background);
 		GameObject.Destroy(bottomDither);
-		fallingGuyProp.Destroy();
 	}
 }
