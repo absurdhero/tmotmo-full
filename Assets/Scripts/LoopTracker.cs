@@ -49,6 +49,7 @@ public class LoopTracker : MarshalByRefObject {
 	}
 	
 	private void PlayRepetition() {
+		// Comment line to play all stems all the time
 		sounds.pickStemsFor(repetition);
 		sounds.setAudioTime(loopStart);
 	}

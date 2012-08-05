@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Scenes\SceneEleven.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneFive.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneFour.cs" />
+     <Compile Include="Assets\Scripts\Scenes\SceneFourteen.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneNine.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneOne.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneSeven.cs" />

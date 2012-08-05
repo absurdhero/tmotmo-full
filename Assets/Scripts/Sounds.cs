@@ -5,16 +5,12 @@ using System.Collections.Generic;
 // Handles all sounds/stems in the app
 // This is a MonoBehaviour class only to use the Unity features to initialize AudioSource members
 public class Sounds : MarshalByRefObject {
-	public AudioSource bass;
-	public AudioSource vocalFX;
-	public AudioSource beats;
-	public AudioSource vocalBG;
 	public AudioSource guitar1;
-	public AudioSource liveDrums;
-	public AudioSource guitar2;
-	public AudioSource keyboard;
-	public AudioSource vocals;
-	public AudioSource drumBeats;	
+	public AudioSource keys;
+	public AudioSource bass_beatsfx;
+	public AudioSource guitars2_beats;
+	public AudioSource lead_bgvocals;
+	public AudioSource vocalsfx_livedrums;
 
 	private AudioSource[] orderedStems;
 	private AudioSource playingStem; // we need this to do playingStem.time
@@ -29,30 +25,22 @@ public class Sounds : MarshalByRefObject {
 	}
 	
 	virtual public void Start () {
-		bass = gameObject.AddComponent<AudioSource>();
-		bass.clip = (AudioClip)Resources.Load("Sounds/BASS STEM_01", typeof(AudioClip));
-		vocalFX = gameObject.AddComponent<AudioSource>();
-		vocalFX.clip = (AudioClip)Resources.Load ("Sounds/LEAD VOCALS FX STEM_01", typeof(AudioClip));
-		beats = gameObject.AddComponent<AudioSource>();
-		beats.clip = (AudioClip)Resources.Load ("Sounds/BEATS STEM_01", typeof(AudioClip));
-		vocalBG = gameObject.AddComponent<AudioSource>();
-		vocalBG.clip = (AudioClip)Resources.Load ("Sounds/BG VOCALS STEM_01", typeof(AudioClip));
 		guitar1 = gameObject.AddComponent<AudioSource>();
 		guitar1.clip = (AudioClip)Resources.Load ("Sounds/GUITARS 1 STEM", typeof(AudioClip));
-		liveDrums = gameObject.AddComponent<AudioSource>();
-		liveDrums.clip = (AudioClip)Resources.Load ("Sounds/LIVE DRUM STEM_02", typeof(AudioClip));
-		guitar2 = gameObject.AddComponent<AudioSource>();
-		guitar2.clip = (AudioClip)Resources.Load ("Sounds/GUITARS 2 STEM_01", typeof(AudioClip));
-		keyboard = gameObject.AddComponent<AudioSource>();
-		keyboard.clip = (AudioClip)Resources.Load ("Sounds/KEYS STEM_01", typeof(AudioClip));
-		vocals = gameObject.AddComponent<AudioSource>();
-		vocals.clip = (AudioClip)Resources.Load ("Sounds/LEAD VOCALS STEM_01", typeof(AudioClip));
-		drumBeats = gameObject.AddComponent<AudioSource>();
-		drumBeats.clip = (AudioClip)Resources.Load ("Sounds/DRUM_BEATS FX STEM_01", typeof(AudioClip));
+		keys = gameObject.AddComponent<AudioSource>();
+		keys.clip = (AudioClip)Resources.Load ("Sounds/KEYS STEM_01", typeof(AudioClip));
+		bass_beatsfx = gameObject.AddComponent<AudioSource>();
+		bass_beatsfx.clip = (AudioClip)Resources.Load("Sounds/bass_beatsfx", typeof(AudioClip));
+		guitars2_beats = gameObject.AddComponent<AudioSource>();
+		guitars2_beats.clip = (AudioClip)Resources.Load ("Sounds/guitars2_beats", typeof(AudioClip));
+		lead_bgvocals = gameObject.AddComponent<AudioSource>();
+		lead_bgvocals.clip = (AudioClip)Resources.Load ("Sounds/lead_bgvocals", typeof(AudioClip));
+		vocalsfx_livedrums = gameObject.AddComponent<AudioSource>();
+		vocalsfx_livedrums.clip = (AudioClip)Resources.Load ("Sounds/vocalsfx_livedrums", typeof(AudioClip));
 		
 		
 		orderedStems = new AudioSource[]
-			{ bass, vocalFX, beats, vocalBG, guitar1, liveDrums, guitar2, keyboard, vocals, drumBeats };
+		{ bass_beatsfx, vocalsfx_livedrums, guitars2_beats, lead_bgvocals, guitar1, keys };
 	}
 
 	void Update () {} // this is not really a MonoBehaviour object
@@ -112,7 +100,7 @@ public class Sounds : MarshalByRefObject {
 		foreach (var stem in orderedStems) {
 			stem.Play ();
 		}
-		playingStem = bass;
+		playingStem = bass_beatsfx;
 	}
 
 	public void playAllStems () {
@@ -136,26 +124,18 @@ public class Sounds : MarshalByRefObject {
 	}
 
 	private string print (AudioSource stem) {
-		if (stem == bass)
-			return "bass ";
-		if (stem == vocalFX)
-			return "vocalFX ";
-		if (stem == beats)
-			return "beats ";
-		if (stem == vocalBG)
-			return "vocalBG ";
 		if (stem == guitar1)
 			return "guitar1 ";
-		if (stem == liveDrums)
-			return "liveDrums ";
-		if (stem == guitar2)
-			return "guitar2 ";
-		if (stem == keyboard)
-			return "keyboard ";
-		if (stem == vocals)
-			return "vocals ";
-		if (stem == drumBeats)
-			return "drumBeats ";
+		if (stem == keys)
+			return "keys ";
+		if (stem == bass_beatsfx)
+			return "bass_beatsfx ";
+		if (stem == guitars2_beats)
+			return "guitars2_beats ";
+		if (stem == lead_bgvocals)
+			return "lead_bgvocals ";
+		if (stem == vocalsfx_livedrums)
+			return "vocalsfx_livedrums ";
 
 		return "SOMeTHING'S MISSING!!";
 	}
