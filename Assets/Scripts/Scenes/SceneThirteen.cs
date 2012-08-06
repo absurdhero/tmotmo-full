@@ -7,6 +7,7 @@ public class SceneThirteen : Scene {
 	Metronome animation;
 
 	public SceneThirteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
+		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
 	}
 
@@ -17,14 +18,13 @@ public class SceneThirteen : Scene {
 		bottomDither.active = false;
 	}
 
-	public override void Setup () {
-		timeLength = 8.0f;
+	public override void Setup (float startTime) {
 		endScene();
 
 		background.active = true;
 		bottomDither.active = true;
 
-		animation = new Metronome(Time.time, 0.1f);
+		animation = new Metronome(startTime, 0.1f);
 		fallingGuyProp.Setup();
 		fallingGuyProp.ensureArmIsOnLeftOfScreen();
 	}

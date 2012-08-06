@@ -30,7 +30,7 @@ public class TitleScene : Scene {
 		input = new UnityInput();
 	}
 
-	public override void Setup() {
+	public override void Setup(float startTime) {
 		background = resourceFactory.Create(this, "BackgroundQuad");
 		title = resourceFactory.Create(this, "Title");
 		subtitle = resourceFactory.Create(this, "Subtitle");

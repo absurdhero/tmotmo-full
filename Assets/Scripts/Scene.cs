@@ -33,7 +33,7 @@ public abstract class Scene : MarshalByRefObject {
 	}
 
 	public virtual void LoadAssets() {}
-	public abstract void Setup();
+	public abstract void Setup(float startTime);
 	public abstract void Update();
 	public abstract void Destroy();
 	

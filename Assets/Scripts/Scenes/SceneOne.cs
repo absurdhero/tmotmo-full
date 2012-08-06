@@ -26,6 +26,7 @@ class SceneOne : Scene {
 	private UnityInput input;
 	
 	public SceneOne(SceneManager manager) : base(manager) {
+		timeLength = 8.0f;
 		input = new UnityInput();
 	}
 
@@ -43,9 +44,7 @@ class SceneOne : Scene {
 		triangle.active = false;
 	}
 
-	public override void Setup() {
-		timeLength = 8.0f;
-
+	public override void Setup(float startTime) {
 		background.active = true;
 		same.active = true;
 		notSame.active = true;
@@ -62,10 +61,10 @@ class SceneOne : Scene {
 		// hide the triangle to start
 		triangle.active = false;
 		
-		circleCycler = new Cycler(shapeSpeed);
+		circleCycler = new Cycler(shapeSpeed, 0, startTime);
 		circleCycler.AddSprite(circle);
 		
-		notSameCycler = new DelayedCycler(0.2f, 4, 1.2f);
+		notSameCycler = new DelayedCycler(0.2f, 4, 1.2f, startTime);
 		notSameCycler.AddSprite(notSame);
 	}
 

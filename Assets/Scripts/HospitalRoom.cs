@@ -124,18 +124,18 @@ public class HospitalRoom {
 		clipBoard.GetComponent<Sprite>().setWorldPosition(-12f, -80f, -1f);
 	}
 	
-	public void addHeartRate() {
+	public void addHeartRate(float startTime) {
 		heartRate = resourceFactory.Create(this, "HeartRate");
 		heartRate.GetComponent<Sprite>().setWorldPosition(-115f, 17f, -1f);
 		
 		// Repeat 7 frame animation every 2 seconds
 		// That's 30bpm which might mean he is dying!
-		heartRateCycler = new Cycler(1f/7f*2f, 0);
+		heartRateCycler = new Cycler(1f/7f*2f, 0, startTime);
 		heartRateCycler.AddSprite(heartRate);
 	}
 	
-	public void doubleHeartRate() {
-		heartRateCycler = new Cycler(1f/7f, 0);
+	public void doubleHeartRate(float startTime) {
+		heartRateCycler = new Cycler(1f/7f, 0, startTime);
 		heartRateCycler.AddSprite(heartRate);
 	}
 	

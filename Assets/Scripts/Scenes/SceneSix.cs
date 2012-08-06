@@ -15,12 +15,12 @@ class SceneSix : Scene {
 	private UnityInput input;
 	
 	public SceneSix(SceneManager manager) : base(manager) {
+		timeLength = 4.0f;
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
 	}
 
-	public override void Setup () {
-		timeLength = 4.0f;
+	public override void Setup (float startTime) {
 		bigHeadProp.Setup();
 		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
 		

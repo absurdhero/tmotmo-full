@@ -9,6 +9,7 @@ public class SceneFourteen : Scene {
 	bool leftHandTouched = false, rightHandTouched = false;
 
 	public SceneFourteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
+		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
 		input = new UnityInput();
 	}
@@ -20,13 +21,11 @@ public class SceneFourteen : Scene {
 		bottomDither.active = false;
 	}
 
-	public override void Setup () {
-		timeLength = 8.0f;
-
+	public override void Setup (float startTime) {
 		background.active = true;
 		bottomDither.active = true;
 
-		animation = new Metronome(Time.time, 0.1f);
+		animation = new Metronome(startTime, 0.1f);
 		fallingGuyProp.Setup();
 		fallingGuyProp.ensureArmIsOnLeftOfScreen();
 	}

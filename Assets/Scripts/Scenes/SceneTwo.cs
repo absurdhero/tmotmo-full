@@ -7,16 +7,15 @@ class SceneTwo : Scene {
 	private UnityInput input;
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
+		timeLength = 8.0f;
 		input = new UnityInput();
 		room = new HospitalRoom(resourceFactory, camera);
 	}
 
-	public override void Setup() {
-		timeLength = 8.0f;
-
+	public override void Setup(float startTime) {
 		room.createBackground();
 		room.addZzz();
-		room.addHeartRate();
+		room.addHeartRate(startTime);
 		room.addFootboard();
 		room.addCover();
 		room.addPerson();
@@ -36,7 +35,7 @@ class SceneTwo : Scene {
 
 		if (room.eyesTotallyOpen && !completed) {
 			room.removeCover();
-			room.doubleHeartRate();
+			room.doubleHeartRate(Time.time);
 			endScene();
 		}
 		

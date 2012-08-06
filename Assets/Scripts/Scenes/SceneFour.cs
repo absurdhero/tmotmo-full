@@ -14,6 +14,7 @@ class SceneFour : Scene {
 	const int END_POSITION = 120;
 	
 	public SceneFour(SceneManager manager, HospitalRoom room) : base(manager) {
+		timeLength = 4.0f;
 		this.hospitalRoom = room;
 	}
 	
@@ -21,12 +22,10 @@ class SceneFour : Scene {
 		addMouth();
 	}
 
-	public override void Setup() {
-		timeLength = 4.0f;
-		
+	public override void Setup(float startTime) {
 		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
 		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
-		mouthMovement = new MouthAnimator(leftMouth, rightMouth);
+		mouthMovement = new MouthAnimator(startTime, leftMouth, rightMouth);
 	}
 
 	public override void Destroy() {
@@ -67,7 +66,7 @@ class SceneFour : Scene {
 		
 		const int totalFrames = 16;		
 		
-		public MouthAnimator(GameObject leftMouth, GameObject rightMouth) : base(0.25f) {
+		public MouthAnimator(float startTime, GameObject leftMouth, GameObject rightMouth) : base(0.25f, 0, startTime) {
 			this.leftMouth = leftMouth;
 			this.rightMouth = rightMouth;
 		}

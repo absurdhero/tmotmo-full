@@ -15,6 +15,7 @@ class SceneEight : Scene {
 	private UnityInput input;
 	
 	public SceneEight(SceneManager manager) : base(manager) {
+		timeLength = 4.0f;
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
 		confetti = new Confetti();
@@ -27,9 +28,7 @@ class SceneEight : Scene {
 		mouthRight.visible(false);
 	}
 
-	public override void Setup () {
-		timeLength = 4.0f;
-		
+	public override void Setup (float startTime) {
 		bigHeadProp.Setup();
 		faceRightParent = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
 
@@ -41,7 +40,7 @@ class SceneEight : Scene {
 		mouthLeft.visible(true);
 		mouthRight.visible(true);
 
-		mouthAnimator = new MouthAnimator(mouthLeft, mouthRight);
+		mouthAnimator = new MouthAnimator(startTime, mouthLeft, mouthRight);
 	}
 
 	public override void Update () {
@@ -105,7 +104,7 @@ class SceneEight : Scene {
 		const int totalFramesInScene = 24;		
 		
 		// the speed is eight note triplets because of the lilting rhythm of the lyrics
-		public MouthAnimator(Sprite mouthLeft, Sprite mouthRight) : base(0.16666666f) {
+		public MouthAnimator(float startTime, Sprite mouthLeft, Sprite mouthRight) : base(0.16666666f, 0, startTime) {
 			this.mouthLeft = mouthLeft;
 			this.mouthRight = mouthRight;
 		}

@@ -9,21 +9,20 @@ class SceneFive : Scene {
 	LipsAppear lips;
 	
 	public SceneFive(SceneManager manager) : base(manager) {
+		timeLength = 4.0f;
 		bigHeadProp = new BigHeadProp(resourceFactory);
-
 	}
 	
 	public override void LoadAssets() {
 		lips = new LipsAppear(resourceFactory);
 	}
 
-	public override void Setup () {
-		timeLength = 4.0f;
+	public override void Setup (float startTime) {
 		endScene(); // no interaction required to continue
 		
 		bigHeadProp.Setup();
 		
-		bigMouthAnimator = new BigMouthAnimator(resourceFactory);
+		bigMouthAnimator = new BigMouthAnimator(startTime, resourceFactory);
 	}
 
 	public override void Update () {
@@ -72,7 +71,7 @@ class SceneFive : Scene {
 		
 		const int totalFramesInScene = 16;		
 		
-		public BigMouthAnimator(GameObjectFactory<string> resourceFactory) : base(0.25f) {
+		public BigMouthAnimator(float startTime, GameObjectFactory<string> resourceFactory) : base(0.25f, 0, startTime) {
 			var mouthLeftGameObject = resourceFactory.Create("SceneFive/MouthLeft");
 			mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
 			mouthLeft.setWorldPosition(-29.5f, -56f, -5f);

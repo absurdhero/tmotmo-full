@@ -7,6 +7,7 @@ public class SceneEleven : Scene {
 	Sprite videoSprite;
 
 	public SceneEleven(SceneManager manager) : base(manager) {
+		timeLength = 6f;
 	}
 	
 	public override void LoadAssets() {
@@ -14,11 +15,10 @@ public class SceneEleven : Scene {
 		videoClip.active = false;
 	}
 	
-	public override void Setup () {
-		timeLength = 6f;
+	public override void Setup (float startTime) {
 		endScene();
 
-		videoSpeed = new Metronome(Time.time, 0.33333333f);
+		videoSpeed = new Metronome(startTime, 0.33333333f);
 
 		videoClip.active = true;
 		videoSprite = videoClip.GetComponent<Sprite>();

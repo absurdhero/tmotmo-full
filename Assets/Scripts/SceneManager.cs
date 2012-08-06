@@ -24,7 +24,7 @@ public class SceneManager {
 		this.loopTracker = loopTracker;
 		
 		currentScene = sceneFactory.GetFirstScene();
-		currentScene.Setup();
+		currentScene.Setup(Time.time);
 		
 		SkipToScene(skipToSceneNumber);
 	}
@@ -38,6 +38,7 @@ public class SceneManager {
 	
 	public void NextScene() {
 		currentScene.Destroy();
+		Resources.UnloadUnusedAssets();
 		
 		if(sceneFactory.isLastScene(currentScene)) {
 			GameOver();
@@ -50,10 +51,11 @@ public class SceneManager {
 		
 		currentScene = sceneFactory.GetSceneAfter(currentScene);		
 		Debug.Log("Beginning next scene (" + currentScene.GetType().Name + ")");
-		currentScene.Setup();
-		
+
 		loopTracker.Rewind(currentScene.rewindTime);
 		loopTracker.NextLoop(currentScene.TimeLength());
+
+		currentScene.Setup(Time.time);
 	}
 
 	public void Update () {
@@ -93,6 +95,6 @@ public class SceneManager {
 		Debug.Log("game over");
 		currentScene.Destroy();
 		currentScene = sceneFactory.GetFirstScene();
-		currentScene.Setup();
+		currentScene.Setup(Time.time);
 	}
 }

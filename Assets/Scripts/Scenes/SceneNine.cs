@@ -9,17 +9,17 @@ public class SceneNine : Scene {
 	GameObject background;
 
 	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
+		timeLength = 2.0f;
 		this.confetti = confetti;
 	}
 
-	public override void Setup () {
-		timeLength = 2.0f;
+	public override void Setup (float startTime) {
 		endScene();
 
 		background = resourceFactory.Create("TodoList/GreenQuad");
 
 		spreadConfetti = new ScrollLetters(confetti);
-		spreadConfetti.Setup();
+		spreadConfetti.Setup(startTime);
 
 		todoList = Sprite.create("TodoList/todo");
 		todoList.setCenterToViewportCoord(0.5f, 0.5f);
@@ -49,8 +49,8 @@ public class SceneNine : Scene {
 			this.confetti = confetti;
 		}
 		
-		public void Setup() {
-			metronome = new Metronome(Time.time, 0.125f);
+		public void Setup(float startTime) {
+			metronome = new Metronome(startTime, 0.125f);
 			confetti.ensureConfettiWasPoured();
 			scrollingLetters = new ScrollingLetters();
 			scrollingLetters.Setup();

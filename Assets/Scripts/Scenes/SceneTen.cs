@@ -22,6 +22,7 @@ public class SceneTen : Scene {
 	const int firstCrackFrame = 3;
 
 	public SceneTen(SceneManager manager) : base(manager) {
+		timeLength = 1.5f;
 	}
 	
 	public override void LoadAssets() {
@@ -38,8 +39,7 @@ public class SceneTen : Scene {
 		wireShadow.active = false;
 	}
 
-	public override void Setup () {
-		timeLength = 1.5f;
+	public override void Setup (float startTime) {
 		endScene();
 		
 		// double the scale on all of these because the art is half-size
@@ -64,7 +64,7 @@ public class SceneTen : Scene {
 		retractFoot = new RetractFoot(new List<Sprite> {shoeSprite});
 		animatables = new[] {pedalStomped, pedalUnStomped, stompFoot, retractFoot};
 		
-		stompSpeed = new Metronome(Time.time, 0.1f);
+		stompSpeed = new Metronome(startTime, 0.1f);
 	}
 
 	public override void Update () {

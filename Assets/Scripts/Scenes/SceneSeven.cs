@@ -8,6 +8,7 @@ class SceneSeven : Scene {
 	Sprite mouthLeft, mouthRight;
 
 	public SceneSeven(SceneManager manager) : base(manager) {
+		timeLength = 4.0f;
 		bigHeadProp = new BigHeadProp(resourceFactory);
 	}
 
@@ -18,8 +19,7 @@ class SceneSeven : Scene {
 		mouthRight.visible(false);
 	}
 
-	public override void Setup () {
-		timeLength = 4.0f;
+	public override void Setup (float startTime) {
 		endScene();
 		
 		bigHeadProp.Setup();
@@ -29,7 +29,7 @@ class SceneSeven : Scene {
 		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
 		mouthRight.setWorldPosition(10f, -56f, -5f);
 
-		mouthAnimator = new MouthAnimator(mouthLeft, mouthRight);
+		mouthAnimator = new MouthAnimator(startTime, mouthLeft, mouthRight);
 	}
 
 	public override void Update () {
@@ -49,7 +49,7 @@ class SceneSeven : Scene {
 		
 		const int totalFramesInScene = 16;		
 		
-		public MouthAnimator(Sprite mouthLeft, Sprite mouthRight) : base(0.25f) {
+		public MouthAnimator(float startTime, Sprite mouthLeft, Sprite mouthRight) : base(0.25f, 0, startTime) {
 			this.mouthLeft = mouthLeft;
 			this.mouthRight = mouthRight;
 		}

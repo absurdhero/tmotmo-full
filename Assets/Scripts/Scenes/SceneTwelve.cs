@@ -22,6 +22,7 @@ public class SceneTwelve : Scene {
 	public FallingGuyProp fallingGuyProp { get; private set; }
 
 	public SceneTwelve(SceneManager manager) : base(manager) {
+		timeLength = 8.0f;
 		touchSensor = new TouchSensor(new UnityInput());
 		fallingGuyProp = new FallingGuyProp();
 	}
@@ -61,9 +62,7 @@ public class SceneTwelve : Scene {
 		fallingGuyProp.LoadAssets();
 	}
 
-	public override void Setup () {
-		timeLength = 8.0f;
-
+	public override void Setup (float startTime) {
 		background.active = true;
 		bottomDither.active = true;
 		topHand.visible(true);
@@ -89,7 +88,7 @@ public class SceneTwelve : Scene {
 		bottomHandFingers.setScreenPosition(143, 82);
 		bottomHandFingers.setDepth(3);
 
-		armSwinger = new ArmSwinger(Time.time, bottomWrist.createPivotOnTopLeftCorner());
+		armSwinger = new ArmSwinger(startTime, bottomWrist.createPivotOnTopLeftCorner());
 
 		indexClosed.setScreenPosition(186, 52);
 		indexClosed.setDepth(2);
@@ -209,7 +208,7 @@ public class SceneTwelve : Scene {
 
 		public void swing(float time) {
 			swinging = true;
-			swingInterval = new Metronome(Time.time, 0.1f);
+			swingInterval = new Metronome(time, 0.1f);
 		}
 
 		public void Update() {

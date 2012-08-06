@@ -9,14 +9,14 @@ class SceneThree : Scene {
 	UnityInput input;
 	
 	public SceneThree(SceneManager manager, HospitalRoom room) : base(manager) {
+		timeLength = 8.0f;
+		rewindLoop(8.0f);
+
 		this.room = room;
 		input = new UnityInput();
 	}
 
-	public override void Setup() {
-		timeLength = 8.0f;
-		rewindLoop(8.0f);
-
+	public override void Setup(float startTime) {
 		room.addSplitLine();
 		room.removeCover();
 		room.openEyes();
