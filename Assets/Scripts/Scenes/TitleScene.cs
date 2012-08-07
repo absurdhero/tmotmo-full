@@ -69,8 +69,8 @@ public class TitleScene : Scene {
 		
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
-			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(touch.position);
-			touchedNews |= news.GetComponent<Sprite>().Contains(touch.position);
+			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(Camera.main, touch.position);
+			touchedNews |= news.GetComponent<Sprite>().Contains(Camera.main, touch.position);
 	    }
 		
 		if (touchedBuy) {

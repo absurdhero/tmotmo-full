@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class SceneFourteen : Scene {
-	GameObject background, bottomDither;
+	DitheredBlueBackground background;
 	FallingGuyProp fallingGuyProp;
 	Metronome animation;
 	UnityInput input;
@@ -12,18 +12,15 @@ public class SceneFourteen : Scene {
 		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
 		input = new UnityInput();
+		background = new DitheredBlueBackground(resourceFactory);
 	}
 
 	public override void LoadAssets() {
-		background = resourceFactory.Create("SceneTwelve/TealBackground");
-		bottomDither = resourceFactory.Create("SceneTwelve/BottomDither");
-		background.active = false;
-		bottomDither.active = false;
+		background.LoadAssets();
 	}
 
 	public override void Setup (float startTime) {
-		background.active = true;
-		bottomDither.active = true;
+		background.Show();
 
 		animation = new Metronome(startTime, 0.1f);
 		fallingGuyProp.Setup();
@@ -33,8 +30,10 @@ public class SceneFourteen : Scene {
 	public override void Update () {
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
-			leftHandTouched |= fallingGuyProp.otherArm.Contains(touch.position);
-			rightHandTouched |= fallingGuyProp.guyWithArmOut.Contains(touch.position);
+			leftHandTouched |= fallingGuyProp.otherArm.Contains(Camera.main, touch.position);
+			rightHandTouched |= fallingGuyProp.guyWithArmOut.Contains(Camera.main, touch.position);
+			leftHandTouched |= fallingGuyProp.otherArm.Contains(fallingGuyProp.wrapCam, touch.position);
+			rightHandTouched |= fallingGuyProp.guyWithArmOut.Contains(fallingGuyProp.wrapCam, touch.position);
 		}
 		
 		if (Application.isEditor && input.GetMouseButtonUp(0)) {
@@ -51,8 +50,7 @@ public class SceneFourteen : Scene {
 	}
 
 	public override void Destroy () {
-		GameObject.Destroy(background);
-		GameObject.Destroy(bottomDither);
+		background.Destroy();
 		fallingGuyProp.Destroy();
 	}
 }

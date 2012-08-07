@@ -33,8 +33,10 @@ class SceneSix : Scene {
 	public override void Update () {
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
-			leftHeadTouched |= bigHeadProp.faceLeft.Contains(touch.position);
-			rightHeadTouched |= bigHeadProp.faceRight.Contains(touch.position);
+			leftHeadTouched |= bigHeadProp.faceLeft.Contains(Camera.main, touch.position);
+			rightHeadTouched |= bigHeadProp.faceRight.Contains(Camera.main, touch.position);
+			leftHeadTouched |= bigHeadProp.faceLeft.Contains(wrapCam.camera, touch.position);
+			rightHeadTouched |= bigHeadProp.faceRight.Contains(wrapCam.camera, touch.position);
 		}
 		
 		if (Application.isEditor && input.GetMouseButtonUp(0)) {

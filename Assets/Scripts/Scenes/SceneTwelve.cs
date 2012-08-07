@@ -134,7 +134,7 @@ public class SceneTwelve : Scene {
 			return;
 		}
 
-		if (touchSensor.insideSprite(topHand)) {
+		if (touchSensor.insideSprite(Camera.main, topHand)) {
 			openFingers[nextFinger].visible(true);
 
 			if (nextFinger < 4) {

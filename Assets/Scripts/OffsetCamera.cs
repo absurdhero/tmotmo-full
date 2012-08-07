@@ -3,6 +3,8 @@ using UnityEngine;
 public class OffsetCamera {
 	GameObject cameraObject;
 
+	public Camera camera { get { return cameraObject.GetComponent<Camera>(); } }
+
 	/// <summary>
 	/// Add an additional camera to the scene layered on top of the main one
 	/// </summary>

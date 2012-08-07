@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class FallingGuyProp {
-	OffsetCamera wrapCam;
+	OffsetCamera offsetCamera;
+	public Camera wrapCam { get; private set; }
 	public Sprite guyWithArmOut { get; private set; }
 	public Sprite otherArm { get; private set; }
 	bool armIsMovingAway = false;
@@ -19,12 +20,12 @@ public class FallingGuyProp {
 	}
 
 	public void Setup() {
-		if (wrapCam != null) return; // skip if prop was already set up
+		if (offsetCamera != null) return; // skip if prop was already set up
 
 		armIsMovingAway = true;
 
 		// construct additional camera that is positioned above the screen to show vertical wrapping
-		wrapCam = new OffsetCamera(new Vector3(0, 200, -10), 2);
+		offsetCamera = new OffsetCamera(new Vector3(0, 200, -10), 2);
 
 		// put sprites in their own layer so the other camera doesn't render the background
 		guyWithArmOut.gameObject.layer = 1;
@@ -107,6 +108,6 @@ public class FallingGuyProp {
 	public void Destroy() {
 		Sprite.Destroy(guyWithArmOut);
 		Sprite.Destroy(otherArm);
-		wrapCam.Destroy();
+		offsetCamera.Destroy();
 	}
 }

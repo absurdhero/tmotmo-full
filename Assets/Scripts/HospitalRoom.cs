@@ -152,8 +152,8 @@ public class HospitalRoom {
 	}
 	
 	public bool guyContains(Vector2 position) {
-		return guyLeft.GetComponent<Sprite>().Contains(position)
-			|| guyRight.GetComponent<Sprite>().Contains(position);
+		return guyLeft.GetComponent<Sprite>().Contains(Camera.main, position)
+			|| guyRight.GetComponent<Sprite>().Contains(Camera.main, position);
 	}
 	
 	public void separateHalves(float distance) {

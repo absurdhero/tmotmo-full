@@ -29,7 +29,7 @@ class SceneTwo : Scene {
 	public override void Update () {
 		var touch = new TouchSensor(input);
 
-		if (touch.insideSprite(room.cover.GetComponent<Sprite>())) {
+		if (touch.insideSprite(Camera.main, room.cover.GetComponent<Sprite>())) {
 			room.openEyes();
 		}
 

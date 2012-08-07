@@ -17,7 +17,7 @@ public class Dragger {
 	public Vector3 movementIfDragged() {
 		if (input.touchCount > 0 && input.hasMoved(0)) {
 			var touch = input.GetTouch(0);
-			if (!sprite.Contains(touch.position)) return Vector3.zero;
+			if (!sprite.Contains(Camera.main, touch.position)) return Vector3.zero;
 			return new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0f);
 		}
 		return Vector3.zero;

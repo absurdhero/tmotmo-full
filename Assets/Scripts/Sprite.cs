@@ -149,7 +149,11 @@ public class Sprite : MonoBehaviour {
 	}
 	
 	public Rect ScreenRect() {
-		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+		return ScreenRect(Camera.main);
+	}
+	
+	public Rect ScreenRect(Camera camera) {
+		Vector3 pos = camera.WorldToScreenPoint(transform.position);
 		return new Rect(pos.x, pos.y, width, height);
 	}
 	
@@ -158,12 +162,12 @@ public class Sprite : MonoBehaviour {
 		return new Vector2(pos.x + width / 2, pos.y + height / 2);
 	}
 
-	public bool Contains(Vector2 position) {
-		return ScreenRect().Contains(position);
+	public bool Contains(Camera camera, Vector2 position) {
+		return ScreenRect(camera).Contains(position);
 	}
 	
-	public bool Contains(Vector3 position) {
-		return ScreenRect().Contains(new Vector2(position.x, position.y));
+	public bool Contains(Camera camera, Vector3 position) {
+		return ScreenRect(camera).Contains(new Vector2(position.x, position.y));
 	}
 
 	public void setScreenPosition(float x, float y) {

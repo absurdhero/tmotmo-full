@@ -83,8 +83,8 @@ class SceneOne : Scene {
 		touched2 = false;
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
-			touched1 |= circle.GetComponent<Sprite>().Contains(touch.position);
-			touched2 |= triangle.GetComponent<Sprite>().Contains(touch.position);
+			touched1 |= circle.GetComponent<Sprite>().Contains(Camera.main, touch.position);
+			touched2 |= triangle.GetComponent<Sprite>().Contains(Camera.main, touch.position);
 		}
 		
 		if (Application.isEditor && input.GetMouseButtonUp(0)) {

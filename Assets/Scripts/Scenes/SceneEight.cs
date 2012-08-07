@@ -77,7 +77,7 @@ class SceneEight : Scene {
 		previousMousePosition = input.mousePosition;
 		
 		if (input.touchCount > 0 && input.GetTouch(0).phase == TouchPhase.Moved) {
-			if (!bigHeadProp.faceRight.Contains(input.GetTouch(0).position)) return;
+			if (!bigHeadProp.faceRight.Contains(Camera.main, input.GetTouch(0).position)) return;
 			movementDelta = new Vector3(input.GetTouch(0).deltaPosition.x, input.GetTouch(0).deltaPosition.y, 0f);
 		}
 		moveToLocation(movementDelta);

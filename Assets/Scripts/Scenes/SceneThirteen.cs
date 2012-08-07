@@ -2,27 +2,24 @@ using UnityEngine;
 using System.Collections;
 
 public class SceneThirteen : Scene {
-	GameObject background, bottomDither;
+	DitheredBlueBackground background;
 	public FallingGuyProp fallingGuyProp { get; private set; }
 	Metronome animation;
 
 	public SceneThirteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
 		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
+		background = new DitheredBlueBackground(resourceFactory);
 	}
 
 	public override void LoadAssets() {
-		background = resourceFactory.Create("SceneTwelve/TealBackground");
-		bottomDither = resourceFactory.Create("SceneTwelve/BottomDither");
-		background.active = false;
-		bottomDither.active = false;
+		background.LoadAssets();
 	}
 
 	public override void Setup (float startTime) {
 		endScene();
-
-		background.active = true;
-		bottomDither.active = true;
+		
+		background.Show();
 
 		animation = new Metronome(startTime, 0.1f);
 		fallingGuyProp.Setup();
@@ -34,7 +31,6 @@ public class SceneThirteen : Scene {
 	}
 
 	public override void Destroy () {
-		GameObject.Destroy(background);
-		GameObject.Destroy(bottomDither);
+		background.Destroy();
 	}
 }
