@@ -61,6 +61,10 @@ public class SceneManager {
 	public void Update () {
 		currentScene.Update();		
 		
+		if (currentScene.completed) {
+			loopTracker.PlayAll();
+		}
+
 		if (loopTracker.IsLoopOver()) {
 			if (currentScene.completed) {
 				Debug.Log("scene complete. Transitioning...");
