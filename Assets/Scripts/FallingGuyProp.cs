@@ -7,6 +7,11 @@ public class FallingGuyProp {
 	public Sprite otherArm { get; private set; }
 	bool armIsMovingAway = false;
 	bool leftSideStopped, rightSideStopped;
+	int fallAndStopSpeed = 10;
+	bool armsAreReadyToMoveInward = false;
+	
+	const int leftFinalBottomHeight = -50;
+	const int rightFinalBottomHeight = -30;
 
 	public FallingGuyProp() {
 	}
@@ -42,6 +47,10 @@ public class FallingGuyProp {
 			if (!armIsMovingAway) {
 				if (!leftSideStopped) scrollLeftSide();
 				if (!rightSideStopped) scrollRightSide();
+				
+				if (leftSideStopped && rightSideStopped) {
+					alignArmsAtBottomOfScreen();
+				}
 			} else {
 				if (!armIsOnLeftOfScreen()) {
 					otherArm.move(-10, -5);
@@ -50,6 +59,10 @@ public class FallingGuyProp {
 					armIsMovingAway = false;
 					scrollFall();
 				}
+			}
+			
+			if (armsAreStoppedAtBottom() && armsAreReadyToMoveInward) {
+				moveArmsInward();
 			}
 		}
 	}
@@ -72,18 +85,38 @@ public class FallingGuyProp {
 			otherArm.move(-100, 0);
 		}
 	}
-	
+
 	public void moveArmsApart() {
 		otherArm.move(-1, 0);
 		guyWithArmOut.move(5, 0);
 	}
 	
-	public void stopLefSide() {
+	public void stopLeftSide() {
 		leftSideStopped = true;
 	}
 	
 	public void stopRightSide() {
 		rightSideStopped = true;
+	}
+	
+	public bool armsAreStoppedAtBottom() {
+		if (leftSideStopped
+			&& rightSideStopped
+			&& otherArm.getScreenPosition().y <= leftFinalBottomHeight
+			&& guyWithArmOut.getScreenPosition().y <= rightFinalBottomHeight)
+			return true;
+		return false;
+	}
+	
+	public void readyToMoveArmsInward() {
+		armsAreReadyToMoveInward = true;
+	}
+	
+	public bool handsAreAlmostTouching() {
+		if (otherArm.getScreenPosition().x > 75
+			&& guyWithArmOut.getScreenPosition().x <= 170)
+			return true;
+		return false;
 	}
 
 	private void scrollLeftSide() {
@@ -103,6 +136,25 @@ public class FallingGuyProp {
 	private void scrollFall() {
 		scrollLeftSide();
 		scrollRightSide();
+	}
+	
+	private void alignArmsAtBottomOfScreen() {
+		var otherArmHeight = otherArm.getScreenPosition().y;
+		if (otherArmHeight > leftFinalBottomHeight) {
+			otherArm.move(0, -Mathf.Min(fallAndStopSpeed, otherArmHeight - leftFinalBottomHeight));
+		}
+
+		var guyArmHeight = guyWithArmOut.getScreenPosition().y;
+		if (guyArmHeight > rightFinalBottomHeight) {
+			guyWithArmOut.move(0, -Mathf.Min(fallAndStopSpeed, guyArmHeight - rightFinalBottomHeight));
+		}
+	}
+	
+	private void moveArmsInward() {
+		if (handsAreAlmostTouching()) return;
+		
+		otherArm.move(4, 0);
+		guyWithArmOut.move(-6, 0);
 	}
 
 	public void Destroy() {

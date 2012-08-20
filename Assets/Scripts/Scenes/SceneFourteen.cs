@@ -41,14 +41,23 @@ public class SceneFourteen : Scene {
 			leftHandTouched = true;
 		}
 
-		if (leftHandTouched) fallingGuyProp.stopLefSide();
+		if (leftHandTouched) fallingGuyProp.stopLeftSide();
 		if (rightHandTouched) fallingGuyProp.stopRightSide();
 		
-		if (leftHandTouched && rightHandTouched) endScene();
+		if (fallingGuyProp.armsAreStoppedAtBottom()
+			&& nearEndOfLoop()) {
+			fallingGuyProp.readyToMoveArmsInward();
+			endScene();
+		}
 		
 		fallingGuyProp.updateFallingGuy(animation);
 	}
-
+	
+	private bool nearEndOfLoop() {
+		return sceneManager.timeLeftInCurrentLoop() < 3.5f
+			&& sceneManager.timeLeftInCurrentLoop() > 3f;
+	}
+	
 	public override void Destroy () {
 		background.Destroy();
 		fallingGuyProp.Destroy();
