@@ -4,8 +4,8 @@ using System;
 class SceneFour : Scene {
 	HospitalRoom hospitalRoom;
 
-	GameObject leftMouth;
-	GameObject rightMouth;
+	Sprite leftMouth;
+	Sprite rightMouth;
 	
 	SpeechBubble speechBubble;
 	
@@ -49,24 +49,24 @@ class SceneFour : Scene {
 	}
 		
 	private void addMouth() {
-		leftMouth = resourceFactory.Create(this, "LeftMouth");
-		rightMouth = resourceFactory.Create(this, "RightMouth");
-		leftMouth.active = false;
-		rightMouth.active = false;
+		leftMouth = resourceFactory.Create(this, "LeftMouth").GetComponent<Sprite>();
+		rightMouth = resourceFactory.Create(this, "RightMouth").GetComponent<Sprite>();
+		leftMouth.visible(false);
+		rightMouth.visible(false);
 		
-		leftMouth.GetComponent<Sprite>().setWorldPosition(-24f, 24f, -4f);
-		rightMouth.GetComponent<Sprite>().setWorldPosition(28f, 24f, -4f);		
+		leftMouth.setWorldPosition(-25f, 24f, -4f);
+		rightMouth.setWorldPosition(29f, 24f, -4f);
 	}
 	
 	class MouthAnimator : Repeater {
-		GameObject leftMouth;
-		GameObject rightMouth;
+		Sprite leftMouth;
+		Sprite rightMouth;
 		int delay = 2;
 		int frame = 0;
 		
 		const int totalFrames = 16;		
 		
-		public MouthAnimator(float startTime, GameObject leftMouth, GameObject rightMouth) : base(0.25f, 0, startTime) {
+		public MouthAnimator(float startTime, Sprite leftMouth, Sprite rightMouth) : base(0.25f, 0, startTime) {
 			this.leftMouth = leftMouth;
 			this.rightMouth = rightMouth;
 		}
@@ -77,8 +77,8 @@ class SceneFour : Scene {
 				return;
 			}
 
-			moveMouth(this.leftMouth, 0, 4);
-			moveMouth(this.rightMouth, 8, 8 + 4);
+			moveMouth(leftMouth, 0, 4);
+			moveMouth(rightMouth, 8, 8 + 4);
 			
 			incrementFrame();
 		}
@@ -87,17 +87,17 @@ class SceneFour : Scene {
 			frame = (frame + 1) % totalFrames;
 		}
 
-		private void moveMouth(GameObject mouth, int start, int end) {
+		private void moveMouth(Sprite mouth, int start, int end) {
 			// combinations of nextTexture and activating/deactivating the mouth overlays
 			if (frame == start) {
-				mouth.active = true;
+				mouth.visible(true);
 			}
 			else if(frame > start && frame < end) {
-				mouth.GetComponent<Sprite>().DrawNextFrame();
+				mouth.DrawNextFrame();
 			}
 			else if(frame == end) {
-				mouth.GetComponent<Sprite>().DrawNextFrame();
-				mouth.active = false;	
+				mouth.DrawNextFrame();
+				mouth.visible(false);
 			}
 		}
 	}
