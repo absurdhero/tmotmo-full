@@ -226,12 +226,29 @@ public class Sprite : MonoBehaviour {
 		
 		return parent;		
 	}
-	
+
+	public GameObject createPivotOnCenter() {
+		var parent = new GameObject("Parent of " + gameObject.name);
+		copyTransformTo(parent);
+
+		// translate the parent 2 times the sprite height.
+		// implicitly translate the sprite in the opposite direction by the same amount.
+		parent.transform.Translate(worldWidth / 2f, worldHeight / 2f, 0f);
+		gameObject.transform.parent = parent.transform;
+		
+		return parent;		
+	}
+
 	private float worldHeight {
 		// This is multiplied by two because orthographicSize is half the screen height
 		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }
 	}
 	
+	private float worldWidth {
+		// This is multiplied by two because orthographicSize is half the screen height
+		get { return width / Camera.main.pixelWidth * Camera.main.orthographicSize * 2.0f; }
+	}
+
 	private Vector3 snapToPixel(Vector3 pos) {
 		Vector3 newpos;
 		float pixelRatio = (Camera.main.orthographicSize * 2) / Camera.main.pixelHeight;
