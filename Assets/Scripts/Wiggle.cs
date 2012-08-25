@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 
 class Wiggle : Repeater {
-	GameObject centerPivot;
+	List<GameObject> centerPivots;
 	float sceneStart;
 	float sceneLength;
 	
@@ -10,11 +12,16 @@ class Wiggle : Repeater {
 	const int zoomTicks = 5;
 	const int wiggleTicks = 15;
 
-	public Wiggle(float startTime, float sceneLength, Sprite sprite) : base(0.05f, 0, startTime) {
+	public Wiggle(float startTime, float sceneLength, Sprite sprite) :
+	this(startTime, sceneLength, new[] {sprite}) {}
+
+	public Wiggle(float startTime, float sceneLength, Sprite[] sprites) : base(0.05f, 0, startTime) {
 		sceneStart = startTime;
 		this.sceneLength = sceneLength;
 		
-		centerPivot = sprite.createPivotOnCenter();
+		centerPivots = sprites.Select<Sprite, GameObject>(
+			sprite => sprite.createPivotOnCenter()).ToList();
+
 		doWiggle = false;
 	}
 	
@@ -31,7 +38,7 @@ class Wiggle : Repeater {
 		} else if (currentTick < zoomTicks + wiggleTicks) {
 			wiggle();
 		} else if (currentTick < zoomTicks + wiggleTicks + zoomTicks) {
-			centerPivot.transform.rotation = Quaternion.identity;
+			centerPivots.ForEach(pivot => pivot.transform.rotation = Quaternion.identity);
 			zoomOut();
 		} else {
 			doWiggle = false;
@@ -45,7 +52,7 @@ class Wiggle : Repeater {
 	}
 	
 	public void Destroy() {
-		GameObject.Destroy(centerPivot);
+		centerPivots.ForEach(pivot => GameObject.Destroy(pivot));
 	}
 	
 	private void zoomIn() {
@@ -58,11 +65,11 @@ class Wiggle : Repeater {
 	}
 	
 	private void zoomFor(int tick) {
-		centerPivot.transform.localScale = Vector3.one * (1f + tick / (float) zoomTicks / 24f);
+		centerPivots.ForEach(pivot => pivot.transform.localScale = Vector3.one * (1f + tick / (float) zoomTicks / 24f));
 	}
 	
 	private void wiggle() {
 		float angle = Mathf.PingPong(currentTick - zoomTicks / 64f * Mathf.PI, Mathf.PI / 16f);
-		centerPivot.transform.Rotate(Vector3.back, angle, Space.Self);
+		centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, angle, Space.Self));
 	}
 }

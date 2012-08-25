@@ -8,7 +8,7 @@ class SceneOne : Scene {
 	public GameObject circle;
 	public GameObject triangle;
 	
-	Wiggle circleWiggle, triangleWiggle;
+	Wiggle wiggle;
 
 	Cycler notSameCycler;
 	Cycler circleCycler;
@@ -69,8 +69,7 @@ class SceneOne : Scene {
 		notSameCycler = new DelayedCycler(0.2f, 4, 1.2f, startTime);
 		notSameCycler.AddSprite(notSame);
 
-		circleWiggle = new Wiggle(startTime, timeLength, circle.GetComponent<Sprite>());
-		triangleWiggle = new Wiggle(startTime, timeLength, triangle.GetComponent<Sprite>());
+		wiggle = new Wiggle(startTime, timeLength, new[] {circle.GetComponent<Sprite>(), triangle.GetComponent<Sprite>()});
 	}
 
 	public override void Destroy() {
@@ -79,15 +78,13 @@ class SceneOne : Scene {
 		GameObject.Destroy(same);
 		GameObject.Destroy(notSame);
 		GameObject.Destroy(background);
-		circleWiggle.Destroy();
-		triangleWiggle.Destroy();
+		wiggle.Destroy();
 	}
 
 	public override void Update () {
 		float now = Time.time;
 		notSameCycler.Update(now);
-		circleWiggle.Update(now);
-		triangleWiggle.Update(now);
+		wiggle.Update(now);
 		
 		touched1 = false;
 		touched2 = false;
@@ -104,8 +101,7 @@ class SceneOne : Scene {
 		
 		if (touched1 && touched2) {
 			Handheld.Vibrate();
-			circleWiggle.wiggleNow(now);
-			triangleWiggle.wiggleNow(now);
+			wiggle.wiggleNow(now);
 			endScene();
 		} else {
 			AnimateShapes();
