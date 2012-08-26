@@ -12,16 +12,21 @@ class Wiggle : Repeater {
 	const int zoomTicks = 5;
 	const int wiggleTicks = 15;
 
+	private static GameObject[] pivotsFromSprite(Sprite[] sprites) {
+		return sprites.Select<Sprite, GameObject>(
+			sprite => sprite.createPivotOnCenter()).ToArray();
+	}
+
 	public Wiggle(float startTime, float sceneLength, Sprite sprite) :
 	this(startTime, sceneLength, new[] {sprite}) {}
 
-	public Wiggle(float startTime, float sceneLength, Sprite[] sprites) : base(0.05f, 0, startTime) {
+	public Wiggle(float startTime, float sceneLength, Sprite[] sprites) :
+	this(startTime, sceneLength, pivotsFromSprite(sprites)) {}
+
+	public Wiggle(float startTime, float sceneLength, GameObject[] centerPivots) : base(0.05f, 0, startTime) {
 		sceneStart = startTime;
 		this.sceneLength = sceneLength;
-
-		centerPivots = sprites.Select<Sprite, GameObject>(
-			sprite => sprite.createPivotOnCenter()).ToList();
-
+		this.centerPivots = centerPivots.ToList();
 		doWiggle = false;
 	}
 	

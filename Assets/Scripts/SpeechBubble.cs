@@ -69,6 +69,13 @@ class SpeechBubble {
 		var currentBubbleRightTailPosition = camera.WorldToScreenPoint(speechBubbleRight.transform.position);
 		speechBubbleRight.transform.position = camera.ScreenToWorldPoint(currentBubbleRightTailPosition + movementDelta);
 	}
+
+	public GameObject centerPivot() {
+		GameObject pivot = speechBubble.GetComponent<Sprite>().createPivotOnCenter();
+		speechBubbleLeft.transform.parent = pivot.transform;
+		speechBubbleRight.transform.parent = pivot.transform;
+		return pivot;
+	}
 	
 	public void Update() {
 		moveToLocation(dragger.movementIfDragged());
