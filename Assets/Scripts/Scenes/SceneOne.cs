@@ -16,9 +16,6 @@ class SceneOne : Scene {
 
 	int triangleWaitTime = 4;
 
-	//Color hi = new Color(0.8f, 0.8f, 0.8f, 1f);
-	//Fader fader = new Fader(1.0f);
-
 	bool touched1 = false;
 	bool touched2 = false;
 	
@@ -83,23 +80,16 @@ class SceneOne : Scene {
 
 	public override void Update () {
 		float now = Time.time;
-		notSameCycler.Update(now);
 		wiggle.Update(now);
+		notSameCycler.Update(now);
+
+		var touch = new TouchSensor(input);
+
+		bool editorTouched = Application.isEditor && input.GetMouseButtonUp(0);
 		
-		touched1 = false;
-		touched2 = false;
-		for (int i = 0; i < input.touchCount; i++) {
-			var touch = input.GetTouch(i);
-			touched1 |= circle.GetComponent<Sprite>().Contains(Camera.main, touch.position);
-			touched2 |= triangle.GetComponent<Sprite>().Contains(Camera.main, touch.position);
-		}
-		
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			touched1 = true;
-			touched2 = true;
-		}
-		
-		if (touched1 && touched2) {
+		if (editorTouched ||
+			(touch.insideSprite(Camera.main, circle.GetComponent<Sprite>()) &&
+			 touch.insideSprite(Camera.main, triangle.GetComponent<Sprite>()))) {
 			Handheld.Vibrate();
 			wiggle.wiggleNow(now);
 			endScene();

@@ -63,25 +63,17 @@ public class TitleScene : Scene {
 	}
 	
 	public override void Update () {
-		bool touchedBuy = false;
-		bool touchedNews = false;
-		bool touched = input.touchCount > 0;
+		var touch = new TouchSensor(input);
 		
-		for (int i = 0; i < input.touchCount; i++) {
-			var touch = input.GetTouch(i);
-			touchedBuy |= buyMusic.GetComponent<Sprite>().Contains(Camera.main, touch.position);
-			touchedNews |= news.GetComponent<Sprite>().Contains(Camera.main, touch.position);
-	    }
-		
-		if (touchedBuy) {
+		if (touch.insideSprite(Camera.main, buyMusic.GetComponent<Sprite>())) {
 			Application.OpenURL("http://itunes.apple.com/us/album/same-not-same-ep/id533347009");
 			ConsumeTouches();
 		}
-		else if (touchedNews) {
+		else if (touch.insideSprite(Camera.main, news.GetComponent<Sprite>())) {
 			Application.OpenURL("http://themakingofthemakingof.com");
 			ConsumeTouches();
 		}
-		else if (touched) {
+		else if (touch.any()) {
 			endScene();
 		}
 

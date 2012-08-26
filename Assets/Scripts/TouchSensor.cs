@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class TouchSensor {
 	UnityInput input;
@@ -7,20 +9,33 @@ public class TouchSensor {
 		this.input = input;
 	}
 
-	public bool insideSprite(Camera camera, Sprite sprite) {
-		bool touched = false;
-		for (int i = 0; i < input.touchCount; i++) {
-			var touch = input.GetTouch(i);
-			if (touch.phase == TouchPhase.Began) {
-				touched |= sprite.Contains(camera, touch.position);
+	private IEnumerable<Touch> allTouches {
+		get {
+			for (int i = 0; i < input.touchCount; i++) {
+				var touch = input.GetTouch(i);
+				if (touch.phase == TouchPhase.Began)
+					yield return touch;
 			}
 		}
+	}
 
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			var pos = input.mousePosition;
-			touched |= sprite.Contains(camera, pos);
+	private bool editorTouched {
+		get { return Application.isEditor && input.GetMouseButtonUp(0); }
+	}
+
+	public bool insideSprite(Camera camera, Sprite sprite) {
+		foreach (var touch in allTouches) {
+			if (sprite.Contains(camera, touch.position))
+				return true;
 		}
 
-		return touched;
+		if (editorTouched && sprite.Contains(camera, input.mousePosition))
+			return true;
+
+		return false;
+	}
+
+	public bool any() {
+		return allTouches.Any() || editorTouched;
 	}
 }
