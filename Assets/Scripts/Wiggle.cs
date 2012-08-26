@@ -18,7 +18,7 @@ class Wiggle : Repeater {
 	public Wiggle(float startTime, float sceneLength, Sprite[] sprites) : base(0.05f, 0, startTime) {
 		sceneStart = startTime;
 		this.sceneLength = sceneLength;
-		
+
 		centerPivots = sprites.Select<Sprite, GameObject>(
 			sprite => sprite.createPivotOnCenter()).ToList();
 
@@ -52,7 +52,11 @@ class Wiggle : Repeater {
 	}
 	
 	public void Destroy() {
-		centerPivots.ForEach(pivot => GameObject.Destroy(pivot));
+		foreach(var pivot in centerPivots) {
+			// GameObject.Destroy also destroys children so we must detach each Sprite from its pivot
+			pivot.transform.DetachChildren();
+			GameObject.Destroy(pivot);
+		}
 	}
 	
 	private void zoomIn() {

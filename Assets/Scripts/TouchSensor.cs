@@ -19,7 +19,7 @@ public class TouchSensor {
 		}
 	}
 
-	private bool editorTouched {
+	public bool editorTouched {
 		get { return Application.isEditor && input.GetMouseButtonUp(0); }
 	}
 

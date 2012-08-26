@@ -33,7 +33,7 @@ public class Cycler
 		if (sprite == null) {
 			throw new MissingComponentException("Expected object to have a Sprite component");
 		}
-		sprites.Add(sprite);
+		AddSprite(sprite);
 	}
 	
 	public int Count() {

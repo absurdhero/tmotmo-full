@@ -7,8 +7,7 @@ public class HospitalRoom {
 	GameObject room;
 	
 	int guyCenterOffset = 6;
-	GameObject guyLeft;
-	GameObject guyRight;
+	public Sprite guyLeft, guyRight;
 	Vector3 guyLeftInitialPosition;
 	Vector3 guyRightInitialPosition;
 	public float guySplitDistance { get; private set; }
@@ -42,6 +41,10 @@ public class HospitalRoom {
 		if (gobj != null) GameObject.Destroy(gobj);
 	}
 
+	private void DestroyIfNotNull(Sprite sprite) {
+		if (sprite != null) Sprite.Destroy(sprite);
+	}
+
 	public void Destroy() {
 		DestroyIfNotNull(room);
 		DestroyIfNotNull(guyLeft);
@@ -57,18 +60,15 @@ public class HospitalRoom {
 	}
 	
 	public void addPerson() {
-		guyLeft = resourceFactory.Create(this, "GuyLeft");
-		guyRight = resourceFactory.Create(this, "GuyRight");
+		guyLeft = resourceFactory.Create(this, "GuyLeft").GetComponent<Sprite>();
+		guyRight = resourceFactory.Create(this, "GuyRight").GetComponent<Sprite>();
 		
-		var leftSprite = guyLeft.GetComponent<Sprite>();
-		var rightSprite = guyRight.GetComponent<Sprite>();
-		
-		leftSprite.setScreenPosition((int) camera.pixelWidth / 2 - leftSprite.PixelWidth() + guyCenterOffset,
-									 (int) camera.pixelHeight / 2 - leftSprite.PixelHeight() / 2);
-		rightSprite.setScreenPosition((int) camera.pixelWidth / 2 + guyCenterOffset,
-									  (int) camera.pixelHeight / 2 - rightSprite.PixelHeight() / 2);
-		guyLeftInitialPosition = leftSprite.getScreenPosition();
-		guyRightInitialPosition = rightSprite.getScreenPosition();
+		guyLeft.setScreenPosition((int) camera.pixelWidth / 2 - guyLeft.PixelWidth() + guyCenterOffset,
+									 (int) camera.pixelHeight / 2 - guyLeft.PixelHeight() / 2);
+		guyRight.setScreenPosition((int) camera.pixelWidth / 2 + guyCenterOffset,
+									  (int) camera.pixelHeight / 2 - guyRight.PixelHeight() / 2);
+		guyLeftInitialPosition = guyLeft.getScreenPosition();
+		guyRightInitialPosition = guyRight.getScreenPosition();
 		
 		eyes = resourceFactory.Create(this, "EyesOpening");
 		eyes.GetComponent<Sprite>().setWorldPosition(-5.5f, 36.5f, -1f);
@@ -141,8 +141,8 @@ public class HospitalRoom {
 	
 	
 	public Rect guyBoundsPlus(float inflation) {
-		var leftRect = guyLeft.GetComponent<Sprite>().ScreenRect();
-		var rightRect = guyRight.GetComponent<Sprite>().ScreenRect();
+		var leftRect = guyLeft.ScreenRect();
+		var rightRect = guyRight.ScreenRect();
 		var rect = new Rect(leftRect.x - inflation,
 						leftRect.y - inflation,
 						leftRect.width + rightRect.width + inflation * 2f,
@@ -152,8 +152,8 @@ public class HospitalRoom {
 	}
 	
 	public bool guyContains(Vector2 position) {
-		return guyLeft.GetComponent<Sprite>().Contains(Camera.main, position)
-			|| guyRight.GetComponent<Sprite>().Contains(Camera.main, position);
+		return guyLeft.Contains(Camera.main, position)
+			|| guyRight.Contains(Camera.main, position);
 	}
 	
 	public void separateHalves(float distance) {
@@ -161,11 +161,8 @@ public class HospitalRoom {
 	}
 
 	private void setGuySplit() {
-		var leftSprite = guyLeft.GetComponent<Sprite>();
-		var rightSprite = guyRight.GetComponent<Sprite>();
-		
-		leftSprite.setScreenPosition((int) (guyLeftInitialPosition.x - guySplitDistance), (int) guyLeftInitialPosition.y);
-		rightSprite.setScreenPosition((int) (guyRightInitialPosition.x + guySplitDistance), (int) guyRightInitialPosition.y);
+		guyLeft.setScreenPosition((int) (guyLeftInitialPosition.x - guySplitDistance), (int) guyLeftInitialPosition.y);
+		guyRight.setScreenPosition((int) (guyRightInitialPosition.x + guySplitDistance), (int) guyRightInitialPosition.y);
 	}
 	
 	public void addSplitLine() {

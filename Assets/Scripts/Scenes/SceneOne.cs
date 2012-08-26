@@ -16,9 +16,6 @@ class SceneOne : Scene {
 
 	int triangleWaitTime = 4;
 
-	bool touched1 = false;
-	bool touched2 = false;
-	
  	// animate both shapes at the same frequency
 	private float shapeSpeed = 0.5f;
 	

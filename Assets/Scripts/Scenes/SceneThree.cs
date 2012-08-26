@@ -3,6 +3,7 @@ using System;
 
 class SceneThree : Scene {
 	public HospitalRoom room { get; private set; }
+	Wiggle wiggle;
 	
 	public const int MAX_SPLIT = 40;
 	
@@ -22,13 +23,17 @@ class SceneThree : Scene {
 		room.openEyes();
 		room.openEyes();
 		room.removeZzz();
+
+		wiggle = new Wiggle(startTime, timeLength, new[] {room.guyLeft, room.guyRight});
 	}
 	
 	public override void Destroy() {
+		wiggle.Destroy();
 	}
 
 	public override void Update () {
 		room.Update();
+		wiggle.Update(Time.time);
 		
 		if(room.guySplitDistance == MAX_SPLIT) {
 			endScene();
