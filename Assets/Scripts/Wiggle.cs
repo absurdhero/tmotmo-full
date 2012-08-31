@@ -6,6 +6,7 @@ class Wiggle : Repeater {
 	List<GameObject> centerPivots;
 	float sceneStart;
 	float sceneLength;
+	float totalRotation;
 	
 	bool doWiggle;
 	
@@ -28,6 +29,7 @@ class Wiggle : Repeater {
 		this.sceneLength = sceneLength;
 		this.centerPivots = centerPivots.ToList();
 		doWiggle = false;
+		totalRotation = 0f;
 	}
 	
 	public override void OnTick() {
@@ -43,7 +45,8 @@ class Wiggle : Repeater {
 		} else if (currentTick < zoomTicks + wiggleTicks) {
 			wiggle();
 		} else if (currentTick < zoomTicks + wiggleTicks + zoomTicks) {
-			centerPivots.ForEach(pivot => pivot.transform.rotation = Quaternion.identity);
+			centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, -totalRotation, Space.Self));
+			totalRotation = 0f;
 			zoomOut();
 		} else {
 			doWiggle = false;
@@ -78,7 +81,8 @@ class Wiggle : Repeater {
 	}
 	
 	private void wiggle() {
-		float angle = Mathf.PingPong(currentTick - zoomTicks / 64f * Mathf.PI, Mathf.PI / 16f);
+		float angle = -Mathf.PingPong(currentTick - zoomTicks / 64f * Mathf.PI, Mathf.PI / 16f);
+		totalRotation += angle;
 		centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, angle, Space.Self));
 	}
 }

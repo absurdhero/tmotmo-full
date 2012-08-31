@@ -9,6 +9,7 @@ class SceneEight : Scene {
 	GameObject faceRightParent;
 	MouthAnimator mouthAnimator;
 	Sprite mouthLeft, mouthRight;
+	Wiggle wiggle;
 	
 	Vector3 previousMousePosition;
 
@@ -41,21 +42,29 @@ class SceneEight : Scene {
 		mouthRight.visible(true);
 
 		mouthAnimator = new MouthAnimator(startTime, mouthLeft, mouthRight);
+		
+		var pivot = bigHeadProp.faceRight.createPivotOnTopLeftCorner();
+		mouthRight.transform.parent = pivot.transform;
+		wiggle = new Wiggle(startTime, timeLength, new[] {pivot});
 	}
 
 	public override void Update () {
-		mouthAnimator.Update(Time.time);
+		float now = Time.time;
+		
+		mouthAnimator.Update(now);
+		wiggle.Update(now);
 		
 		if (fullyTilted() && !confetti.pouring) {
-			confetti.Pour(Time.time);
+			confetti.Pour(now);
 		}
 		
 		if (confetti.pouring) {
-			confetti.Update(Time.time);
+			confetti.Update(now);
 		}
 		
 		if (confetti.finishedPouring) {
 			endScene();
+			wiggle.wiggleNow(now);
 		}
 
 		if(completed) return;
@@ -66,6 +75,7 @@ class SceneEight : Scene {
 		GameObject.Destroy(faceRightParent);
 		bigHeadProp.Destroy();
 		mouthAnimator.Destroy();
+		wiggle.Destroy();
 	}
 
 	void setLocationToTouch() {
