@@ -203,6 +203,8 @@ public class FallingGuyProp {
 	public void Destroy() {
 		Sprite.Destroy(guyWithArmOut);
 		Sprite.Destroy(otherArm);
+		Sprite.Destroy(guyWithFist);
+		Sprite.Destroy(otherFist);
 		offsetCamera.Destroy();
 	}
 }

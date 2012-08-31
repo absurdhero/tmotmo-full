@@ -5,14 +5,14 @@ using UnityEngine;
 public class SceneFactory : MarshalByRefObject {
 	SceneManager sceneManager;
 	
-	Type LAST_SCENE = typeof(SceneFourteen);
+	Type LAST_SCENE = typeof(Continued);
 
 	bool scenesInstantiated = false;
 	Scene[] scenes;
 
 	public SceneFactory (SceneManager sceneManager) {
 		this.sceneManager = sceneManager;
-		scenes = new Scene[15];
+		scenes = new Scene[16];
 	}
 
 	private void ensureScenesInstantiated() {
@@ -40,6 +40,7 @@ public class SceneFactory : MarshalByRefObject {
 		var sceneThirteen = new SceneThirteen(sceneManager, sceneTwelve.fallingGuyProp);
 		scenes[13] = sceneThirteen;
 		scenes[14] = new SceneFourteen(sceneManager, sceneThirteen.fallingGuyProp);
+		scenes[15] = new Continued(sceneManager);
 
 		scenesInstantiated = true;
 	}
