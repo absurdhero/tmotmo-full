@@ -57,8 +57,6 @@ public class FallingGuyProp {
 	public void updateFallingGuy(Metronome metronome) {
 		if (metronome.isNextTick(Time.time)) {
 			if (!armIsMovingAway) {
-				adjustScrollSpeed();
-				makeFistsWhenTogether();
 				if (!leftSideStopped) scrollLeftSide();
 				if (!rightSideStopped) scrollRightSide();
 				
@@ -147,7 +145,7 @@ public class FallingGuyProp {
 		}
 	}
 	
-	private void adjustScrollSpeed() {
+	public void adjustScrollSpeed() {
 		var rightPos = guyWithArmOut.getScreenPosition().y;
 		var leftPos = otherArm.getScreenPosition().y;
 		
@@ -162,7 +160,7 @@ public class FallingGuyProp {
 		scrollSpeed = (int) (1 / (50 - p + 20) * 400f);
 	}
 
-	private void makeFistsWhenTogether() {
+	public void makeFistsWhenTogether() {
 		if (scrollSpeed == normalScrollSpeed) {
 			guyWithArmOut.visible(true);
 			otherArm.visible(true);

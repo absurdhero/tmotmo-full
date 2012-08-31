@@ -50,6 +50,8 @@ public class SceneFourteen : Scene {
 			endScene();
 		}
 		
+		fallingGuyProp.adjustScrollSpeed();
+		fallingGuyProp.makeFistsWhenTogether();
 		fallingGuyProp.updateFallingGuy(animation);
 	}
 	
