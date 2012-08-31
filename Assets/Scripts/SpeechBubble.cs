@@ -22,6 +22,7 @@ class SpeechBubble {
 		speechBubble.GetComponent<Sprite>().setWorldPosition(-80f, 60f, -1f);
 		speechBubbleLeft.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
 		speechBubbleRight.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
+		speechBubbleRight.transform.Rotate(Vector3.forward * 5);
 		
 		input = new UnityInput();
 		dragger = new Dragger(input, speechBubble.GetComponent<Sprite>());
