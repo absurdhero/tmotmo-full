@@ -5,13 +5,17 @@ public class FallingGuyProp {
 	public Camera wrapCam { get; private set; }
 	public Sprite guyWithArmOut { get; private set; }
 	public Sprite otherArm { get; private set; }
+	private Sprite guyWithFist, otherFist;
+	
 	bool armIsMovingAway = false;
 	bool leftSideStopped, rightSideStopped;
 	int fallAndStopSpeed = 10;
+	int scrollSpeed = 20;
 	bool armsAreReadyToMoveInward = false;
 	
 	const int leftFinalBottomHeight = -50;
 	const int rightFinalBottomHeight = -30;
+	const int normalScrollSpeed = 20;
 
 	public FallingGuyProp() {
 	}
@@ -22,6 +26,12 @@ public class FallingGuyProp {
 
 		guyWithArmOut.visible(false);
 		otherArm.visible(false);
+		
+		guyWithFist = Sprite.create("SceneTwelve/guy_armout_fist");
+		otherFist = Sprite.create("SceneTwelve/other_arm_fist");
+		
+		guyWithFist.visible(false);
+		otherFist.visible(false);
 	}
 
 	public void Setup() {
@@ -35,6 +45,8 @@ public class FallingGuyProp {
 		// put sprites in their own layer so the other camera doesn't render the background
 		guyWithArmOut.gameObject.layer = 1;
 		otherArm.gameObject.layer = 1;
+		guyWithFist.gameObject.layer = 1;
+		otherFist.gameObject.layer = 1;
 
 		guyWithArmOut.setScreenPosition(180, -30);
 		guyWithArmOut.visible(true);
@@ -45,6 +57,8 @@ public class FallingGuyProp {
 	public void updateFallingGuy(Metronome metronome) {
 		if (metronome.isNextTick(Time.time)) {
 			if (!armIsMovingAway) {
+				adjustScrollSpeed();
+				makeFistsWhenTogether();
 				if (!leftSideStopped) scrollLeftSide();
 				if (!rightSideStopped) scrollRightSide();
 				
@@ -120,19 +134,50 @@ public class FallingGuyProp {
 	}
 
 	private void scrollLeftSide() {
-		otherArm.move(0, -20);
+		otherArm.move(0, -scrollSpeed);
 		if (otherArm.getScreenPosition().y <= 0) {
 			otherArm.move(0, Camera.main.pixelHeight);
 		}
 	}
 	
 	private void scrollRightSide() {
-		guyWithArmOut.move(0, 20);
+		guyWithArmOut.move(0, scrollSpeed);
 		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
 			guyWithArmOut.move(0, -Camera.main.pixelHeight);
 		}
 	}
 	
+	private void adjustScrollSpeed() {
+		var rightPos = guyWithArmOut.getScreenPosition().y;
+		var leftPos = otherArm.getScreenPosition().y;
+		
+		// slow down vertical scrolling as they get closer
+		float p = Mathf.Abs(rightPos - leftPos);
+		
+		if (p > 50) {
+			scrollSpeed = normalScrollSpeed;
+			return;
+		}
+		
+		scrollSpeed = (int) (1 / (50 - p + 20) * 400f);
+	}
+
+	private void makeFistsWhenTogether() {
+		if (scrollSpeed == normalScrollSpeed) {
+			guyWithArmOut.visible(true);
+			otherArm.visible(true);
+			otherFist.visible(false);
+			guyWithFist.visible(false);
+		} else {
+			otherFist.transform.position = otherArm.transform.position;
+			guyWithFist.transform.position = guyWithArmOut.transform.position;
+			otherFist.visible(true);
+			guyWithFist.visible(true);
+			guyWithArmOut.visible(false);
+			otherArm.visible(false);
+		}
+	}
+
 	private void scrollFall() {
 		scrollLeftSide();
 		scrollRightSide();
