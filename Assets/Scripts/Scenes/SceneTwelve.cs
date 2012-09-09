@@ -7,6 +7,8 @@ public class SceneTwelve : Scene {
 
 	Sprite bottomHandFingers, indexOpen, indexClosed, littleFingerOpen,
 		   middleFingerOpen, otherFingerOpen, thumbOpen;
+	
+	GameObject wristPivot;
 
 	Sprite[] openFingers;
 	int nextFinger = 0;
@@ -87,8 +89,9 @@ public class SceneTwelve : Scene {
 
 		bottomHandFingers.setScreenPosition(143, 82);
 		bottomHandFingers.setDepth(3);
-
-		armSwinger = new ArmSwinger(startTime, bottomWrist.createPivotOnTopLeftCorner());
+		
+		wristPivot = bottomWrist.createPivotOnTopLeftCorner();
+		armSwinger = new ArmSwinger(startTime, wristPivot);
 
 		indexClosed.setScreenPosition(186, 52);
 		indexClosed.setDepth(2);
@@ -168,6 +171,8 @@ public class SceneTwelve : Scene {
 		foreach(var finger in openFingers) {
 			Sprite.Destroy(finger);
 		}
+
+		GameObject.Destroy(wristPivot);
 	}
 
 	private void hideLargeSceneProps() {

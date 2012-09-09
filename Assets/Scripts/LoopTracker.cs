@@ -49,6 +49,12 @@ public class LoopTracker : MarshalByRefObject {
 		stems.Remove(sounds.lead_bgvocals);
 		sounds.playStems(stems);
 	}
+	
+	public void Stop() {
+		loopStart = 0f;
+		loopEnd = 0f;
+		sounds.playStems(new List<AudioSource>{});
+	}
 
 	public bool IsLoopOver() {
 		return (loopEnd == 0.0f) || (sounds.getAudioTime() > loopEnd);

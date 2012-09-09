@@ -5,6 +5,8 @@ using System.Collections.Generic;
 // Handles all sounds/stems in the app
 // This is a MonoBehaviour class only to use the Unity features to initialize AudioSource members
 public class Sounds : MarshalByRefObject {
+	const float trackStartingOffset = 8.0f;
+	
 	public AudioSource guitar1;
 	public AudioSource keys;
 	public AudioSource bass_beatsfx;
@@ -58,14 +60,14 @@ public class Sounds : MarshalByRefObject {
 	}
 
 	private void setTime (AudioSource stem, float when) {
-		stem.time = when + 8.0f;
+		stem.time = when + trackStartingOffset;
 	}
 
 	public float getAudioTime () {
 		if (playingStem == null) {
 			return 0f;
 		}
-		return ((float)playingStem.timeSamples) / SAMPLE_RATE - 8.0f;
+		return ((float)playingStem.timeSamples) / SAMPLE_RATE - trackStartingOffset;
 	}
 
 	// Strategy: Round 1: Play all stems
@@ -98,6 +100,8 @@ public class Sounds : MarshalByRefObject {
 
 	public void startPlaying () {
 		foreach (var stem in orderedStems) {
+			stem.Stop ();
+			stem.time = 0f;
 			stem.Play ();
 		}
 		playingStem = bass_beatsfx;

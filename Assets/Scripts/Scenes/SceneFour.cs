@@ -33,8 +33,8 @@ class SceneFour : Scene {
 	public override void Destroy() {
 		wiggle.Destroy();
 		speechBubble.Destroy();
-		GameObject.Destroy(leftMouth);
-		GameObject.Destroy(rightMouth);
+		Sprite.Destroy(leftMouth);
+		Sprite.Destroy(rightMouth);
 		hospitalRoom.Destroy();
 	}
 

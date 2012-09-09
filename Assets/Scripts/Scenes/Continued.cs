@@ -3,7 +3,7 @@ using UnityEngine;
 class Continued : Scene {
 	private Sprite text;
 	private Color originalBGColor;
-	private UnityInput input;
+	private TouchSensor touch;
 
 	public Continued(SceneManager manager) : base(manager) {
 		timeLength = 8;
@@ -15,11 +15,11 @@ class Continued : Scene {
 		text.setScreenPosition(0, 0);
 		originalBGColor = Camera.main.backgroundColor;
 		Camera.main.backgroundColor = Color.black;
-		input = new UnityInput();
+		touch = new TouchSensor(new UnityInput());
 	}
 	
 	public override void Update() {
-		if (input.touchCount > 0 && input.GetTouch(0).phase == TouchPhase.Began)
+		if (touch.any())
 			endScene();
 
 		sceneManager.loopTracker.PlayAllButVocals();

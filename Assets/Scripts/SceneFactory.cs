@@ -76,4 +76,9 @@ public class SceneFactory : MarshalByRefObject {
 			scene.LoadAssets();
 		}
 	}
+	
+	public void Reset() {
+		scenesInstantiated = false;
+		scenes = new Scene[16];
+	}
 }

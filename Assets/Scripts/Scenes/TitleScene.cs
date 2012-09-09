@@ -1,19 +1,6 @@
 using UnityEngine;
 using System;
 
-public interface Factory<TReturn, TId>
-{
-	TReturn create(TId id);
-}
-
-public class ImageFactory : Factory<GameObject, string>
-{
-	public GameObject create(string id) 
-	{
-		return (GameObject)GameObject.Instantiate(Resources.Load(id));
-	}
-}
-
 public class TitleScene : Scene {
 	public GameObject title;
 	public GameObject subtitle;

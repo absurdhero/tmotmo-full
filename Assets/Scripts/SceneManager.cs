@@ -19,13 +19,17 @@ public class SceneManager {
 		if(sceneFactory == null) {
 			sceneFactory = new SceneFactory(this);
 		}
-		sceneFactory.PreloadAssets();
 		this.sceneFactory = sceneFactory;
 		this.loopTracker = loopTracker;
+
+		StartGame();
+	}
+
+	void StartGame() {
+		sceneFactory.PreloadAssets();
 		
 		currentScene = sceneFactory.GetFirstScene();
 		currentScene.Setup(Time.time);
-		
 		SkipToScene(skipToSceneNumber);
 	}
 	
@@ -37,14 +41,14 @@ public class SceneManager {
 	}
 	
 	public void NextScene() {
-		currentScene.Destroy();
-		Resources.UnloadUnusedAssets();
-		
 		if(sceneFactory.isLastScene(currentScene)) {
 			GameOver();
 			return;
 		}
 
+		currentScene.Destroy();
+		Resources.UnloadUnusedAssets();
+		
 		if(sceneFactory.isFirstScene(currentScene)) {
 			loopTracker.startPlaying();
 		}
@@ -59,7 +63,7 @@ public class SceneManager {
 	}
 
 	public void Update () {
-		currentScene.Update();		
+		currentScene.Update();
 		
 		if (currentScene.completed) {
 			loopTracker.PlayAll();
@@ -97,8 +101,9 @@ public class SceneManager {
 
 	void GameOver() {
 		Debug.Log("game over");
+		loopTracker.Stop();
 		currentScene.Destroy();
-		currentScene = sceneFactory.GetFirstScene();
-		currentScene.Setup(Time.time);
+		sceneFactory.Reset();
+		StartGame();
 	}
 }
