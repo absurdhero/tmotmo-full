@@ -12,7 +12,7 @@ public class Sounds : MarshalByRefObject {
 	public AudioSource lead_bgvocals;
 	public AudioSource vocalsfx_livedrums;
 
-	private AudioSource[] orderedStems;
+	public AudioSource[] orderedStems;
 	private AudioSource playingStem; // we need this to do playingStem.time
 	public static string playingStems = "??";
 
@@ -107,7 +107,7 @@ public class Sounds : MarshalByRefObject {
 		playStems (new List<AudioSource> (orderedStems));
 	}
 
-	private void playStems (List<AudioSource> toPlay) {
+	public void playStems (List<AudioSource> toPlay) {
 		logStems (toPlay);
 		
 		foreach (AudioSource stem in orderedStems) {

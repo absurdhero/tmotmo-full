@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class LoopTracker : MarshalByRefObject {
 	int repetition;
@@ -41,6 +42,12 @@ public class LoopTracker : MarshalByRefObject {
 	
 	public void PlayAll() {
 		sounds.playAllStems();
+	}
+	
+	public void PlayAllButVocals() {
+		List<AudioSource> stems = new List<AudioSource>(sounds.orderedStems);
+		stems.Remove(sounds.lead_bgvocals);
+		sounds.playStems(stems);
 	}
 
 	public bool IsLoopOver() {

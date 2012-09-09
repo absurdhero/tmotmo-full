@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class SceneManager {
 	SceneFactory sceneFactory;
 	public Scene currentScene { get; private set;}
-	LoopTracker loopTracker;
+	public LoopTracker loopTracker { get; private set;}
 
 	// click instantly through scenes instead of waiting for them to transition
 	public bool debugMode = false;
