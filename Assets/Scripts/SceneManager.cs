@@ -65,7 +65,7 @@ public class SceneManager {
 	public void Update () {
 		currentScene.Update();
 		
-		if (currentScene.completed) {
+		if (currentScene.solved) {
 			loopTracker.PlayAll();
 		}
 

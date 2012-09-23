@@ -132,6 +132,7 @@ public class SceneTwelve : Scene {
 		}
 
 		if (openFingers.Length == nextFinger) {
+			solvedScene();
 			gripReleased = true;
 			armMovement = new Metronome(Time.time, 0.1f);
 			return;

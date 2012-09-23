@@ -44,6 +44,10 @@ public class SceneFourteen : Scene {
 		if (leftHandTouched) fallingGuyProp.stopLeftSide();
 		if (rightHandTouched) fallingGuyProp.stopRightSide();
 		
+		if (leftHandTouched && rightHandTouched) {
+			solvedScene();
+		}
+
 		if (fallingGuyProp.armsAreStoppedAtBottom()
 			&& nearEndOfLoop()) {
 			fallingGuyProp.readyToMoveArmsInward();

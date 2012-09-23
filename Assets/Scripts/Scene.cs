@@ -15,9 +15,16 @@ public abstract class Scene : MarshalByRefObject {
 		return timeLength;
 	}
 	
+	public bool solved { get; private set; }
+
+	public void solvedScene() {
+		solved = true;
+	}
+
 	public bool completed { get; private set; }
 	
 	public void endScene() {
+		solved = true;
 		completed = true;
 	}
 	

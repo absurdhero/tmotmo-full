@@ -55,6 +55,7 @@ class SceneEight : Scene {
 		wiggle.Update(now);
 		
 		if (fullyTilted() && !confetti.pouring) {
+			solvedScene();
 			confetti.Pour(now);
 		}
 		
