@@ -6,8 +6,7 @@ class Continued : Scene {
 	private TouchSensor touch;
 
 	public Continued(SceneManager manager) : base(manager) {
-		timeLength = 8;
-		rewindLoop(8);
+		timeLength = 16;
 	}
 	
 	public override void Setup(float startTime) {

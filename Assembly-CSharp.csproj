@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_0;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_IOS;UNITY_IPHONE;ENABLE_GENERICS;ENABLE_TERRAIN;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_6;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_IOS;UNITY_IPHONE;ENABLE_GENERICS;ENABLE_TERRAIN;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Confetti.cs" />
      <Compile Include="Assets\Scripts\Cycler.cs" />
      <Compile Include="Assets\Scripts\DelayedCycler.cs" />
+     <Compile Include="Assets\Scripts\DitheredBlueBackground.cs" />
      <Compile Include="Assets\Scripts\Dragger.cs" />
      <Compile Include="Assets\Scripts\FallingGuyProp.cs" />
      <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
@@ -61,10 +62,12 @@
      <Compile Include="Assets\Scripts\Metronome.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\OffsetCamera.cs" />
+     <Compile Include="Assets\Scripts\Preloadable.cs" />
      <Compile Include="Assets\Scripts\Repeater.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
      <Compile Include="Assets\Scripts\SceneFactory.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
+     <Compile Include="Assets\Scripts\Scenes\Continued.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneEight.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneEleven.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneFive.cs" />
@@ -86,6 +89,7 @@
      <Compile Include="Assets\Scripts\Sprite.cs" />
      <Compile Include="Assets\Scripts\TouchSensor.cs" />
      <Compile Include="Assets\Scripts\UnityInput.cs" />
+     <Compile Include="Assets\Scripts\Wiggle.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
