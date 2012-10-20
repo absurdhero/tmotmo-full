@@ -1,8 +1,10 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 class SceneSix : Scene {
 	BigHeadProp bigHeadProp;
+	BigMouthAnimator bigMouthAnimator;
 	OffsetCamera wrapCam;
 	
 	HeadScroller firstLeftHeadScroller;
@@ -28,9 +30,23 @@ class SceneSix : Scene {
 		
 		firstLeftHeadScroller = new HeadScroller(bigHeadProp.faceLeftObject, 3.0f);
 		firstRightHeadScroller = new HeadScroller(bigHeadProp.faceRightObject, 5.0f);
+		
+		var mouthLeftGameObject = resourceFactory.Create("SceneSix/MouthLeft-KeepMeInPlace");
+		var mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
+		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
+		mouthLeftGameObject.transform.parent = bigHeadProp.faceLeft.transform;
+		
+		var mouthRightGameObject = resourceFactory.Create("SceneSix/MouthRight-KeepMeInPlace");
+		var mouthRight = mouthRightGameObject.GetComponent<Sprite>();
+		mouthRight.setWorldPosition(10f, -56f, -5f);
+		mouthRightGameObject.transform.parent = bigHeadProp.faceRight.transform;
+		
+		bigMouthAnimator = new BigMouthAnimator(startTime, mouthLeft, mouthRight);
 	}
 
 	public override void Update () {
+		bigMouthAnimator.Update(Time.time);
+
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
 			leftHeadTouched |= bigHeadProp.faceLeft.Contains(Camera.main, touch.position);
@@ -141,6 +157,98 @@ class SceneSix : Scene {
 			get {
 				return head.GetComponent<Sprite>().PixelHeight();
 			}
+		}
+	}
+	
+	class BigMouthAnimator : Repeater {
+		Sprite mouthLeft;
+		Sprite mouthRight;
+		int sceneFrame = 0;
+		
+		const int totalFramesInScene = 16;		
+		
+		public BigMouthAnimator(float startTime, Sprite mouthLeft, Sprite mouthRight) : base(0.25f, 0, startTime) {
+			this.mouthLeft = mouthLeft;
+			this.mouthRight = mouthRight;
+		}
+		
+		public override void OnTick() {
+			var sprites = getSpritesFor(sceneFrame);
+
+			foreach(var sprite in sprites) {
+				sprite.Animate();
+			}
+
+			incrementFrame();
+		}
+		
+		private ICollection<Sprite> getSpritesFor(int sceneFrame) {
+			if (sceneFrame == 0) return initialMouthFrame();
+			if (sceneFrame >= 2 && sceneFrame <= 2) return sayTake();
+			if (sceneFrame >= 4 && sceneFrame <= 9) return sayMe();
+			if (sceneFrame >= 10 && sceneFrame <= 11) return sayIn();
+			if (sceneFrame >= 12 && sceneFrame <= 15) return sayPlace();
+			
+			return new List<Sprite>();
+		}
+		
+		private void incrementFrame() {
+			sceneFrame = (sceneFrame + 1) % totalFramesInScene;
+		}
+		
+
+		private ICollection<Sprite> initialMouthFrame()
+		{
+			setMouthFrame(0);
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayTake() {
+			if (sceneFrame == 2)	{
+				setMouthFrame(1);
+			}
+			else nextMouthFrame();
+			
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayMe() {
+			if (sceneFrame == 4)	{
+				setMouthFrame(4);
+			}
+			else if (sceneFrame >= 9) {
+				setMouthFrame(4); //close the mouth again
+			}
+			else if (sceneFrame > 4) {
+				setMouthFrame(5); // open mouth
+			}
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private ICollection<Sprite> sayIn() {
+			if (sceneFrame == 10) {
+				setMouthFrame(6);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+
+		private ICollection<Sprite> sayPlace() {
+			if (sceneFrame == 12) {
+				setMouthFrame(8);
+			}
+			else nextMouthFrame();
+			return new List<Sprite>{ mouthLeft, mouthRight };
+		}
+		
+		private void setMouthFrame(int index) {
+			mouthLeft.setFrame(index);
+			mouthRight.setFrame(index);
+		}
+		
+		private void nextMouthFrame() {
+			mouthLeft.nextFrame();
+			mouthRight.nextFrame();
 		}
 	}
 }
