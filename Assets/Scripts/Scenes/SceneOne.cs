@@ -84,19 +84,38 @@ class SceneOne : Scene {
 		bool editorTouched = Application.isEditor && input.GetMouseButtonUp(0);
 		
 		if (editorTouched ||
-			(touch.insideSprite(Camera.main, circle) &&
-			 touch.insideSprite(Camera.main, triangle))) {
-			Handheld.Vibrate();
-			wiggle.wiggleNow(now);
-			endScene();
-		} else {
+			(touch.changeInsideSprite(Camera.main, circle) ||
+			 touch.changeInsideSprite(Camera.main, triangle))) {
+			// solved
+			if (touch.insideSprite(Camera.main, circle) &&
+			    touch.insideSprite(Camera.main, triangle) &&
+			    triangleCycler != null) {
+				Handheld.Vibrate();
+				wiggle.wiggleNow(now);
+				endScene();
+			}
+
+			// if touched circle, draw its bright first frame
+			if (touch.changeInsideSprite(Camera.main, circle)) {
+				circle.setFrame(0);
+				circle.Animate();
+			}
+
+			// if touched triangle, ditto
+			if (touch.changeInsideSprite(Camera.main, triangle)) {
+				triangle.setFrame(0);
+				triangle.Animate();
+			}
+			// don't continue animating once they tap both at the same time
+		} else if (!solved) {
 			AnimateShapes();
 		}
 	}
 	
 	void AnimateShapes() {
 		circleCycler.Update(Time.time);
-		if (circleCycler.Count() == triangleWaitTime) {
+
+		if (triangleCycler == null && circleCycler.Count() >= triangleWaitTime) {
 			triangleCycler = new DelayedCycler(shapeSpeed, 6, 1f);
 			triangle.visible(true);
 			triangleCycler.AddSprite(triangle);

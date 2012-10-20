@@ -4,18 +4,20 @@ using System.Linq;
 
 public class TouchSensor {
 	UnityInput input;
-
+	TouchPhase ANY_PHASE = TouchPhase.Began | TouchPhase.Canceled | TouchPhase.Ended | TouchPhase.Moved | TouchPhase.Stationary;
 	public TouchSensor(UnityInput input) {
 		this.input = input;
 	}
 
 	private IEnumerable<Touch> allTouches {
-		get {
-			for (int i = 0; i < input.touchCount; i++) {
-				var touch = input.GetTouch(i);
-				if (touch.phase == TouchPhase.Began)
-					yield return touch;
-			}
+		get { return touchesFor(TouchPhase.Began); }
+	}
+
+	IEnumerable<Touch> touchesFor(TouchPhase phase) {
+		for (int i = 0; i < input.touchCount; i++) {
+			var touch = input.GetTouch(i);
+			if (phase == ANY_PHASE || touch.phase == phase)
+				yield return touch;
 		}
 	}
 
@@ -24,7 +26,15 @@ public class TouchSensor {
 	}
 
 	public bool insideSprite(Camera camera, Sprite sprite) {
-		foreach (var touch in allTouches) {
+		return insideSprite(camera, sprite, TouchPhase.Began);
+	}
+
+	public bool changeInsideSprite(Camera camera, Sprite sprite) {
+		return insideSprite(camera, sprite, ANY_PHASE);
+	}
+
+	public bool insideSprite(Camera camera, Sprite sprite, TouchPhase phase) {
+		foreach (var touch in touchesFor(phase)) {
 			if (sprite.Contains(camera, touch.position))
 				return true;
 		}
