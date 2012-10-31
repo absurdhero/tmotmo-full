@@ -5,7 +5,7 @@ class SceneThree : Scene {
 	public HospitalRoom room { get; private set; }
 	Wiggle wiggle;
 	
-	public const int MAX_SPLIT = 40;
+	public const int MAX_SPLIT = 30;
 	
 	UnityInput input;
 	
