@@ -58,8 +58,8 @@ class SceneFour : Scene {
 		leftMouth.visible(false);
 		rightMouth.visible(false);
 		
-		leftMouth.setWorldPosition(-25f, 24f, -4f);
-		rightMouth.setWorldPosition(29f, 24f, -4f);
+		leftMouth.setWorldPosition(-19f, 24f, -4f);
+		rightMouth.setWorldPosition(22.5f, 24f, -4f);
 	}
 	
 	class MouthAnimator : Repeater {
