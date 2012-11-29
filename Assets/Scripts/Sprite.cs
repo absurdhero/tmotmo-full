@@ -238,7 +238,27 @@ public class Sprite : MonoBehaviour {
 		
 		return parent;		
 	}
+	
+	public GameObject createPivotOnBottomRightCorner() {
+		var parent = new GameObject("Parent of " + gameObject.name);
+		copyTransformTo(parent);
 
+		// translate the parent 2 times the sprite width.
+		// implicitly translate the sprite in the opposite direction by the same amount.
+		parent.transform.Translate(worldWidth, 0f, 0f);
+		gameObject.transform.parent = parent.transform;
+
+		return parent;
+	}
+
+	public GameObject createPivotOnBottomLeftCorner() {
+		var parent = new GameObject("Parent of " + gameObject.name);
+		copyTransformTo(parent);
+		gameObject.transform.parent = parent.transform;
+		
+		return parent;
+	}
+	
 	private float worldHeight {
 		// This is multiplied by two because orthographicSize is half the screen height
 		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }

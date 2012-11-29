@@ -8,7 +8,7 @@ class SceneOne : Scene {
 	public Sprite circle;
 	public Sprite triangle;
 	
-	Wiggle wiggle;
+	Wiggler wiggler;
 
 	Cycler notSameCycler;
 	Cycler circleCycler;
@@ -62,7 +62,7 @@ class SceneOne : Scene {
 		notSameCycler = new DelayedCycler(0.2f, 4, 1.2f, startTime);
 		notSameCycler.AddSprite(notSame);
 
-		wiggle = new Wiggle(startTime, timeLength, new[] {circle, triangle});
+		wiggler = new Wiggler(startTime, timeLength, new[] {circle, triangle});
 	}
 
 	public override void Destroy() {
@@ -71,12 +71,12 @@ class SceneOne : Scene {
 		Sprite.Destroy(same);
 		Sprite.Destroy(notSame);
 		GameObject.Destroy(background);
-		wiggle.Destroy();
+		wiggler.Destroy();
 	}
 
 	public override void Update () {
 		float now = Time.time;
-		wiggle.Update(now);
+		wiggler.Update(now);
 		notSameCycler.Update(now);
 
 		var touch = new TouchSensor(input);
@@ -91,7 +91,7 @@ class SceneOne : Scene {
 			    touch.insideSprite(Camera.main, triangle) &&
 			    triangleCycler != null) {
 				Handheld.Vibrate();
-				wiggle.wiggleNow(now);
+				wiggler.wiggleNow(now);
 				endScene();
 			}
 

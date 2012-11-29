@@ -3,7 +3,7 @@ using System;
 
 class SceneThree : Scene {
 	public HospitalRoom room { get; private set; }
-	Wiggle wiggle;
+	Wiggler wiggler, reverseWiggler;
 	
 	public const int MAX_SPLIT = 30;
 	
@@ -24,16 +24,21 @@ class SceneThree : Scene {
 		room.openEyes();
 		room.removeZzz();
 
-		wiggle = new Wiggle(startTime, timeLength, new[] {room.guyLeft, room.guyRight});
+		var guyLeftPivot = room.guyLeft.createPivotOnBottomRightCorner();
+		var guyRightPivot = room.guyRight.createPivotOnBottomLeftCorner();
+		wiggler = new Wiggler(startTime, timeLength, new[] {guyLeftPivot});
+		reverseWiggler = new ReverseWiggler(startTime, timeLength, new[] {guyRightPivot});
 	}
 	
 	public override void Destroy() {
-		wiggle.Destroy();
+		wiggler.Destroy();
+		reverseWiggler.Destroy();
 	}
 
 	public override void Update () {
 		room.Update();
-		wiggle.Update(Time.time);
+		wiggler.Update(Time.time);
+		reverseWiggler.Update(Time.time);
 		
 		if(room.guySplitDistance == MAX_SPLIT) {
 			endScene();

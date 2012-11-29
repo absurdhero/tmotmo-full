@@ -4,7 +4,7 @@ using System;
 class SceneTwo : Scene {
 	public HospitalRoom room { get; private set; }
 	
-	private Wiggle wiggle;
+	private Wiggler wiggler;
 	private UnityInput input;
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
@@ -21,11 +21,11 @@ class SceneTwo : Scene {
 		room.addCover();
 		room.addPerson();
 		
-		wiggle = new Wiggle(startTime, timeLength, room.cover.GetComponent<Sprite>());
+		wiggler = new Wiggler(startTime, timeLength, room.cover.GetComponent<Sprite>());
 	}
 
 	public override void Destroy() {
-		wiggle.Destroy();
+		wiggler.Destroy();
 		// Handled by next scene
 		//room.Destroy();
 	}
@@ -33,7 +33,7 @@ class SceneTwo : Scene {
 	public override void Update () {
 		var touch = new TouchSensor(input);
 		
-		wiggle.Update(Time.time);
+		wiggler.Update(Time.time);
 
 		if (touch.insideSprite(Camera.main, room.cover.GetComponent<Sprite>())) {
 			room.openEyes();

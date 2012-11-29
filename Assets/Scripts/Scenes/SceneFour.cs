@@ -3,7 +3,7 @@ using System;
 
 class SceneFour : Scene {
 	HospitalRoom hospitalRoom;
-	Wiggle wiggle;
+	Wiggler wiggler;
 
 	Sprite leftMouth;
 	Sprite rightMouth;
@@ -27,11 +27,11 @@ class SceneFour : Scene {
 		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
 		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
 		mouthMovement = new MouthAnimator(startTime, leftMouth, rightMouth);
-		wiggle = new Wiggle(startTime, timeLength, new[] {speechBubble.centerPivot()});
+		wiggler = new Wiggler(startTime, timeLength, new[] {speechBubble.centerPivot()});
 	}
 
 	public override void Destroy() {
-		wiggle.Destroy();
+		wiggler.Destroy();
 		speechBubble.Destroy();
 		Sprite.Destroy(leftMouth);
 		Sprite.Destroy(rightMouth);
@@ -40,7 +40,7 @@ class SceneFour : Scene {
 
 	public override void Update() {
 		hospitalRoom.Update();
-		wiggle.Update(Time.time);
+		wiggler.Update(Time.time);
 		mouthMovement.Update(Time.time);
 		
 		speechBubble.Update();
