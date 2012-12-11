@@ -55,11 +55,6 @@ class SceneSix : Scene {
 			rightHeadTouched |= bigHeadProp.faceRight.Contains(wrapCam.camera, touch.position);
 		}
 		
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			if (leftHeadTouched) rightHeadTouched = true;
-			leftHeadTouched = true;
-		}
-		
 		if(!leftHeadTouched) {
 			firstLeftHeadScroller.Update();
 		}

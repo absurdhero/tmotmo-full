@@ -49,12 +49,7 @@ class SceneThree : Scene {
 			var distance = PinchDistance();
 			var horizontal_distance = Math.Min(Math.Abs(distance.x), MAX_SPLIT);
 			room.separateHalves(horizontal_distance);
-		}
-		
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			room.separateHalves(MAX_SPLIT);
-		}
-
+		}		
 	}
 	
 	private bool PinchingGuy() {

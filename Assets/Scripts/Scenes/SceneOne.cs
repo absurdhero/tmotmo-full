@@ -86,14 +86,17 @@ class SceneOne : Scene {
 		if (editorTouched ||
 			(touch.changeInsideSprite(Camera.main, circle) ||
 			 touch.changeInsideSprite(Camera.main, triangle))) {
+			
 			// solved
-			if (touch.insideSprite(Camera.main, circle) &&
-			    touch.insideSprite(Camera.main, triangle) &&
+			if (touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
+			    touch.insideSprite(Camera.main, triangle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
 			    triangleCycler != null) {
 				Handheld.Vibrate();
 				wiggler.wiggleNow(now);
 				endScene();
 			}
+
+			AnimateShapes();
 
 			// if touched circle, draw its bright first frame
 			if (touch.changeInsideSprite(Camera.main, circle)) {

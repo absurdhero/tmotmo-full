@@ -41,6 +41,7 @@ public class FallingGuyProp {
 
 		// construct additional camera that is positioned above the screen to show vertical wrapping
 		offsetCamera = new OffsetCamera(new Vector3(0, 200, -10), 2);
+		wrapCam = offsetCamera.camera;
 
 		// put sprites in their own layer so the other camera doesn't render the background
 		guyWithArmOut.gameObject.layer = 1;

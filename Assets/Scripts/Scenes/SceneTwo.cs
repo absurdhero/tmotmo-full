@@ -6,6 +6,7 @@ class SceneTwo : Scene {
 	
 	private Wiggler wiggler;
 	private UnityInput input;
+	private bool eyesOpened = false;
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
@@ -31,15 +32,20 @@ class SceneTwo : Scene {
 	}
 
 	public override void Update () {
-		var touch = new TouchSensor(input);
+		var sensor = new TouchSensor(input);
 		
 		wiggler.Update(Time.time);
 
-		if (touch.insideSprite(Camera.main, room.cover.GetComponent<Sprite>())) {
-			room.openEyes();
+
+		if (room.eyesTotallyOpen && touchedBed(sensor)) {
+			eyesOpened = true;
 		}
 
-		if (room.eyesTotallyOpen && !completed) {
+		if (touchedBed(sensor)) {
+			room.openEyes();
+		}
+		
+		if (eyesOpened && !completed) {
 			room.removeCover();
 			room.doubleHeartRate(Time.time);
 			endScene();
@@ -49,4 +55,7 @@ class SceneTwo : Scene {
 	}
 	
 	
+	bool touchedBed(TouchSensor touch) {
+		return touch.insideSprite(Camera.main, room.cover.GetComponent<Sprite>(), new[] {TouchPhase.Began});
+	}
 }

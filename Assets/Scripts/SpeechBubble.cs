@@ -80,10 +80,6 @@ class SpeechBubble {
 	
 	public void Update() {
 		moveToLocation(dragger.movementIfDragged().x * Vector3.right);
-		
-		if (Application.isEditor && input.GetMouseButtonUp(0)) {
-			moveToLocation(new Vector3(40f, 0f, 0f));
-		}
 		chooseTail();
 	}
 }
