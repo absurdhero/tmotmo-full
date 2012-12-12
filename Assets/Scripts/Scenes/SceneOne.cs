@@ -82,19 +82,26 @@ class SceneOne : Scene {
 		var touch = new TouchSensor(input);
 
 		bool editorTouched = Application.isEditor && input.GetMouseButtonUp(0);
-		
+				
 		if (editorTouched ||
 			(touch.changeInsideSprite(Camera.main, circle) ||
 			 touch.changeInsideSprite(Camera.main, triangle))) {
 			
 			// solved
-			if (touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
+			if (!solved &&
+			    touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
 			    touch.insideSprite(Camera.main, triangle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
 			    triangleCycler != null) {
 				Handheld.Vibrate();
 				wiggler.wiggleNow(now);
-				endScene();
+				solvedScene();
+				prompt.solve(this, "stop shapes from changing");
+			} else if (!solved && touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary})) {
+				prompt.hint("stop circle from changing");
+			} else if (!solved && touch.insideSprite(Camera.main, triangle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary})) {
+				prompt.hint("stop triangle from changing");
 			}
+				
 
 			AnimateShapes();
 

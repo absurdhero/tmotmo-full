@@ -5,6 +5,7 @@ public class SceneManager {
 	SceneFactory sceneFactory;
 	public Scene currentScene { get; private set;}
 	public LoopTracker loopTracker { get; private set;}
+	public Prompt prompt { get; private set;}
 
 	// click instantly through scenes instead of waiting for them to transition
 	public bool debugMode = false;
@@ -27,6 +28,8 @@ public class SceneManager {
 
 	void StartGame() {
 		sceneFactory.PreloadAssets();
+		prompt = new Prompt();
+		prompt.Setup();
 		
 		currentScene = sceneFactory.GetFirstScene();
 		currentScene.Setup(Time.time);
@@ -72,11 +75,14 @@ public class SceneManager {
 		if (loopTracker.IsLoopOver()) {
 			if (currentScene.completed) {
 				Debug.Log("scene complete. Transitioning...");
+				prompt.Reset();
 				currentScene.Transition();
 			} else {
 				loopTracker.Repeat();
 			}
 		}
+		
+		prompt.Update(Time.time);
 
 		// Debugging ability to right-click through scenes
 		if(Application.isEditor && Input.GetMouseButtonUp(1)) {

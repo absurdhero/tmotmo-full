@@ -23,6 +23,8 @@ public abstract class Scene : MarshalByRefObject {
 
 	public bool completed { get; private set; }
 	
+	public Prompt prompt { get { return sceneManager.prompt; } }
+	
 	public void endScene() {
 		solved = true;
 		completed = true;
