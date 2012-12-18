@@ -22,7 +22,7 @@ public class SceneTen : Scene {
 	const int firstCrackFrame = 3;
 
 	public SceneTen(SceneManager manager) : base(manager) {
-		timeLength = 1.5f;
+		timeLength = 1.75f;
 	}
 	
 	public override void LoadAssets() {
@@ -37,11 +37,8 @@ public class SceneTen : Scene {
 		amp.active = false;
 		wires.active = false;
 		wireShadow.active = false;
-	}
 
-	public override void Setup (float startTime) {
-		endScene();
-		
+
 		// double the scale on all of these because the art is half-size
 		shoe.transform.localScale = Vector3.one * 2;
 		shoe.GetComponent<Sprite>().setScreenPosition(0, 164);
@@ -52,25 +49,29 @@ public class SceneTen : Scene {
 		wireShadow.GetComponent<Sprite>().setScreenPosition(30, 30);
 		wireShadow.transform.localScale = Vector3.one * 2;
 		
+		pedalStomped = new PedalStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
+		pedalUnStomped = new PedalUnStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
+		stompFoot = new StompFoot(new List<Sprite> {shoeSprite});
+		retractFoot = new RetractFoot(new List<Sprite> {shoeSprite});
+		animatables = new[] {pedalStomped, pedalUnStomped, stompFoot, retractFoot};
+	}
+
+	public override void Setup (float startTime) {
+		endScene();
+		
 		background.active = true;
 		shoe.active = true;
 		amp.active = true;
 		wires.active = true;
 		wireShadow.active = true;
 
-		pedalStomped = new PedalStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
-		pedalUnStomped = new PedalUnStomped(new List<Sprite> {ampSprite, wiresSprite, wireShadowSprite});
-		stompFoot = new StompFoot(new List<Sprite> {shoeSprite});
-		retractFoot = new RetractFoot(new List<Sprite> {shoeSprite});
-		animatables = new[] {pedalStomped, pedalUnStomped, stompFoot, retractFoot};
-		
 		stompSpeed = new Metronome(startTime, 0.1f);
 	}
 
 	public override void Update () {
 		float time = Time.time;
 		if (stompSpeed.isNextTick(time)) {
-			OnTick(stompSpeed.currentTick(time));
+			OnTick(stompSpeed.nextTick);
 		}
 	}
 

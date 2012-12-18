@@ -7,7 +7,7 @@ public class SceneEleven : Scene {
 	Sprite videoSprite;
 
 	public SceneEleven(SceneManager manager) : base(manager) {
-		timeLength = 6f;
+		timeLength = 6.25f;
 	}
 	
 	public override void LoadAssets() {
