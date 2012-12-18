@@ -4,9 +4,9 @@ class SpeechBubble {
 	Camera camera;
 	float leftToRightSwitchOverPosition;
 
-	GameObject speechBubble;
-	GameObject speechBubbleLeft;
-	GameObject speechBubbleRight;
+	Sprite speechBubble;
+	Sprite speechBubbleLeft;
+	Sprite speechBubbleRight;
 	
 	Dragger dragger;
 	UnityInput input;
@@ -14,18 +14,18 @@ class SpeechBubble {
 	public SpeechBubble(GameObjectFactory<string> resourceFactory, Camera camera, float leftToRightSwitchOverPosition) {
 		this.camera = camera;
 		this.leftToRightSwitchOverPosition = leftToRightSwitchOverPosition;
-		speechBubble = resourceFactory.Create(this, "SpeechBubble");
-		speechBubbleLeft = resourceFactory.Create(this, "BubbleTailLeft");
-		speechBubbleRight = resourceFactory.Create(this, "BubbleTailRight");
-		speechBubbleRight.active = false;
+		speechBubble = resourceFactory.Create(this, "SpeechBubble").GetComponent<Sprite>();
+		speechBubbleLeft = resourceFactory.Create(this, "BubbleTailLeft").GetComponent<Sprite>();
+		speechBubbleRight = resourceFactory.Create(this, "BubbleTailRight").GetComponent<Sprite>();
+		speechBubbleRight.visible(false);
 		
-		speechBubble.GetComponent<Sprite>().setWorldPosition(-80f, 60f, -1f);
-		speechBubbleLeft.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
-		speechBubbleRight.GetComponent<Sprite>().setWorldPosition(-55f, 50f, -5f);
+		speechBubble.setWorldPosition(-80f, 60f, -1f);
+		speechBubbleLeft.setWorldPosition(-55f, 50f, -5f);
+		speechBubbleRight.setWorldPosition(-55f, 50f, -5f);
 		speechBubbleRight.transform.Rotate(Vector3.forward * 5);
 		
 		input = new UnityInput();
-		dragger = new Dragger(input, speechBubble.GetComponent<Sprite>());
+		dragger = new Dragger(input, speechBubble);
 	}
 	
 	private float terminalPosition {
@@ -39,9 +39,9 @@ class SpeechBubble {
 	}
 	
 	public void Destroy() {
-		GameObject.Destroy(speechBubble);
-		GameObject.Destroy(speechBubbleLeft);
-		GameObject.Destroy(speechBubbleRight);
+		Sprite.Destroy(speechBubble);
+		Sprite.Destroy(speechBubbleLeft);
+		Sprite.Destroy(speechBubbleRight);
 	}
 
 	public void snapToEnd() {
@@ -50,20 +50,26 @@ class SpeechBubble {
 		var bubbleRightPos = speechBubbleRight.transform.position;
 		float terminalTailPosition = camera.orthographicSize / 2.22f;
 		speechBubbleRight.transform.position = new Vector3(terminalTailPosition, bubbleRightPos.y, bubbleRightPos.z); 
+		chooseTail();
 	}
 
 	public void chooseTail() {
-		if (speechBubble.GetComponent<Sprite>().ScreenCenter().x > leftToRightSwitchOverPosition) {
-			speechBubbleLeft.active = false;
-			speechBubbleRight.active = true;
+		if (speechBubble.ScreenCenter().x > leftToRightSwitchOverPosition) {
+			speechBubbleLeft.visible(false);
+			speechBubbleRight.visible(true);
 		} else {
-			speechBubbleLeft.active = true;
-			speechBubbleRight.active = false;			
+			speechBubbleLeft.visible(true);
+			speechBubbleRight.visible(false);
 		}
 	}
 
 	public void moveToLocation(Vector3 movementDelta) {
 		var currentBubblePosition = camera.WorldToScreenPoint(speechBubble.transform.position);
+
+		// don't move off the left side of the screen
+		if (movementDelta.x < 0 && (currentBubblePosition.x + movementDelta.x) <= 0)
+			return;
+
 		speechBubble.transform.position = camera.ScreenToWorldPoint(currentBubblePosition + movementDelta);
 		var currentBubbleLeftTailPosition = camera.WorldToScreenPoint(speechBubbleLeft.transform.position);
 		speechBubbleLeft.transform.position = camera.ScreenToWorldPoint(currentBubbleLeftTailPosition + movementDelta);
@@ -72,13 +78,16 @@ class SpeechBubble {
 	}
 
 	public GameObject centerPivot() {
-		GameObject pivot = speechBubble.GetComponent<Sprite>().createPivotOnCenter();
+		GameObject pivot = speechBubble.createPivotOnCenter();
 		speechBubbleLeft.transform.parent = pivot.transform;
 		speechBubbleRight.transform.parent = pivot.transform;
 		return pivot;
 	}
 	
 	public void Update() {
+		if(inTerminalPosition)
+			return;
+
 		moveToLocation(dragger.movementIfDragged().x * Vector3.right);
 		chooseTail();
 	}

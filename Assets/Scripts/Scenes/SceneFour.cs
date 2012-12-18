@@ -45,7 +45,7 @@ class SceneFour : Scene {
 		
 		speechBubble.Update();
 
-		if(speechBubble.inTerminalPosition) {
+		if(speechBubble.inTerminalPosition && !solved) {
 			speechBubble.snapToEnd();
 			endScene();
 			return;
