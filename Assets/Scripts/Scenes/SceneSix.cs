@@ -64,6 +64,7 @@ class SceneSix : Scene {
 		}
 		
 		if (leftHeadTouched && rightHeadTouched) {
+			prompt.solve(this, "stop both halves");
 			endScene();
 
 			firstLeftHeadScroller.gotoTargetBeforeEnd(initialHeadPosition.y, sceneManager.timeLeftInCurrentLoop());

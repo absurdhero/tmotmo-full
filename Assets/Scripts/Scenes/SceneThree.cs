@@ -8,6 +8,8 @@ class SceneThree : Scene {
 	public const int MAX_SPLIT = 30;
 	
 	UnityInput input;
+
+	TouchSensor sensor;
 	
 	public SceneThree(SceneManager manager, HospitalRoom room) : base(manager) {
 		timeLength = 8.0f;
@@ -28,6 +30,8 @@ class SceneThree : Scene {
 		var guyRightPivot = room.guyRight.createPivotOnBottomLeftCorner();
 		wiggler = new Wiggler(startTime, timeLength, new[] {guyLeftPivot});
 		reverseWiggler = new ReverseWiggler(startTime, timeLength, new[] {guyRightPivot});
+
+		sensor = new TouchSensor(new UnityInput());
 	}
 	
 	public override void Destroy() {
@@ -39,17 +43,25 @@ class SceneThree : Scene {
 		room.Update();
 		wiggler.Update(Time.time);
 		reverseWiggler.Update(Time.time);
-		
-		if(room.guySplitDistance == MAX_SPLIT) {
-			endScene();
-			return;
-		}
 
-		if(PinchingGuy()) {
+		if (solved) return;
+
+		if(room.guySplitDistance == MAX_SPLIT) {
+			prompt.solve(this, "pull guy in half");
+			endScene();
+		}
+		else if(PinchingGuy()) {
 			var distance = PinchDistance();
 			var horizontal_distance = Math.Min(Math.Abs(distance.x), MAX_SPLIT);
 			room.separateHalves(horizontal_distance);
-		}		
+			prompt.progress("pull guy apart");
+		}
+		else if (sensor.insideSprite(Camera.main, room.guyLeft)) {
+			prompt.hint("poke left half");
+		}
+		else if (sensor.insideSprite(Camera.main, room.guyRight)) {
+			prompt.hint("poke right half");
+		}
 	}
 	
 	private bool PinchingGuy() {

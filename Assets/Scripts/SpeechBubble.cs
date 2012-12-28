@@ -53,7 +53,7 @@ class SpeechBubble {
 		chooseTail();
 	}
 
-	public void chooseTail() {
+	private void chooseTail() {
 		if (speechBubble.ScreenCenter().x > leftToRightSwitchOverPosition) {
 			speechBubbleLeft.visible(false);
 			speechBubbleRight.visible(true);
@@ -63,7 +63,7 @@ class SpeechBubble {
 		}
 	}
 
-	public void moveToLocation(Vector3 movementDelta) {
+	private void moveToLocation(Vector3 movementDelta) {
 		var currentBubblePosition = camera.WorldToScreenPoint(speechBubble.transform.position);
 
 		// don't move off the left side of the screen
@@ -90,5 +90,9 @@ class SpeechBubble {
 
 		moveToLocation(dragger.movementIfDragged().x * Vector3.right);
 		chooseTail();
+	}
+
+	public bool hasMoved() {
+		return dragger.movementIfDragged().x != 0;
 	}
 }

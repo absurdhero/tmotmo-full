@@ -14,13 +14,15 @@ public abstract class Scene : MarshalByRefObject {
 	public virtual float TimeLength() {
 		return timeLength;
 	}
-	
+
+	/// Indicates that the puzzle has been solved
 	public bool solved { get; private set; }
 
 	public void solvedScene() {
 		solved = true;
 	}
 
+	/// Whether the scene will end once the current loop completes
 	public bool completed { get; private set; }
 	
 	public Prompt prompt { get { return sceneManager.prompt; } }

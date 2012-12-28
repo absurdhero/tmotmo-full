@@ -62,6 +62,7 @@ public class Prompt {
 
 	public void Reset() {
 		hide();
+		hideBoxes();
 		solveScene = false;
 		enabled = false;
 	}
@@ -76,15 +77,15 @@ public class Prompt {
 		sceneToSolve = scene;
 		print(message);
 	}
-	
-	public void hint(string message) {
-		correct = false;
+
+	public void progress(string message) {
+		correct = true;
 		print(message);
 	}
 
-	void hideBoxes() {
-		okBox.visible(false);
-		nopeBox.visible(false);
+	public void hint(string message) {
+		correct = false;
+		print(message);
 	}
 	
 	private void print(string message) {
@@ -103,6 +104,11 @@ public class Prompt {
 	private void hide() {
 		blackBox.active = false;
 		textLabel.active = false;
+	}
+
+	void hideBoxes() {
+		okBox.visible(false);
+		nopeBox.visible(false);
 	}
 }
 
