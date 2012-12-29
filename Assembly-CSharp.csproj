@@ -45,17 +45,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Animatable.cs" />
-     <Compile Include="Assets\Scripts\BigHeadProp.cs" />
-     <Compile Include="Assets\Scripts\Confetti.cs" />
      <Compile Include="Assets\Scripts\Cycler.cs" />
      <Compile Include="Assets\Scripts\DelayedCycler.cs" />
-     <Compile Include="Assets\Scripts\DitheredBlueBackground.cs" />
      <Compile Include="Assets\Scripts\Dragger.cs" />
-     <Compile Include="Assets\Scripts\FallingGuyProp.cs" />
      <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
      <Compile Include="Assets\Scripts\GameObjectFactory.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
-     <Compile Include="Assets\Scripts\HospitalRoom.cs" />
      <Compile Include="Assets\Scripts\ImageMaterial.cs" />
      <Compile Include="Assets\Scripts\Layout.cs" />
      <Compile Include="Assets\Scripts\LoopTracker.cs" />
@@ -63,6 +58,14 @@
      <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\OffsetCamera.cs" />
      <Compile Include="Assets\Scripts\Preloadable.cs" />
+     <Compile Include="Assets\Scripts\Prompt.cs" />
+     <Compile Include="Assets\Scripts\Props\BigHeadProp.cs" />
+     <Compile Include="Assets\Scripts\Props\Confetti.cs" />
+     <Compile Include="Assets\Scripts\Props\DitheredBlueBackground.cs" />
+     <Compile Include="Assets\Scripts\Props\FallingGuyProp.cs" />
+     <Compile Include="Assets\Scripts\Props\HospitalRoom.cs" />
+     <Compile Include="Assets\Scripts\Props\ScrollingLetters.cs" />
+     <Compile Include="Assets\Scripts\Props\SpeechBubble.cs" />
      <Compile Include="Assets\Scripts\Repeater.cs" />
      <Compile Include="Assets\Scripts\Scene.cs" />
      <Compile Include="Assets\Scripts\SceneFactory.cs" />
@@ -83,19 +86,20 @@
      <Compile Include="Assets\Scripts\Scenes\SceneTwelve.cs" />
      <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
      <Compile Include="Assets\Scripts\Scenes\TitleScene.cs" />
-     <Compile Include="Assets\Scripts\ScrollingLetters.cs" />
      <Compile Include="Assets\Scripts\Sounds.cs" />
-     <Compile Include="Assets\Scripts\SpeechBubble.cs" />
      <Compile Include="Assets\Scripts\Sprite.cs" />
+     <Compile Include="Assets\Scripts\SpriteTouchExtensions.cs" />
      <Compile Include="Assets\Scripts\TouchSensor.cs" />
      <Compile Include="Assets\Scripts\UnityInput.cs" />
-     <Compile Include="Assets\Scripts\Wiggle.cs" />
+     <Compile Include="Assets\Scripts\Wiggler.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
+     <None Include="Assets\Resources\sierra_agi_font\license.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
+     <None Include="Assets\Resources\sierra_agi_font\read me.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
