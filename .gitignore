@@ -1,7 +1,8 @@
 .DS_Store
 *.pidb
-/Library/cache/*
-/Library/previews/*
+Library
+Temp
+Assembly-CSharp*.csproj
 Tests/test-results
 MockUnity/bin/
 
