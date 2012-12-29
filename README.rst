@@ -39,7 +39,10 @@ test results.
 
 As a result, we developed a set of stub classes that are
 interface-compatible with the public Unity library that we can link with
-instead of linking with the normal Unity library.
+instead of linking with the normal Unity library. It is important to remember
+that these classes don't implement any functionality. For most of the classes,
+you will get an exception if code calls a method directly (rather
+than using a mock).
 
 This library serves two purposes:
 
