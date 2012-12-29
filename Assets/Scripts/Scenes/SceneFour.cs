@@ -45,11 +45,13 @@ class SceneFour : Scene {
 		
 		speechBubble.Update();
 
+		if (solved) return;
+
 		if (speechBubble.hasMoved()) {
 			prompt.progress("move speech bubble");
 		}
 
-		if(speechBubble.inTerminalPosition && !solved) {
+		if(speechBubble.inTerminalPosition) {
 			speechBubble.snapToEnd();
 			prompt.solve(this, "move speech bubble to other side");
 			endScene();

@@ -18,15 +18,16 @@ public class Prompt {
 	public void Setup() {
 		blackBox = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		blackBox.active = false;
+		blackBox.name = "prompt background";
 		blackBox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
 		blackBox.transform.Rotate(new Vector3(270f, 0f, 0f));
-		blackBox.transform.position = new Vector3(0, -95, -5);
+		blackBox.transform.position = new Vector3(0, -95, -9);
 		blackBox.transform.localScale = new Vector3(30f, 1f, 1.5f);
 		
-		textLabel = new GameObject("text box");
+		textLabel = new GameObject("prompt text");
 		textLabel.active = false;
 		text = textLabel.AddComponent<GUIText>();
-		textLabel.transform.position = new Vector3(0f, 0.06f, 0f);
+		textLabel.transform.position = new Vector3(0f, 0.06f, -9.5f);
 		Font font = (Font) Resources.Load("sierra_agi_font/sierra_agi_font", typeof(Font));
 		text.font = font;
 		

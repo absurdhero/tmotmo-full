@@ -9,18 +9,18 @@ class SceneOne : Scene {
 	public Sprite triangle;
 	
 	Wiggler wiggler;
+	UnityInput input;
+	TouchSensor sensor;
 
 	Cycler notSameCycler;
 	Cycler circleCycler;
 	Cycler triangleCycler;
 
-	int triangleWaitTime = 4;
+	const int triangleWaitTime = 4;
 
  	// animate both shapes at the same frequency
-	private float shapeSpeed = 0.5f;
-	
-	private UnityInput input;
-	
+	const float shapeSpeed = 0.5f;
+
 	public SceneOne(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
 		input = new UnityInput();
@@ -63,6 +63,8 @@ class SceneOne : Scene {
 		notSameCycler.AddSprite(notSame);
 
 		wiggler = new Wiggler(startTime, timeLength, new[] {circle, triangle});
+
+		sensor = new TouchSensor(input);
 	}
 
 	public override void Destroy() {
@@ -79,59 +81,52 @@ class SceneOne : Scene {
 		wiggler.Update(now);
 		notSameCycler.Update(now);
 
-		var touch = new TouchSensor(input);
+		if (solved) return;
 
-		bool editorTouched = Application.isEditor && input.GetMouseButtonUp(0);
-				
-		if (editorTouched ||
-			(touch.changeInsideSprite(Camera.main, circle) ||
-			 touch.changeInsideSprite(Camera.main, triangle))) {
-			
-			// solved
-			if (!solved &&
-			    touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
-			    touch.insideSprite(Camera.main, triangle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary}) &&
-			    triangleCycler != null) {
-				Handheld.Vibrate();
-				wiggler.wiggleNow(now);
-				solvedScene();
-				prompt.solve(this, "stop shapes from changing");
-			} else if (!solved && touch.insideSprite(Camera.main, circle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary})) {
-				prompt.hint("stop circle from changing");
-			} else if (!solved && touch.insideSprite(Camera.main, triangle, new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary})) {
-				prompt.hint("stop triangle from changing");
-			}
-				
+		if (circle.belowFinger(sensor)
+		    && triangle.belowFinger(sensor)
+		    && triangleShowing()) {
+			Handheld.Vibrate();
+			wiggler.wiggleNow(now);
+			solvedScene();
+			prompt.solve(this, "stop shapes from changing");
+			return;
+		} else if (circle.belowFinger(sensor)) {
+			prompt.hint("stop circle from changing");
+		} else if (triangle.belowFinger(sensor)) {
+			prompt.hint("stop triangle from changing");
+		}
 
-			AnimateShapes();
+		AnimateShapes(now);
 
-			// if touched circle, draw its bright first frame
-			if (touch.changeInsideSprite(Camera.main, circle)) {
-				circle.setFrame(0);
-				circle.Animate();
-			}
+		// if touched circle, draw its bright first frame
+		if (sensor.changeInsideSprite(Camera.main, circle)) {
+			circle.setFrame(0);
+			circle.Animate();
+		}
 
-			// if touched triangle, ditto
-			if (touch.changeInsideSprite(Camera.main, triangle)) {
-				triangle.setFrame(0);
-				triangle.Animate();
-			}
-			// don't continue animating once they tap both at the same time
-		} else if (!solved) {
-			AnimateShapes();
+		// if touched triangle, ditto
+		if (sensor.changeInsideSprite(Camera.main, triangle) && triangleShowing()) {
+			triangle.setFrame(0);
+			triangle.Animate();
 		}
 	}
-	
-	void AnimateShapes() {
-		circleCycler.Update(Time.time);
 
-		if (triangleCycler == null && circleCycler.Count() >= triangleWaitTime) {
+	bool triangleShowing() {
+		return triangleCycler != null;
+	}
+
+	void AnimateShapes(float time) {
+		if (!triangleShowing() && circleCycler.Count() >= triangleWaitTime) {
 			triangleCycler = new DelayedCycler(shapeSpeed, 6, 1f);
 			triangle.visible(true);
 			triangleCycler.AddSprite(triangle);
 		}
-		if (triangleCycler != null) {
-			triangleCycler.Update(Time.time);
+
+		circleCycler.Update(time);
+
+		if (triangleShowing()) {
+			triangleCycler.Update(time);
 		}
 	}
 }
