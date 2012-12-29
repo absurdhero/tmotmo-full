@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class TouchSensor {
 	UnityInput input;
@@ -12,17 +11,19 @@ public class TouchSensor {
 		this.input = input;
 	}
 
-	private IEnumerable<Touch> allTouches {
+	private IList<Touch> allTouches {
 		get { return touchesFor(new[] {TouchPhase.Began}); }
 	}
 
-	IEnumerable<Touch> touchesFor(ICollection<TouchPhase> phases) {
+	IList<Touch> touchesFor(ICollection<TouchPhase> phases) {
+		var touches = new List<Touch>();
 		for (int i = 0; i < input.touchCount; i++) {
 			var touch = input.GetTouch(i);
 			if (phases.Contains(touch.phase)) {
-				yield return touch;
+				touches.Add(touch);
 			}
 		}
+		return touches;
 	}
 
 	public bool insideSprite(Camera camera, Sprite sprite) {
@@ -43,6 +44,6 @@ public class TouchSensor {
 	}
 
 	public bool any() {
-		return allTouches.Any();
+		return allTouches.Count > 0;
 	}
 }

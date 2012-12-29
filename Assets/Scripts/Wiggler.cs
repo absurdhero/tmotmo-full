@@ -1,9 +1,8 @@
 using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
 
 class Wiggler : Repeater {
-	protected List<GameObject> centerPivots;
+	protected GameObject[] centerPivots;
 	Dictionary<GameObject, Vector3> initialScales;
 	float sceneStart;
 	float sceneLength;
@@ -15,8 +14,11 @@ class Wiggler : Repeater {
 	protected const int wiggleTicks = 15;
 
 	private static GameObject[] pivotsFromSprite(Sprite[] sprites) {
-		return sprites.Select<Sprite, GameObject>(
-			sprite => sprite.createPivotOnCenter()).ToArray();
+		var pivots = new GameObject[sprites.Length];
+		for(int i = 0; i < sprites.Length; i++) {
+			pivots[i] = sprites[i].createPivotOnCenter();
+		}
+		return pivots;
 	}
 
 	public Wiggler(float startTime, float sceneLength, Sprite sprite) :
@@ -28,7 +30,7 @@ class Wiggler : Repeater {
 	public Wiggler(float startTime, float sceneLength, GameObject[] centerPivots) : base(0.05f, 0, startTime) {
 		sceneStart = startTime;
 		this.sceneLength = sceneLength;
-		this.centerPivots = centerPivots.ToList();
+		this.centerPivots = centerPivots;
 
 		// preserve the scale of each pivot
 		initialScales = new Dictionary<GameObject, Vector3>();
@@ -53,7 +55,9 @@ class Wiggler : Repeater {
 		} else if (currentTick < zoomTicks + wiggleTicks) {
 			wiggle();
 		} else if (currentTick < zoomTicks + wiggleTicks + zoomTicks) {
-			centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, -totalRotation, Space.Self));
+			foreach(var pivot in centerPivots) {
+				pivot.transform.Rotate(Vector3.back, -totalRotation, Space.Self);
+			}
 			totalRotation = 0f;
 			zoomOut();
 		} else {
@@ -85,13 +89,17 @@ class Wiggler : Repeater {
 	}
 	
 	private void zoomFor(int tick) {
-		centerPivots.ForEach(pivot => pivot.transform.localScale = initialScales[pivot] * (1f + tick / (float) zoomTicks / 24f));
+		foreach(var pivot in centerPivots) {
+			pivot.transform.localScale = initialScales[pivot] * (1f + tick / (float) zoomTicks / 24f);
+		}
 	}
 	
 	virtual protected void wiggle() {
 		float angle = -Mathf.PingPong(currentTick - zoomTicks / 64f * Mathf.PI, Mathf.PI / 16f);
 		totalRotation += angle;
-		centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, angle, Space.Self));
+		foreach(var pivot in centerPivots) {
+			pivot.transform.Rotate(Vector3.back, angle, Space.Self);
+		}
 	}
 }
 
@@ -108,6 +116,8 @@ class ReverseWiggler : Wiggler {
 	override protected void wiggle() {
 		float angle = Mathf.PingPong(currentTick - zoomTicks / 64f * Mathf.PI, Mathf.PI / 16f);
 		totalRotation += angle;
-		centerPivots.ForEach(pivot => pivot.transform.Rotate(Vector3.back, angle, Space.Self));
+		foreach(var pivot in centerPivots) {
+			pivot.transform.Rotate(Vector3.back, angle, Space.Self);
+		}
 	}
 }
