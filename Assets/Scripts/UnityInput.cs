@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// Wraps UnityEngine.Input so it can be injected
 public class UnityInput {
 	public UnityInput () {
 		

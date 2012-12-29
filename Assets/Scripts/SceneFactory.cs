@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Instantiates scenes and defines their order
+/// </summary>
 public class SceneFactory : MarshalByRefObject {
 	SceneManager sceneManager;
 	

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-//Cycles through a set of images, for animations
+/// Cycles through sprite frames at a defined rate
 public class Cycler
 {
 	protected float interval;

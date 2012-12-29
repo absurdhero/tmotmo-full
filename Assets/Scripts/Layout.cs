@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// This is the entry point for the game.
+/// Layout is added to an object in the Main Scene so Unity loads it at startup.
+/// </summary>
 public class Layout : MonoBehaviour {
 	SceneManager sceneManager;
 	Sounds sounds;

@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Controls progression from scene to scene and provides shared game state accessible to scenes.
+/// </summary>
 public class SceneManager {
 	SceneFactory sceneFactory;
 	public Scene currentScene { get; private set;}

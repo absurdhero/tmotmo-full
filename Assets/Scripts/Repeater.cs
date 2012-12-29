@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/* Repeats an action on timed intervals */
+/// Repeats an action on timed intervals by calling OnTick()
 public abstract class Repeater
 {
 	protected float interval;
