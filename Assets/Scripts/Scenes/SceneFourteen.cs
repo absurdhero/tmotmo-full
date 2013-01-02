@@ -12,6 +12,7 @@ public class SceneFourteen : Scene {
 	public SceneFourteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
 		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
+		permitUnloadResources = false;
 		input = new UnityInput();
 		background = new DitheredBlueBackground(resourceFactory);
 	}

@@ -53,13 +53,17 @@ public class SceneManager {
 		}
 
 		currentScene.Destroy();
-		Resources.UnloadUnusedAssets();
-		
+
 		if(sceneFactory.isFirstScene(currentScene)) {
 			loopTracker.startPlaying();
 		}
 		
-		currentScene = sceneFactory.GetSceneAfter(currentScene);		
+		currentScene = sceneFactory.GetSceneAfter(currentScene);
+
+		if (currentScene.permitUnloadResources) {
+			Resources.UnloadUnusedAssets();
+		}
+
 		Debug.Log("Beginning next scene (" + currentScene.GetType().Name + ")");
 
 		loopTracker.Rewind(currentScene.rewindTime);

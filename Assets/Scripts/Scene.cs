@@ -31,7 +31,11 @@ public abstract class Scene : MarshalByRefObject {
 		solved = true;
 		completed = true;
 	}
-	
+
+	/// OK to spend time unloading unused resources from prior scenes.
+	/// Set this to false if transition between scenes must be perfectly smooth
+	public bool permitUnloadResources { get; protected set; }
+
 	public Scene(SceneManager manager) : this(manager, new ResourceFactory()){
 	}
 
@@ -39,6 +43,7 @@ public abstract class Scene : MarshalByRefObject {
 		sceneManager = manager;
 		this.resourceFactory = resourceFactory;
 		completed = false;
+		permitUnloadResources = true;
 		camera = Camera.main;
 		input = new UnityInput();
 	}

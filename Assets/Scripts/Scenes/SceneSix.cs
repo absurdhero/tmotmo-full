@@ -18,6 +18,7 @@ class SceneSix : Scene {
 	
 	public SceneSix(SceneManager manager) : base(manager) {
 		timeLength = 4.0f;
+		permitUnloadResources = false;
 		bigHeadProp = new BigHeadProp(resourceFactory);
 		input = new UnityInput();
 	}

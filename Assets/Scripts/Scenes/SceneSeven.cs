@@ -9,6 +9,7 @@ class SceneSeven : Scene {
 
 	public SceneSeven(SceneManager manager) : base(manager) {
 		timeLength = 4.0f;
+		permitUnloadResources = false;
 		bigHeadProp = new BigHeadProp(resourceFactory);
 	}
 
