@@ -5,6 +5,7 @@ public class SceneFourteen : Scene {
 	DitheredBlueBackground background;
 	FallingGuyProp fallingGuyProp;
 	Metronome animation;
+	float startTime;
 	UnityInput input;
 	bool leftHandTouched = false, rightHandTouched = false;
 
@@ -21,7 +22,7 @@ public class SceneFourteen : Scene {
 
 	public override void Setup (float startTime) {
 		background.Show();
-
+		this.startTime = startTime;
 		animation = new Metronome(startTime, 0.1f);
 		fallingGuyProp.Setup();
 		fallingGuyProp.ensureArmIsOnLeftOfScreen();
@@ -54,8 +55,8 @@ public class SceneFourteen : Scene {
 			endScene();
 		}
 		
-		fallingGuyProp.adjustScrollSpeed();
-		fallingGuyProp.makeFistsWhenTogether();
+		fallingGuyProp.adjustScrollSpeed(startTime);
+		fallingGuyProp.makeFistsWhenTogether(animation);
 		fallingGuyProp.updateFallingGuy(animation);
 	}
 	

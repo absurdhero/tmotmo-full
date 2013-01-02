@@ -9,13 +9,14 @@ public class FallingGuyProp {
 	
 	bool armIsMovingAway = false;
 	bool leftSideStopped, rightSideStopped;
-	int fallAndStopSpeed = 10;
-	int scrollSpeed = 20;
+	int fallAndStopSpeed = 100;
 	bool armsAreReadyToMoveInward = false;
 	
 	const int leftFinalBottomHeight = -50;
 	const int rightFinalBottomHeight = -30;
-	const int normalScrollSpeed = 20;
+
+	float scrollSpeed;
+	float normalScrollSpeed;
 
 	public FallingGuyProp() {
 	}
@@ -43,6 +44,9 @@ public class FallingGuyProp {
 		offsetCamera = new OffsetCamera(new Vector3(0, 200, -10), 2);
 		wrapCam = offsetCamera.camera;
 
+		// travel one half screen length per second and take the overlapping offsetCamera into account
+		scrollSpeed = normalScrollSpeed = (Camera.main.pixelHeight + 100) / 2;
+		
 		// put sprites in their own layer so the other camera doesn't render the background
 		guyWithArmOut.gameObject.layer = 1;
 		otherArm.gameObject.layer = 1;
@@ -56,36 +60,32 @@ public class FallingGuyProp {
 	}
 
 	public void updateFallingGuy(Metronome metronome) {
-		if (metronome.isNextTick(Time.time)) {
-			if (!armIsMovingAway) {
-				if (!leftSideStopped) scrollLeftSide();
-				if (!rightSideStopped) scrollRightSide();
-				
-				if (leftSideStopped && rightSideStopped) {
-					alignArmsAtBottomOfScreen();
-				}
-			} else {
-				if (!armIsOnLeftOfScreen()) {
-					otherArm.move(-10, -5);
-				}
-				if (armIsOnLeftOfScreen()) {
-					armIsMovingAway = false;
-					scrollFall();
-				}
-			}
+		if (!armIsMovingAway) {
+			if (!leftSideStopped) scrollLeftSide();
+			if (!rightSideStopped) scrollRightSide();
 			
-			if (armsAreStoppedAtBottom() && armsAreReadyToMoveInward) {
-				moveArmsInward();
+			if (leftSideStopped && rightSideStopped) {
+				alignArmsAtBottomOfScreen();
+			}
+		} else {
+			if (!armIsOnLeftOfScreen()) {
+				otherArm.smoothMove(-100, -50);
+			}
+			if (armIsOnLeftOfScreen()) {
+				armIsMovingAway = false;
+				scrollFall();
 			}
 		}
+		
+		if (armsAreStoppedAtBottom() && armsAreReadyToMoveInward) {
+			moveArmsInward();
+		}
 	}
-	
+
 	public void updateFallingGuyAndMoveApart(Metronome metronome, float time) {
-		if (metronome.isNextTick(time)) {
-			scrollFall();
-			if (metronome.currentTick(time) < 30) {
-				moveArmsApart();
-			}
+		scrollFall();
+		if (metronome.currentTick(time) < 30) {
+			moveArmsApart();
 		}
 	}
 
@@ -100,8 +100,8 @@ public class FallingGuyProp {
 	}
 
 	public void moveArmsApart() {
-		otherArm.move(-1, 0);
-		guyWithArmOut.move(5, 0);
+		otherArm.smoothMove(-10, 0);
+		guyWithArmOut.smoothMove(50, 0);
 	}
 	
 	public void stopLeftSide() {
@@ -133,36 +133,34 @@ public class FallingGuyProp {
 	}
 
 	private void scrollLeftSide() {
-		otherArm.move(0, -scrollSpeed);
+		otherArm.smoothMove(0, -scrollSpeed);
 		if (otherArm.getScreenPosition().y <= 0) {
 			otherArm.move(0, Camera.main.pixelHeight);
 		}
 	}
 	
 	private void scrollRightSide() {
-		guyWithArmOut.move(0, scrollSpeed);
+		guyWithArmOut.smoothMove(0, scrollSpeed);
 		if (guyWithArmOut.getScreenPosition().y >= Camera.main.pixelHeight) {
 			guyWithArmOut.move(0, -Camera.main.pixelHeight);
 		}
 	}
-	
-	public void adjustScrollSpeed() {
-		var rightPos = guyWithArmOut.getScreenPosition().y;
-		var leftPos = otherArm.getScreenPosition().y;
-		
-		// slow down vertical scrolling as they get closer
-		float p = Mathf.Abs(rightPos - leftPos);
-		
-		if (p > 50) {
-			scrollSpeed = normalScrollSpeed;
-			return;
-		}
-		
-		scrollSpeed = (int) (1 / (50 - p + 20) * 400f);
+
+	// slow down vertical scrolling as the arms get near based on the beat
+	public void adjustScrollSpeed(float startTime) {
+		// change the scroll speed based on the beat
+		float p = Mathf.Repeat(Time.time - startTime, 1f);
+
+		// oscillate the speed while the average speed is normalScrollSpeed.
+		// Ideally the speed is slowest when the hands are close together
+		// but being on the beat is more important.
+		scrollSpeed = normalScrollSpeed + Mathf.Sin(p * 2f * Mathf.PI) * 100f;
 	}
 
-	public void makeFistsWhenTogether() {
-		if (scrollSpeed == normalScrollSpeed) {
+	public void makeFistsWhenTogether(Metronome metronome) {
+		// flap the hands twice per second on the beat
+		if ((leftSideStopped && rightSideStopped)
+		    || (int) (metronome.currentTick(Time.time) * metronome.interval * 2f) % 2 == 1) {
 			guyWithArmOut.visible(true);
 			otherArm.visible(true);
 			otherFist.visible(false);
@@ -185,20 +183,20 @@ public class FallingGuyProp {
 	private void alignArmsAtBottomOfScreen() {
 		var otherArmHeight = otherArm.getScreenPosition().y;
 		if (otherArmHeight > leftFinalBottomHeight) {
-			otherArm.move(0, -Mathf.Min(fallAndStopSpeed, otherArmHeight - leftFinalBottomHeight));
+			otherArm.smoothMove(0, -Mathf.Min(fallAndStopSpeed, otherArmHeight - leftFinalBottomHeight + 16));
 		}
 
 		var guyArmHeight = guyWithArmOut.getScreenPosition().y;
 		if (guyArmHeight > rightFinalBottomHeight) {
-			guyWithArmOut.move(0, -Mathf.Min(fallAndStopSpeed, guyArmHeight - rightFinalBottomHeight));
+			guyWithArmOut.smoothMove(0, -Mathf.Min(fallAndStopSpeed, guyArmHeight - rightFinalBottomHeight + 16));
 		}
 	}
 	
 	private void moveArmsInward() {
 		if (handsAreAlmostTouching()) return;
 		
-		otherArm.move(4, 0);
-		guyWithArmOut.move(-6, 0);
+		otherArm.smoothMove(40, 0);
+		guyWithArmOut.smoothMove(-60, 0);
 	}
 
 	public void Destroy() {

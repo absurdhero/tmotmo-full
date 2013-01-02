@@ -215,6 +215,14 @@ public class Sprite : MonoBehaviour {
 		move(new Vector3(x, y));
 	}
 
+	public void smoothMove(Vector3 pixels) {
+		move(pixels * Time.deltaTime);
+	}
+
+	public void smoothMove(float x, float y) {
+		move(new Vector3(x * Time.deltaTime, y * Time.deltaTime));
+	}
+
 	public GameObject createPivotOnTopLeftCorner() {
 		var parent = new GameObject("Parent of " + gameObject.name);
 		copyTransformTo(parent);
