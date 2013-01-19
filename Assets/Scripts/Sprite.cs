@@ -147,16 +147,24 @@ public class Sprite : MonoBehaviour {
 	public int PixelHeight() {
 		return height;
 	}
-	
+
+	/// The screen rect based on texture dimensions
 	public Rect ScreenRect() {
 		return ScreenRect(Camera.main);
 	}
-	
+
 	public Rect ScreenRect(Camera camera) {
 		Vector3 pos = camera.WorldToScreenPoint(transform.position);
 		return new Rect(pos.x, pos.y, width, height);
 	}
-	
+
+	/// Takes scale and rotation into account
+	public Rect WorldScreenRect(Camera camera) {
+		Vector3 pos = camera.WorldToScreenPoint(transform.position);
+		Vector3 outterPos = transform.TransformPoint(transform.position + new Vector3(width, height, transform.position.z));
+		return new Rect(pos.x, pos.y, outterPos.x - pos.x, outterPos.y - pos.y);
+	}
+
 	public Vector2 ScreenCenter() {
 		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
 		return new Vector2(pos.x + width / 2, pos.y + height / 2);

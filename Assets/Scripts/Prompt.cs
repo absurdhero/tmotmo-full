@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Prompt {
 	GameObject textLabel, blackBox;
+	MessageBox messageBox;
 	GUIText text;
 	Sprite okBox, nopeBox;
 	bool correct, enabled, solveScene;
 	float startTime = 0f;
-	
+
 	Scene sceneToSolve;
 	
 	const float promptTime = 1.5f;
@@ -16,20 +17,16 @@ public class Prompt {
 	}
 	
 	public void Setup() {
-		blackBox = GameObject.CreatePrimitive(PrimitiveType.Plane);
-		blackBox.active = false;
-		blackBox.name = "prompt background";
-		blackBox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
-		blackBox.transform.Rotate(new Vector3(270f, 0f, 0f));
-		blackBox.transform.position = new Vector3(0, -95, -9);
-		blackBox.transform.localScale = new Vector3(30f, 1f, 1.5f);
-		
+		buildBlackBox();
+
 		textLabel = new GameObject("prompt text");
 		textLabel.active = false;
 		text = textLabel.AddComponent<GUIText>();
 		textLabel.transform.position = new Vector3(0f, 0.06f, -9.5f);
 		Font font = (Font) Resources.Load("sierra_agi_font/sierra_agi_font", typeof(Font));
 		text.font = font;
+
+		messageBox = new MessageBox(font);
 		
 		okBox = Sprite.create("ok box");
 		okBox.visible(false);
@@ -38,20 +35,26 @@ public class Prompt {
 		nopeBox.visible(false);
 		nopeBox.setCenterToViewportCoord(0.5f, 0.5f);
 	}
-	
+
+	void buildBlackBox() {
+		blackBox = GameObject.CreatePrimitive(PrimitiveType.Plane);
+		blackBox.active = false;
+		blackBox.name = "prompt background";
+		blackBox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+		blackBox.transform.Rotate(new Vector3(270f, 0f, 0f));
+		blackBox.transform.position = new Vector3(0, -95, -9);
+		blackBox.transform.localScale = new Vector3(30f, 1f, 1.5f);
+	}
+
 	public void Update(float time) {
 		if (!enabled) return;
 		
 		if (time > startTime + promptTime) {
 			hide();
-			if (correct) {
-				okBox.visible(true);
-				if (solveScene) {
-					sceneToSolve.endScene();
-					solveScene = false;
-				}
-			} else {
-				nopeBox.visible(true);
+			messageBox.show();
+			if (correct && solveScene) {
+				sceneToSolve.endScene();
+				solveScene = false;
 			}
 		}
 		if (time > startTime + promptTime + boxTime) {
@@ -72,28 +75,33 @@ public class Prompt {
 		GameObject.Destroy(textLabel);
 	}
 
-	public void solve(Scene scene, string message) {
+	public void solve(Scene scene, string action) {
 		solveScene = true;
 		correct = true;
 		sceneToSolve = scene;
-		print(message);
+		print(action, "OK");
 	}
 
-	public void progress(string message) {
+	public void progress(string action) {
 		correct = true;
-		print(message);
+		print(action, "OK");
 	}
 
-	public void hint(string message) {
-		correct = false;
-		print(message);
+	public void hint(string action) {
+		hint(action, "Nope.");
 	}
-	
-	private void print(string message) {
+
+	public void hint(string action, string message) {
+		correct = false;
+		print(action, message);
+	}
+
+	private void print(string action, string message) {
+		messageBox.setMessage(message);
 		startTime = Time.time;
 		hideBoxes();
 		show();
-		text.text = ">" + message + "_";
+		text.text = ">" + action + "_";
 	}
 	
 	private void show() {
@@ -110,6 +118,7 @@ public class Prompt {
 	void hideBoxes() {
 		okBox.visible(false);
 		nopeBox.visible(false);
+		messageBox.hide();
 	}
 }
 

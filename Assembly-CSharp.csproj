@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\ImageMaterial.cs" />
      <Compile Include="Assets\Scripts\Layout.cs" />
      <Compile Include="Assets\Scripts\LoopTracker.cs" />
+     <Compile Include="Assets\Scripts\MessageBox.cs" />
      <Compile Include="Assets\Scripts\Metronome.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\OffsetCamera.cs" />

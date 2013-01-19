@@ -57,10 +57,10 @@ class SceneThree : Scene {
 			prompt.progress("pull guy apart");
 		}
 		else if (sensor.insideSprite(Camera.main, room.guyLeft)) {
-			prompt.hint("poke left half");
+			prompt.hint("prod left half", "it's already awake.");
 		}
 		else if (sensor.insideSprite(Camera.main, room.guyRight)) {
-			prompt.hint("poke right half");
+			prompt.hint("prod right half", "it's already awake.");
 		}
 	}
 	

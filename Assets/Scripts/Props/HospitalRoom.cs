@@ -180,7 +180,24 @@ public class HospitalRoom {
 			zzzAnimator.Update(Time.time);
 		}
 	}
+
+
+	public bool touchedBed(TouchSensor touch) {
+		return touch.insideSprite(Camera.main, cover.GetComponent<Sprite>(), new[] {TouchPhase.Began});
+	}
 	
+	public bool touchedZ(TouchSensor touch) {
+		return touch.insideSprite(Camera.main, zzz.GetComponent<Sprite>(), new[] {TouchPhase.Began});
+	}
+	
+	public bool touchedClipBoard(TouchSensor touch) {
+		return touch.insideSprite(Camera.main, clipBoard.GetComponent<Sprite>(), new[] {TouchPhase.Began});
+	}
+
+	public bool touchedMonitor(TouchSensor touch) {
+		return touch.insideSprite(Camera.main, heartRate.GetComponent<Sprite>(), new[] {TouchPhase.Began});
+	}
+
 	class ZzzAnimator : Repeater {
 		GameObject zzz;
 		Vector3 initialPosition;
