@@ -1,10 +1,6 @@
 using System;
 namespace UnityEngine
 {
-  public abstract class Behaviour : Component {
-    public bool enabled;
-  }
-
   public abstract class MonoBehaviour : Behaviour
   {
   public void Invoke(string methodName, float time) { throw new InvalidOperationException(); }

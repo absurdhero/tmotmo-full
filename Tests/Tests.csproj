@@ -76,9 +76,6 @@
     <Compile Include="..\Assets\Scripts\GameObjectFactory.cs">
       <Link>GameObjectFactory.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Scripts\HospitalRoom.cs">
-      <Link>HospitalRoom.cs</Link>
-    </Compile>
     <Compile Include="..\Assets\Scripts\Repeater.cs">
       <Link>Repeater.cs</Link>
     </Compile>
@@ -87,12 +84,6 @@
     </Compile>
     <Compile Include="..\Assets\Scripts\Scenes\SceneFour.cs">
       <Link>Scenes\SceneFour.cs</Link>
-    </Compile>
-    <Compile Include="..\Assets\Scripts\SpeechBubble.cs">
-      <Link>SpeechBubble.cs</Link>
-    </Compile>
-    <Compile Include="..\Assets\Scripts\BigHeadProp.cs">
-      <Link>BigHeadProp.cs</Link>
     </Compile>
     <Compile Include="..\Assets\Scripts\UnityInput.cs">
       <Link>UnityInput.cs</Link>
@@ -115,9 +106,6 @@
     </Compile>
     <Compile Include="..\Assets\Scripts\Scenes\SceneNine.cs">
       <Link>Scenes\SceneNine.cs</Link>
-    </Compile>
-    <Compile Include="..\Assets\Scripts\Confetti.cs">
-      <Link>Confetti.cs</Link>
     </Compile>
     <Compile Include="..\Assets\Scripts\Scenes\SceneEleven.cs">
       <Link>Scenes\SceneEleven.cs</Link>
@@ -146,9 +134,6 @@
     <Compile Include="..\Assets\Scripts\Scenes\SceneThirteen.cs">
       <Link>Scenes\SceneThirteen.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Scripts\ScrollingLetters.cs">
-      <Link>ScrollingLetters.cs</Link>
-    </Compile>
     <Compile Include="..\Assets\Scripts\Prompt.cs">
       <Link>Prompt.cs</Link>
     </Compile>
@@ -158,11 +143,38 @@
     <Compile Include="..\Assets\Scripts\OffsetCamera.cs">
       <Link>OffsetCamera.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Scripts\FallingGuyProp.cs">
-      <Link>FallingGuyProp.cs</Link>
+    <Compile Include="..\Assets\Scripts\Props\BigHeadProp.cs">
+      <Link>Props\BigHeadProp.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Scripts\DitheredBlueBackground.cs">
-      <Link>DitheredBlueBackground.cs</Link>
+    <Compile Include="..\Assets\Scripts\Props\Confetti.cs">
+      <Link>Props\Confetti.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Props\DitheredBlueBackground.cs">
+      <Link>Props\DitheredBlueBackground.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Props\FallingGuyProp.cs">
+      <Link>Props\FallingGuyProp.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Props\HospitalRoom.cs">
+      <Link>Props\HospitalRoom.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Props\ScrollingLetters.cs">
+      <Link>Props\ScrollingLetters.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Props\SpeechBubble.cs">
+      <Link>Props\SpeechBubble.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\MessageBox.cs">
+      <Link>MessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\Continued.cs">
+      <Link>Scenes\Continued.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scenes\SceneFourteen.cs">
+      <Link>Scenes\SceneFourteen.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\SpriteTouchExtensions.cs">
+      <Link>SpriteTouchExtensions.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -177,5 +189,8 @@
       <Project>{0308C045-ED54-4F84-9AB2-C4B0BF69D7F7}</Project>
       <Name>MockUnity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Props\" />
   </ItemGroup>
 </Project>

@@ -139,5 +139,7 @@ namespace UnityEngine {
 		//public  void SampleAnimation (AnimationClip animation, float time) { throw new InvalidOperationException(); }
 		public static  GameObject Find (string name) { throw new InvalidOperationException(); }
 
+		public static GameObject CreatePrimitive(PrimitiveType type) { throw new InvalidOperationException(); }
+
 	}
 }

@@ -12,24 +12,24 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
-    <ConsolePause>false</ConsolePause>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -66,5 +66,17 @@
     <Compile Include="Mathf.cs" />
     <Compile Include="Handheld.cs" />
     <Compile Include="Random.cs" />
+    <Compile Include="GUIText.cs">
+      <DependentUpon>GUIText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIStyle.cs" />
+    <Compile Include="Font.cs" />
+    <Compile Include="GUIElement.cs" />
+    <Compile Include="Behaviour.cs" />
+    <Compile Include="PrimitiveType.cs" />
+    <Compile Include="Space.cs" />
+    <Compile Include="CameraClearFlags.cs" />
+    <Compile Include="TextAlignment.cs" />
+    <Compile Include="TextAnchor.cs" />
   </ItemGroup>
 </Project>
