@@ -4,7 +4,6 @@ public class Prompt {
 	GameObject textLabel, blackBox;
 	MessageBox messageBox;
 	GUIText text;
-	Sprite okBox, nopeBox;
 	bool correct, enabled, solveScene;
 	float startTime = 0f;
 
@@ -27,13 +26,6 @@ public class Prompt {
 		text.font = font;
 
 		messageBox = new MessageBox(font);
-		
-		okBox = Sprite.create("ok box");
-		okBox.visible(false);
-		okBox.setCenterToViewportCoord(0.5f, 0.5f);
-		nopeBox = Sprite.create("nope box");
-		nopeBox.visible(false);
-		nopeBox.setCenterToViewportCoord(0.5f, 0.5f);
 	}
 
 	void buildBlackBox() {
@@ -116,8 +108,6 @@ public class Prompt {
 	}
 
 	void hideBoxes() {
-		okBox.visible(false);
-		nopeBox.visible(false);
 		messageBox.hide();
 	}
 }
