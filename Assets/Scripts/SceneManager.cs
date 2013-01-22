@@ -16,24 +16,24 @@ public class SceneManager {
 	// start the program at the given scene
 	private int skipToSceneNumber = 0;
 	
-	public SceneManager(LoopTracker loopTracker) : this(null, loopTracker) {
+	public SceneManager(LoopTracker loopTracker) : this(null, loopTracker, new Prompt()) {
 	}
 	
-	public SceneManager (SceneFactory sceneFactory, LoopTracker loopTracker) {
+	public SceneManager (SceneFactory sceneFactory, LoopTracker loopTracker, Prompt prompt) {
 		if(sceneFactory == null) {
 			sceneFactory = new SceneFactory(this);
 		}
 		this.sceneFactory = sceneFactory;
 		this.loopTracker = loopTracker;
+		this.prompt = prompt;
 
 		StartGame();
 	}
 
 	void StartGame() {
 		sceneFactory.PreloadAssets();
-		prompt = new Prompt();
 		prompt.Setup();
-		
+
 		currentScene = sceneFactory.GetFirstScene();
 		currentScene.Setup(Time.time);
 		SkipToScene(skipToSceneNumber);

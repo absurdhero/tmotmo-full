@@ -28,16 +28,18 @@ namespace Tests
 		{
 			var firstScene = mocks.DynamicMock<Scene>();
 			var lastScene = mocks.DynamicMock<Scene>();
+			var prompt = mocks.Stub<Prompt>();
 			using (mocks.Record ()) {
 				// emulate behavior of sceneFactory and return mock Scenes
 				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene);
+				Expect.Call(sceneFactory.isLastScene(firstScene)).Return(false);
 				Expect.Call(sceneFactory.isFirstScene(firstScene)).Return(true);
 				Expect.Call(delegate{loopTracker.startPlaying();});
 				Expect.Call(sceneFactory.GetSceneAfter(firstScene)).Return(lastScene);
 				Expect.Call(sceneFactory.isLastScene(lastScene)).Return(true);
 			}
 			using (mocks.Playback ()) {
-				var sceneManager = new SceneManager(sceneFactory, loopTracker);
+				var sceneManager = new SceneManager(sceneFactory, loopTracker, prompt);
 				sceneManager.NextScene();
 				sceneManager.NextScene();
 			}

@@ -1,6 +1,7 @@
 using UnityEngine;
+using System;
 
-public class Prompt {
+public class Prompt : MarshalByRefObject {
 	GameObject textLabel, blackBox;
 	MessageBox messageBox;
 	GUIText text;
