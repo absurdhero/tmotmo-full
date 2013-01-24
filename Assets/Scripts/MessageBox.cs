@@ -1,16 +1,17 @@
 using System;
+using System.Text;
 using UnityEngine;
 
 public class MessageBox {
+	const int lineWidth = 20;
+
 	GameObject textLabel;
 	GUIText text;
-	GUIStyle style;
 	Sprite messageBackground, leftBorder, rightBorder, topBorder, bottomBorder;
 
 	const float borderThickness = 8f;
 	const float halfThickness = borderThickness / 2f;
 
-	Rect horizontalBorderDimensions;
 	Texture2D messageBorder;
 
 	public MessageBox(Font font) {
@@ -50,7 +51,8 @@ public class MessageBox {
 	}
 
 	public void setMessage(String message) {
-		text.text = message;
+		text.text = wrap(message);
+
 		var textRect = text.GetScreenRect(Camera.main);
 		expandBackgroundToSizeOf(textRect);
 
@@ -73,6 +75,24 @@ public class MessageBox {
 	void expandBackgroundToSizeOf(Rect textRect) {
 		messageBackground.transform.localScale = new Vector3((textRect.width + borderThickness * 2 + 2f) / 2f, (textRect.height + borderThickness * 2 + 2f) / 2f, 1f);
 		messageBackground.setScreenPosition(textRect.x - borderThickness, textRect.y - borderThickness);
+	}
+
+	static public String wrap(String text) {
+		StringBuilder output = new StringBuilder(text.Length + 1);
+		int spaceLeft = lineWidth;
+		foreach(String word in text.Split(' ')) {
+			if (word.Length + 1 > spaceLeft) {
+				output.Append('\n');
+				output.Append(word);
+				spaceLeft = lineWidth - word.Length;
+			} else {
+				spaceLeft -= word.Length + 1;
+				output.Append(' ');
+				output.Append(word);
+			}
+		}
+		output.Remove(0, 1); // remove space that was inserted at the beginning of the text
+		return output.ToString();
 	}
 
 	public void show() {
