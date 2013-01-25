@@ -11,6 +11,7 @@ public class MessageBox {
 
 	const float borderThickness = 8f;
 	const float halfThickness = borderThickness / 2f;
+	const float paddingX = 4f, paddingY = 4f;
 
 	Texture2D messageBorder;
 
@@ -56,25 +57,25 @@ public class MessageBox {
 		var textRect = text.GetScreenRect(Camera.main);
 		expandBackgroundToSizeOf(textRect);
 
-		leftBorder.setScreenPosition(textRect.xMin - halfThickness, textRect.yMin - halfThickness);
-		rightBorder.setScreenPosition(textRect.xMax + halfThickness, textRect.yMin - halfThickness);
+		leftBorder.setScreenPosition(textRect.xMin - halfThickness - paddingX, textRect.yMin - halfThickness - paddingY);
+		rightBorder.setScreenPosition(textRect.xMax + halfThickness + paddingX, textRect.yMin - halfThickness - paddingY);
 
-		var verticalBorderScale = new Vector3(1f, (textRect.height + borderThickness + 2f) / messageBorder.height, 1f);
+		var verticalBorderScale = new Vector3(1f, (textRect.height + borderThickness + paddingY * 2 + 2f) / messageBorder.height, 1f);
 		leftBorder.transform.localScale =  verticalBorderScale;
 		rightBorder.transform.localScale = verticalBorderScale;
 
-		topBorder.setScreenPosition(textRect.xMin - halfThickness, textRect.yMax + halfThickness);
-		bottomBorder.setScreenPosition(textRect.xMin - halfThickness, textRect.yMin - halfThickness);
+		topBorder.setScreenPosition(textRect.xMin - halfThickness - paddingX, textRect.yMax + halfThickness + paddingY);
+		bottomBorder.setScreenPosition(textRect.xMin - halfThickness - paddingX, textRect.yMin - halfThickness - paddingY);
 
-		var horizontalBorderScale = new Vector3((textRect.width + borderThickness + 2f) / messageBorder.width, 1f, 1f);
+		var horizontalBorderScale = new Vector3((textRect.width + borderThickness + paddingX * 2 + 2f) / messageBorder.width, 1f, 1f);
 		topBorder.transform.localScale =  horizontalBorderScale;
 		bottomBorder.transform.localScale = horizontalBorderScale;
 
 	}
 
 	void expandBackgroundToSizeOf(Rect textRect) {
-		messageBackground.transform.localScale = new Vector3((textRect.width + borderThickness * 2 + 2f) / 2f, (textRect.height + borderThickness * 2 + 2f) / 2f, 1f);
-		messageBackground.setScreenPosition(textRect.x - borderThickness, textRect.y - borderThickness);
+		messageBackground.transform.localScale = new Vector3((textRect.width + borderThickness * 2 + paddingX * 2 + 2f) / 2f, (textRect.height + borderThickness * 2 + paddingY * 2 + 2f) / 2f, 1f);
+		messageBackground.setScreenPosition(textRect.x - borderThickness - paddingX, textRect.y - borderThickness - paddingY);
 	}
 
 	static public String wrap(String text) {
