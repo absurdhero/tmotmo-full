@@ -43,18 +43,10 @@ class SceneTwo : Scene {
 		if (!completed) {
 			if (room.touchedBed(sensor)) {
 				room.openEyes();
-				prompt.progress("prod him");
+				//prompt.progress("prod him");
 			}
-
-			if (room.touchedClipBoard(sensor)) {
-				prompt.hint("look at chart", "even the doctors don't understand the test results");
-			}
-			if (room.touchedZ(sensor)) {
-				prompt.hint("catch z", "that's not going to wake him up");
-			}
-			if (room.touchedMonitor(sensor)) {
-				prompt.hint("look at monitor", "things are stable, for now");
-			}
+			
+			room.hintWhenTouched((touched) => { if (touched == room.cover) endScene(); }, prompt, sensor);
 		}
 		
 		if (eyesOpened && !completed) {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class Prompt : MarshalByRefObject {
 	GameObject textLabel, blackBox;
@@ -8,7 +9,8 @@ public class Prompt : MarshalByRefObject {
 	bool correct, enabled, solveScene;
 	float startTime = 0f;
 
-	Scene sceneToSolve;
+	Action<GameObject> onComplete = GameObject => {};
+	GameObject target;
 	
 	const float promptTime = 1.5f;
 	const float boxTime = 2.0f;
@@ -45,10 +47,8 @@ public class Prompt : MarshalByRefObject {
 		if (time > startTime + promptTime) {
 			hide();
 			messageBox.show();
-			if (correct && solveScene) {
-				sceneToSolve.endScene();
-				solveScene = false;
-			}
+			onComplete(target);
+			onComplete = (obj) => {}; // only run it once
 		}
 		if (time > startTime + promptTime + boxTime) {
 			hide();
@@ -71,7 +71,6 @@ public class Prompt : MarshalByRefObject {
 	public void solve(Scene scene, string action) {
 		solveScene = true;
 		correct = true;
-		sceneToSolve = scene;
 		print(action, "OK");
 	}
 
@@ -87,6 +86,29 @@ public class Prompt : MarshalByRefObject {
 	public void hint(string action, string message) {
 		correct = false;
 		print(action, message);
+	}
+
+	// Cycles through displaying a sequence of action-response pairs for each object that is touched.
+	// Calls onComplete when it reaches the end of a cycle with the object for which the sequence was completed.
+	public void hintWhenTouched(Action<GameObject> onComplete, TouchSensor sensor, Dictionary<GameObject, List<String[]>> interactions) {
+		foreach(var gameObject in interactions.Keys) {
+			if (sensor.insideSprite(Camera.main, gameObject.GetComponent<Sprite>(), new[] {TouchPhase.Began})) {
+				var sequence = interactions[gameObject];
+				var message = sequence[0];
+				var promptInput = message[0];
+				var response = message[1];
+				
+				hint(promptInput, response);
+
+				if (sequence.Count > 1) {
+					sequence.RemoveAt(0);
+				} else {
+					target = gameObject;
+					this.onComplete = onComplete;
+				}
+				continue; // only process one per frame
+			}
+		}
 	}
 
 	private void print(string action, string message) {

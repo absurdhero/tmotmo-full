@@ -12,6 +12,7 @@ public class SceneManager {
 
 	// click instantly through scenes instead of waiting for them to transition
 	public bool debugMode = false;
+	public bool rightClickToComplete = false;
 	
 	// start the program at the given scene
 	private int skipToSceneNumber = 0;
@@ -97,7 +98,7 @@ public class SceneManager {
 				Debug.Log("Clicked through scene");
 				if (sceneFactory.isLastScene(currentScene)) GameOver();
 				else NextScene();
-			} else {
+			} else if (rightClickToComplete) {
 				Debug.Log("Causing scene to complete");
 				currentScene.endScene();
 			}

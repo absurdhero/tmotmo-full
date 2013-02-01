@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 class SceneOne : Scene {
 	public GameObject background;
@@ -83,18 +84,23 @@ class SceneOne : Scene {
 
 		if (solved) return;
 
+		prompt.hintWhenTouched(GameObject => {}, sensor,
+			new Dictionary<GameObject, List<String[]>> {
+					{circle.gameObject, new List<String[]> {new String[] {"stop circle from changing", "Nope."}}},
+					{triangle.gameObject, new List<String[]> {new String[] {"stop triangle from changing", "Nope."}}},
+			});
+
 		if (circle.belowFinger(sensor)
 		    && triangle.belowFinger(sensor)
 		    && triangleShowing()) {
-			Handheld.Vibrate();
-			wiggler.wiggleNow(now);
-			solvedScene();
-			prompt.solve(this, "stop shapes from changing");
-			return;
-		} else if (circle.belowFinger(sensor)) {
-			prompt.hint("stop circle from changing");
-		} else if (triangle.belowFinger(sensor)) {
-			prompt.hint("stop triangle from changing");
+			prompt.hintWhenTouched(gameObject => {
+				Handheld.Vibrate();
+				wiggler.wiggleNow(now);
+				endScene();
+			}, sensor, new Dictionary<GameObject, List<String[]>> {
+					{circle.gameObject, new List<String[]> {new String[] {"stop shapes from changing", "OK"}}},
+					{triangle.gameObject, new List<String[]> {new String[] {"stop shapes from changing", "OK"}}},
+			});
 		}
 
 		AnimateShapes(now);

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class HospitalRoom {
 	GameObjectFactory<string> resourceFactory;
@@ -27,7 +28,9 @@ public class HospitalRoom {
 	Camera camera;
 	GameObject heartRate;
 	Cycler heartRateCycler;
-		
+
+	Dictionary<GameObject, List<String[]>> interactions;
+
 	public HospitalRoom(GameObjectFactory<string> resourceFactory, Camera camera) {
 		this.resourceFactory = resourceFactory;
 		this.camera = camera;
@@ -181,21 +184,22 @@ public class HospitalRoom {
 		}
 	}
 
-
+	public void hintWhenTouched(Action<GameObject> onCompleted, Prompt prompt, TouchSensor touch) {
+		if (interactions == null) {
+			interactions = new Dictionary<GameObject, List<String[]>> {
+				{clipBoard, new List<String[]> {new String[] {"look at chart", "even the doctors don't understand the test results"}}},
+				{zzz, new List<String[]> {new String[] {"catch z", "that's not going to wake him up"}}},
+				{heartRate, new List<String[]> {new String[] {"look at monitor", "things are stable, for now"}}},
+				{cover, new List<String[]> {new String[] {"prod him", "He doesn't want to wake up"},
+						new String[] {"prod him again", "OK"},
+						new String[] {"prod him again", "OK"}}},
+			};
+		}
+		prompt.hintWhenTouched(onCompleted, touch, interactions);
+	}
+	
 	public bool touchedBed(TouchSensor touch) {
 		return touch.insideSprite(Camera.main, cover.GetComponent<Sprite>(), new[] {TouchPhase.Began});
-	}
-	
-	public bool touchedZ(TouchSensor touch) {
-		return touch.insideSprite(Camera.main, zzz.GetComponent<Sprite>(), new[] {TouchPhase.Began});
-	}
-	
-	public bool touchedClipBoard(TouchSensor touch) {
-		return touch.insideSprite(Camera.main, clipBoard.GetComponent<Sprite>(), new[] {TouchPhase.Began});
-	}
-
-	public bool touchedMonitor(TouchSensor touch) {
-		return touch.insideSprite(Camera.main, heartRate.GetComponent<Sprite>(), new[] {TouchPhase.Began});
 	}
 
 	class ZzzAnimator : Repeater {
