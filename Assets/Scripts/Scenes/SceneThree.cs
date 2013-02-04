@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 class SceneThree : Scene {
 	public HospitalRoom room { get; private set; }
@@ -10,6 +11,8 @@ class SceneThree : Scene {
 	UnityInput input;
 
 	TouchSensor sensor;
+	
+	Dictionary<GameObject, ActionResponsePair[]> prodResponses;
 	
 	public SceneThree(SceneManager manager, HospitalRoom room) : base(manager) {
 		timeLength = 8.0f;
@@ -32,6 +35,13 @@ class SceneThree : Scene {
 		reverseWiggler = new ReverseWiggler(startTime, timeLength, new[] {guyRightPivot});
 
 		sensor = new TouchSensor(new UnityInput());
+		
+		prodResponses = new Dictionary<GameObject, ActionResponsePair[]> {
+				{room.guyLeft.gameObject, new [] {new ActionResponsePair("prod Same",   new[] {"it's already awake."}),
+				new ActionResponsePair("prod Same",   new[] {"listen to the lyrics."})}},
+				{room.guyRight.gameObject, new [] {new ActionResponsePair("prod Not Same", new[] {"it's already awake."}),
+				new ActionResponsePair("prod Not Same", new[] {"listen to the lyrics."})}},
+		};
 	}
 	
 	public override void Destroy() {
@@ -46,6 +56,8 @@ class SceneThree : Scene {
 
 		if (solved) return;
 
+	    prompt.hintWhenTouched(GameObject => {}, sensor, prodResponses);
+
 		if(room.guySplitDistance == MAX_SPLIT) {
 			prompt.solve(this, "pull guy in half");
 			endScene();
@@ -55,12 +67,6 @@ class SceneThree : Scene {
 			var horizontal_distance = Math.Min(Math.Abs(distance.x), MAX_SPLIT);
 			room.separateHalves(horizontal_distance);
 			prompt.progress("pull guy apart");
-		}
-		else if (sensor.insideSprite(Camera.main, room.guyLeft)) {
-			prompt.hint("prod left half", "it's already awake.");
-		}
-		else if (sensor.insideSprite(Camera.main, room.guyRight)) {
-			prompt.hint("prod right half", "it's already awake.");
 		}
 	}
 	

@@ -99,24 +99,28 @@ public class Prompt : MarshalByRefObject {
 			return;
 		}
 
+		GameObject touchedObject = null;
 		foreach(var gameObject in interactions.Keys) {
 			if (sensor.insideSprite(Camera.main, gameObject.GetComponent<Sprite>(), new[] {TouchPhase.Began})) {
-				var message = interactions[gameObject][0];
-				var promptInput = message.action;
-				var responses = message.responses;
-				print(promptInput, responses[0]);
-
-				var restOfresponses = new List<string>(responses).GetRange(2, responses.Length - 2);
-				hint(promptInput, restOfresponses);
-
-				if (interactions[gameObject].Length > 1) {
-					interactions[gameObject] = interactions[gameObject].Skip(1).ToArray();
-				} else {
-					target = gameObject;
-					this.onComplete = onComplete;
-				}
-				continue; // only process one per frame
+				touchedObject = gameObject;
 			}
+		}
+
+		if (touchedObject == null) return;
+		
+		var message = interactions[touchedObject][0];
+		var promptInput = message.action;
+		var responses = message.responses;
+		print(promptInput, responses[0]);
+
+		var restOfresponses = new List<string>(responses).Skip(1).ToList();
+		hint(promptInput, restOfresponses);
+
+		if (interactions[touchedObject].Length > 1) {
+			interactions[touchedObject] = interactions[touchedObject].Skip(1).ToArray();
+		} else {
+			target = touchedObject;
+			this.onComplete = onComplete;
 		}
 	}
 

@@ -96,7 +96,7 @@ public class HospitalRoom {
 		eyes.GetComponent<Sprite>().DrawNextFrame();
 	}
 	
-	public bool eyesTotallyOpen {
+	private bool eyesTotallyOpen {
 		get { return !eyes.active; }
 	}
 	
