@@ -29,7 +29,7 @@ public class HospitalRoom {
 	GameObject heartRate;
 	Cycler heartRateCycler;
 
-	Dictionary<GameObject, List<String[]>> interactions;
+	Dictionary<GameObject, ActionResponsePair[]> interactions;
 
 	public HospitalRoom(GameObjectFactory<string> resourceFactory, Camera camera) {
 		this.resourceFactory = resourceFactory;
@@ -186,13 +186,18 @@ public class HospitalRoom {
 
 	public void hintWhenTouched(Action<GameObject> onCompleted, Prompt prompt, TouchSensor touch) {
 		if (interactions == null) {
-			interactions = new Dictionary<GameObject, List<String[]>> {
-				{clipBoard, new List<String[]> {new String[] {"look at chart", "even the doctors don't understand the test results"}}},
-				{zzz, new List<String[]> {new String[] {"catch z", "that's not going to wake him up"}}},
-				{heartRate, new List<String[]> {new String[] {"look at monitor", "things are stable, for now"}}},
-				{cover, new List<String[]> {new String[] {"prod him", "He doesn't want to wake up"},
-						new String[] {"prod him again", "OK"},
-						new String[] {"prod him again", "OK"}}},
+			interactions = new Dictionary<GameObject, ActionResponsePair[]> {
+				{clipBoard, new [] {new ActionResponsePair("look at chart", new [] {"even the doctors don't understand the test results"})}},
+				{zzz,       new [] {new ActionResponsePair("catch z", new [] {"that's not going to wake him up"})}},
+				{heartRate, new [] {new ActionResponsePair("look at monitor", new []{"things are stable, for now"})}},
+				{cover,     new [] {new ActionResponsePair("prod him", new[] {"He doesn't want to wake up"}),
+						            new ActionResponsePair("prod him until he wakes up", new [] {"OK"}),
+							        new ActionResponsePair("expose him to the cold",
+										new [] {
+										"you remove the blankets, security and otherwise.",
+										"there are now two distinct halves.",
+										"are they the same person?"}),
+					}},
 			};
 		}
 		prompt.hintWhenTouched(onCompleted, touch, interactions);

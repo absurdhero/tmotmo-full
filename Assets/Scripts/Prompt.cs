@@ -1,14 +1,16 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Prompt : MarshalByRefObject {
 	GameObject textLabel, blackBox;
 	MessageBox messageBox;
 	GUIText text;
-	bool correct, enabled, solveScene;
+	bool enabled;
 	float startTime = 0f;
 
+	List<string> remainingMessages = new List<string>();
 	Action<GameObject> onComplete = GameObject => {};
 	GameObject target;
 	
@@ -47,10 +49,12 @@ public class Prompt : MarshalByRefObject {
 		if (time > startTime + promptTime) {
 			hide();
 			messageBox.show();
-			onComplete(target);
-			onComplete = (obj) => {}; // only run it once
+			if (remainingMessages.Count == 0) {
+				onComplete(target);
+				onComplete = (obj) => {}; // only run it once
+			}
 		}
-		if (time > startTime + promptTime + boxTime) {
+		if (time > startTime + promptTime + boxTime && remainingMessages.Count == 0) {
 			hide();
 			enabled = false;
 			hideBoxes();
@@ -60,7 +64,6 @@ public class Prompt : MarshalByRefObject {
 	public void Reset() {
 		hide();
 		hideBoxes();
-		solveScene = false;
 		enabled = false;
 	}
 	
@@ -69,39 +72,45 @@ public class Prompt : MarshalByRefObject {
 	}
 
 	public void solve(Scene scene, string action) {
-		solveScene = true;
-		correct = true;
 		print(action, "OK");
 	}
 
 	public void progress(string action) {
-		correct = true;
 		print(action, "OK");
 	}
 
-	public void hint(string action) {
-		hint(action, "Nope.");
+	public void hint(string action, string message) {
+		hint(action, new List<string> {message});
 	}
 
-	public void hint(string action, string message) {
-		correct = false;
-		print(action, message);
+	public void hint(string action, List<string> messages) {
+		remainingMessages = messages;
 	}
 
 	// Cycles through displaying a sequence of action-response pairs for each object that is touched.
 	// Calls onComplete when it reaches the end of a cycle with the object for which the sequence was completed.
-	public void hintWhenTouched(Action<GameObject> onComplete, TouchSensor sensor, Dictionary<GameObject, List<String[]>> interactions) {
+	public void hintWhenTouched(Action<GameObject> onComplete, TouchSensor sensor, Dictionary<GameObject, ActionResponsePair[]> interactions) {
+		if (remainingMessages.Count > 0) {
+			if (sensor.any()) {
+				messageBox.setMessage(remainingMessages[0]);
+				remainingMessages.RemoveAt(0);
+				startTime = Time.time - promptTime;
+			}
+			return;
+		}
+
 		foreach(var gameObject in interactions.Keys) {
 			if (sensor.insideSprite(Camera.main, gameObject.GetComponent<Sprite>(), new[] {TouchPhase.Began})) {
-				var sequence = interactions[gameObject];
-				var message = sequence[0];
-				var promptInput = message[0];
-				var response = message[1];
-				
-				hint(promptInput, response);
+				var message = interactions[gameObject][0];
+				var promptInput = message.action;
+				var responses = message.responses;
+				print(promptInput, responses[0]);
 
-				if (sequence.Count > 1) {
-					sequence.RemoveAt(0);
+				var restOfresponses = new List<string>(responses).GetRange(2, responses.Length - 2);
+				hint(promptInput, restOfresponses);
+
+				if (interactions[gameObject].Length > 1) {
+					interactions[gameObject] = interactions[gameObject].Skip(1).ToArray();
 				} else {
 					target = gameObject;
 					this.onComplete = onComplete;
@@ -135,3 +144,12 @@ public class Prompt : MarshalByRefObject {
 	}
 }
 
+public class ActionResponsePair {
+	public string action {get;set;}
+	public string[] responses {get;set;}
+	
+	public ActionResponsePair(string action, string[] responses) {
+		this.action = action;
+		this.responses = responses;
+	}
+}

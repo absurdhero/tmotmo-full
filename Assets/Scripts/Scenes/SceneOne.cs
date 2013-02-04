@@ -85,9 +85,9 @@ class SceneOne : Scene {
 		if (solved) return;
 
 		prompt.hintWhenTouched(GameObject => {}, sensor,
-			new Dictionary<GameObject, List<String[]>> {
-					{circle.gameObject, new List<String[]> {new String[] {"stop circle from changing", "Nope."}}},
-					{triangle.gameObject, new List<String[]> {new String[] {"stop triangle from changing", "Nope."}}},
+			new Dictionary<GameObject, ActionResponsePair[]> {
+				{circle.gameObject,   new [] {new ActionResponsePair("stop circle from changing",   new[] {"Nope."})}},
+				{triangle.gameObject, new [] {new ActionResponsePair("stop triangle from changing", new[] {"Nope."})}},
 			});
 
 		if (circle.belowFinger(sensor)
@@ -97,9 +97,9 @@ class SceneOne : Scene {
 				Handheld.Vibrate();
 				wiggler.wiggleNow(now);
 				endScene();
-			}, sensor, new Dictionary<GameObject, List<String[]>> {
-					{circle.gameObject, new List<String[]> {new String[] {"stop shapes from changing", "OK"}}},
-					{triangle.gameObject, new List<String[]> {new String[] {"stop shapes from changing", "OK"}}},
+			}, sensor, new Dictionary<GameObject, ActionResponsePair[]> {
+					{circle.gameObject,   new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
+					{triangle.gameObject, new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
 			});
 		}
 

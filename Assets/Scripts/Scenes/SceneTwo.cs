@@ -7,7 +7,6 @@ class SceneTwo : Scene {
 	private Wiggler wiggler;
 	private UnityInput input;
 	private TouchSensor sensor;
-	private bool eyesOpened = false;
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
@@ -36,24 +35,17 @@ class SceneTwo : Scene {
 	public override void Update () {
 		wiggler.Update(Time.time);
 
-		if (room.eyesTotallyOpen && room.touchedBed(sensor)) {
-			eyesOpened = true;
-		}
-
 		if (!completed) {
 			if (room.touchedBed(sensor)) {
 				room.openEyes();
-				//prompt.progress("prod him");
 			}
 			
-			room.hintWhenTouched((touched) => { if (touched == room.cover) endScene(); }, prompt, sensor);
-		}
-		
-		if (eyesOpened && !completed) {
-			room.removeCover();
-			room.doubleHeartRate(Time.time);
-			prompt.solve(this, "remove covers");
-			endScene();
+			room.hintWhenTouched((touched) => { if (touched == room.cover)  {
+					room.removeCover();
+					room.doubleHeartRate(Time.time);
+					endScene();
+				}
+			}, prompt, sensor);
 		}
 		
 		room.Update();
