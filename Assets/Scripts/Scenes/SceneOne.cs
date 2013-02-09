@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 class SceneOne : Scene {
-	public GameObject background;
+	public FullScreenQuad background;
 	public Sprite same;
 	public Sprite notSame;
 	public Sprite circle;
@@ -28,13 +28,13 @@ class SceneOne : Scene {
 	}
 
 	public override void LoadAssets() {
-		background = resourceFactory.Create("TitleScene/BackgroundQuad");
-		background.active = false;
+		background = FullScreenQuad.create("TitleScene/bg");
+		background.visible(false);
 
-		same = resourceFactory.Create(this, "Same").GetComponent<Sprite>();
-		notSame = resourceFactory.Create(this, "NotSame").GetComponent<Sprite>();
-		circle = resourceFactory.Create(this, "Circle").GetComponent<Sprite>();
-		triangle = resourceFactory.Create(this, "Triangle").GetComponent<Sprite>();
+		same = Sprite.create(this, "same");
+		notSame = Sprite.create(this, "notsame", "notsame_caps", "notsame_g1", "notsame_g2");
+		circle = Sprite.create(this, "circle1", "circle2", "circle3", "circle4", "circle5");
+		triangle = Sprite.create(this, "triangle1", "triangle2", "triangle3");
 
 		same.visible(false);
 		notSame.visible(false);
@@ -43,7 +43,7 @@ class SceneOne : Scene {
 	}
 
 	public override void Setup(float startTime) {
-		background.active = true;
+		background.visible(true);
 		same.visible(true);
 		notSame.visible(true);
 		circle.visible(true);

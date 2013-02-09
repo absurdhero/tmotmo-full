@@ -8,24 +8,30 @@ using UnityEngine;
  */
 public class Sprite : MonoBehaviour {
 
-	public static Sprite create(object obj, string textureName) {
+	public static Sprite create(object obj, params string[] textureNames) {
 		var resourcePrefix = obj.GetType().ToString();
-		return create(resourcePrefix + "/" + textureName);
+		string[] texturePaths = new string[textureNames.Length];
+		for (int i = 0; i < textureNames.Length; i++) {
+			texturePaths[i] = resourcePrefix + "/" + textureNames[i];
+	    }
+		return create(texturePaths);
 	}
 
-	public static Sprite create(string texturePath) {
-		return create((Texture2D) Resources.Load(texturePath));
+	public static Sprite create(params string[] texturePaths) {
+		Texture2D[] textures = new Texture2D[texturePaths.Length];
+		for (int i = 0; i < texturePaths.Length; i++) {
+			textures[i] = (Texture2D) Resources.Load(texturePaths[i]);
+		}
+		return create(textures);
 	}
 
-	public static Sprite create(Texture2D texture) {
-		var spriteObject = new GameObject(texture.name + " sprite");
+	public static Sprite create(params Texture2D[] textures) {
+		var spriteObject = new GameObject(textures[0].name + " sprite");
 		var sprite = spriteObject.AddComponent<Sprite>();
 
-		sprite.height = texture.height;
-		sprite.width = texture.width;
-		sprite.textures = new Texture2D[] {
-				texture
-			};
+		sprite.height = textures[0].height;
+		sprite.width = textures[0].width;
+		sprite.textures = textures;
 
 		sprite.Awake();
 		sprite.Start();
