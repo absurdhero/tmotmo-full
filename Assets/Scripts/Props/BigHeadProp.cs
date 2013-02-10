@@ -4,7 +4,7 @@ using UnityEngine;
 public class BigHeadProp {
 	GameObjectFactory<string> resourceFactory;
 	
-	GameObject background;
+	FullScreenQuad background;
 	public GameObject faceLeftObject { get; private set; }
 	public GameObject faceRightObject { get; private set; }
 	
@@ -24,7 +24,7 @@ public class BigHeadProp {
 	}
 
 	public void Setup () {
-		background = resourceFactory.Create(this, "PurpleQuad");
+		background = FullScreenQuad.create(this, "head_closeup_bg");
 
 		faceLeftObject = resourceFactory.Create(this, "FaceLeft");
 		faceLeftObject.layer = 1;
@@ -36,7 +36,7 @@ public class BigHeadProp {
 	}
 	
 	public void Destroy () {
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 		GameObject.Destroy(faceLeftObject);
 		GameObject.Destroy(faceRightObject);
 	}

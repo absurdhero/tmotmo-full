@@ -6,7 +6,7 @@ public class SceneNine : Scene {
 	ScrollLetters spreadConfetti;
 	Sprite todoList;
 
-	GameObject background;
+	FullScreenQuad background;
 
 	public SceneNine(SceneManager manager, Confetti confetti) : base(manager) {
 		timeLength = 2.0f;
@@ -16,7 +16,7 @@ public class SceneNine : Scene {
 	public override void Setup (float startTime) {
 		endScene();
 
-		background = resourceFactory.Create("TodoList/GreenQuad");
+		background = FullScreenQuad.create("TodoList/todo_bg");
 
 		spreadConfetti = new ScrollLetters(confetti);
 		spreadConfetti.Setup(startTime);
@@ -32,7 +32,7 @@ public class SceneNine : Scene {
 
 	public override void Destroy () {
 		confetti.Destroy();
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 		spreadConfetti.Destroy();
 		Sprite.Destroy(todoList);
 	}

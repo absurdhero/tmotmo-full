@@ -8,7 +8,7 @@ public class SceneTen : Scene {
 	GameObject wireShadow;
 	GameObject glassCracks;
 	GameObject wires;
-	GameObject background;
+	FullScreenQuad background;
 	
 	Sprite ampSprite { get { return amp.GetComponent<Sprite>(); }}
 	Sprite shoeSprite { get { return shoe.GetComponent<Sprite>(); }}
@@ -26,13 +26,13 @@ public class SceneTen : Scene {
 	}
 	
 	public override void LoadAssets() {
-		background = resourceFactory.Create(this, "GreenBackground");
+		background = FullScreenQuad.create(this, "pedal_stomp_bg");
 		shoe = resourceFactory.Create("SceneTen/Shoe");
 		amp = resourceFactory.Create(this, "Amp");
 		wires = resourceFactory.Create(this, "Wires");
 		wireShadow = resourceFactory.Create(this, "WireShadow");
 
-		background.active = false;
+		background.visible(false);
 		shoe.active = false;
 		amp.active = false;
 		wires.active = false;
@@ -59,7 +59,7 @@ public class SceneTen : Scene {
 	public override void Setup (float startTime) {
 		endScene();
 		
-		background.active = true;
+		background.visible(true);
 		shoe.active = true;
 		amp.active = true;
 		wires.active = true;
@@ -81,7 +81,7 @@ public class SceneTen : Scene {
 		GameObject.Destroy(wireShadow);
 		GameObject.Destroy(glassCracks);
 		GameObject.Destroy(wires);
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 	}
 			
 	public void beginCracks() {

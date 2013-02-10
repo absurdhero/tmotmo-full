@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class SceneTwelve : Scene {
-	GameObject background, bottomDither;
+	DitheredBlueBackground background;
 
 	Sprite topHand, bottomPalm, bottomWrist;
 
@@ -26,12 +26,12 @@ public class SceneTwelve : Scene {
 	public SceneTwelve(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
 		touchSensor = new TouchSensor(new UnityInput());
+		background = new DitheredBlueBackground(resourceFactory);
 		fallingGuyProp = new FallingGuyProp();
 	}
 
 	public override void LoadAssets() {
-		background = resourceFactory.Create(this, "TealBackground");
-		bottomDither = resourceFactory.Create(this, "BottomDither");
+		background.LoadAssets();
 
 		topHand = Sprite.create(this, "top_hand");
 		bottomPalm = Sprite.create(this, "hand_base_top");
@@ -44,9 +44,6 @@ public class SceneTwelve : Scene {
 		otherFingerOpen = Sprite.create(this, "other_finger_open");
 		littleFingerOpen = Sprite.create(this, "little_finger_open");
 		thumbOpen = Sprite.create(this, "thumb_open");
-
-		background.active = false;
-		bottomDither.active = false;
 
 		topHand.visible(false);
 		bottomPalm.visible(false);
@@ -65,8 +62,8 @@ public class SceneTwelve : Scene {
 	}
 
 	public override void Setup (float startTime) {
-		background.active = true;
-		bottomDither.active = true;
+		background.Show();
+
 		topHand.visible(true);
 		bottomPalm.visible(true);
 		bottomWrist.visible(true);
@@ -161,8 +158,7 @@ public class SceneTwelve : Scene {
 	}
 
 	public override void Destroy () {
-		GameObject.Destroy(background);
-		GameObject.Destroy(bottomDither);
+		background.Destroy();
 		Sprite.Destroy(topHand);
 		Sprite.Destroy(bottomPalm);
 		Sprite.Destroy(bottomWrist);

@@ -2,7 +2,8 @@ using UnityEngine;
 
 
 class DitheredBlueBackground {
-	GameObject background, bottomDither;
+	FullScreenQuad background;
+	GameObject bottomDither;
 	GameObjectFactory<string> resourceFactory;
 	
 	public DitheredBlueBackground(GameObjectFactory<string> resourceFactory) {
@@ -10,19 +11,19 @@ class DitheredBlueBackground {
 	}
 	
 	public void LoadAssets() {
-		background = resourceFactory.Create("SceneTwelve/TealBackground");
+		background = FullScreenQuad.create("SceneTwelve/bgletgo");
 		bottomDither = resourceFactory.Create("SceneTwelve/BottomDither");
-		background.active = false;
+		background.visible(false);
 		bottomDither.active = false;
 	}
 
 	public void Show() {
-		background.active = true;
+		background.visible(true);
 		bottomDither.active = true;
 	}
 
 	public void Destroy () {
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 		GameObject.Destroy(bottomDither);
 	}
 }

@@ -7,7 +7,7 @@ public class TitleScene : Scene {
 	public GameObject news;
 	public GameObject buyMusic;
 	public GameObject startButton;
-	public GameObject background;
+	public FullScreenQuad background;
 	
 	private Cycler cycle_title, cycle_start;
 	
@@ -18,7 +18,7 @@ public class TitleScene : Scene {
 	}
 
 	public override void Setup(float startTime) {
-		background = resourceFactory.Create(this, "BackgroundQuad");
+		background = FullScreenQuad.create(this, "bg");
 		title = resourceFactory.Create(this, "Title");
 		subtitle = resourceFactory.Create(this, "Subtitle");
 		news = resourceFactory.Create(this, "News");
@@ -77,7 +77,7 @@ public class TitleScene : Scene {
 		GameObject.Destroy(news);
 		GameObject.Destroy(buyMusic);
 		GameObject.Destroy(startButton);
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 	}
 
 	private void animateStartButton() {

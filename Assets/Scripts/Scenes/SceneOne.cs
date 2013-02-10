@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 class SceneOne : Scene {
-	public FullScreenQuad background;
+	public Sprite background;
 	public Sprite same;
 	public Sprite notSame;
 	public Sprite circle;
@@ -73,7 +73,7 @@ class SceneOne : Scene {
 		Sprite.Destroy(triangle);
 		Sprite.Destroy(same);
 		Sprite.Destroy(notSame);
-		GameObject.Destroy(background);
+		FullScreenQuad.Destroy(background);
 		wiggler.Destroy();
 	}
 

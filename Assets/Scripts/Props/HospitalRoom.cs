@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HospitalRoom {
 	GameObjectFactory<string> resourceFactory;
 
-	GameObject room;
+	FullScreenQuad room;
 	
 	int guyCenterOffset = 6;
 	public Sprite guyLeft, guyRight;
@@ -37,7 +37,7 @@ public class HospitalRoom {
 	}
 
 	public void createBackground() {
-		room = resourceFactory.Create(this, "HospitalRoomQuad");
+		room = FullScreenQuad.create(this, "hospital_bg");
 	}
 	
 	private void DestroyIfNotNull(GameObject gobj) {

@@ -7,27 +7,39 @@ using UnityEngine;
  * resized if the texture is changed to one of a different size.
  */
 public class Sprite : MonoBehaviour {
-
 	public static Sprite create(object obj, params string[] textureNames) {
+		return createFor<Sprite>(obj, textureNames);
+	}
+
+	public static Sprite create(params string[] texturePaths) {
+		return createFor<Sprite>(texturePaths);
+	}
+	
+	public static Sprite create(params Texture2D[] textures) {
+		return createFor<Sprite>(textures);
+	}
+	
+	// these use generics so that subclasses of Sprite can reuse these factory methods
+	public static T createFor<T>(object obj, params string[] textureNames) where T: Sprite {
 		var resourcePrefix = obj.GetType().ToString();
 		string[] texturePaths = new string[textureNames.Length];
 		for (int i = 0; i < textureNames.Length; i++) {
 			texturePaths[i] = resourcePrefix + "/" + textureNames[i];
 	    }
-		return create(texturePaths);
+		return createFor<T>(texturePaths);
 	}
 
-	public static Sprite create(params string[] texturePaths) {
+	public static T createFor<T>(params string[] texturePaths) where T : Sprite {
 		Texture2D[] textures = new Texture2D[texturePaths.Length];
 		for (int i = 0; i < texturePaths.Length; i++) {
 			textures[i] = (Texture2D) Resources.Load(texturePaths[i]);
 		}
-		return create(textures);
+		return createFor<T>(textures);
 	}
 
-	public static Sprite create(params Texture2D[] textures) {
-		var spriteObject = new GameObject(textures[0].name + " sprite");
-		var sprite = spriteObject.AddComponent<Sprite>();
+	public static T createFor<T>(params Texture2D[] textures) where T : Sprite {
+		var spriteObject = new GameObject(textures[0].name);
+		var sprite = spriteObject.AddComponent<T>();
 
 		sprite.height = textures[0].height;
 		sprite.width = textures[0].width;
@@ -64,27 +76,28 @@ public class Sprite : MonoBehaviour {
 	
 	public void Awake() {
 		if (textures == null) return;
+
+		gameObject.name =  textures[0].name + " " + this.GetType().Name.ToLower();
+
 		// if width/height were not specified, base it on the first texture
 		if (this.width == 0 || this.height == 0) {
 			width = textures[0].width;
 			height = textures[0].height;
 		}
 		
-		if (mesh == null) createMesh();
+		if (mesh == null) mesh = createMesh(Camera.main);
 	}
 
-	private void createMesh() {
-		Camera cam = Camera.main;
-
+	virtual protected Mesh createMesh(Camera camera) {
 		// calculate world points that allow the texture width/height to
 		// display pixel perfect on the screen
-		Vector3 pos = cam.WorldToScreenPoint(gameObject.transform.position);
-		Vector3 tr = cam.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y + height, pos.z));
-		Vector3 tl = cam.ScreenToWorldPoint(new Vector3(pos.x, pos.y + height, pos.z));
-		Vector3 br = cam.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y, pos.z));
-		Vector3 bl = cam.ScreenToWorldPoint(pos);
+		Vector3 pos = camera.WorldToScreenPoint(gameObject.transform.position);
+		Vector3 tr = camera.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y + height, pos.z));
+		Vector3 tl = camera.ScreenToWorldPoint(new Vector3(pos.x, pos.y + height, pos.z));
+		Vector3 br = camera.ScreenToWorldPoint(new Vector3(pos.x + width, pos.y, pos.z));
+		Vector3 bl = camera.ScreenToWorldPoint(pos);
 
-		mesh = new Mesh();
+		Mesh mesh = new Mesh();
 		// These corner points are in World space. The mesh needs to use local coordinates
 		// so we fix that with InverseTransformPoint.
 		mesh.vertices = new Vector3[] {
@@ -93,7 +106,9 @@ public class Sprite : MonoBehaviour {
 			transform.InverseTransformPoint(br),
 			transform.InverseTransformPoint(bl)
 		};
-		mesh.triangles = new int[] {0, 2, 1, 1, 2, 3};		
+		mesh.triangles = new int[] {0, 2, 1, 1, 2, 3};
+
+		return mesh;
 	}
 
 	public void Start () {
