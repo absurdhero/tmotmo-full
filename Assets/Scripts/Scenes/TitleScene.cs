@@ -7,7 +7,7 @@ public class TitleScene : Scene {
 	public GameObject news;
 	public GameObject buyMusic;
 	public GameObject startButton;
-	public FullScreenQuad background;
+	public Sprite background;
 	
 	private Cycler cycle_title, cycle_start;
 	
@@ -77,7 +77,7 @@ public class TitleScene : Scene {
 		GameObject.Destroy(news);
 		GameObject.Destroy(buyMusic);
 		GameObject.Destroy(startButton);
-		FullScreenQuad.Destroy(background);
+		Sprite.Destroy(background);
 	}
 
 	private void animateStartButton() {

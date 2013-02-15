@@ -43,6 +43,7 @@ class SceneTwo : Scene {
 			room.hintWhenTouched((touched) => { if (touched == room.cover)  {
 					room.removeCover();
 					room.doubleHeartRate(Time.time);
+					room.addSplitLine();
 					endScene();
 				}
 			}, prompt, sensor);

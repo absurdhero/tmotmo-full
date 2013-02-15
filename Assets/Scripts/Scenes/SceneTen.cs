@@ -23,6 +23,7 @@ public class SceneTen : Scene {
 
 	public SceneTen(SceneManager manager) : base(manager) {
 		timeLength = 1.75f;
+		permitUnloadResources = false;
 	}
 	
 	public override void LoadAssets() {
