@@ -20,7 +20,19 @@ public class Layout : MonoBehaviour {
 		sounds.Start();
 
 		var loopTracker = new LoopTracker(sounds);
-		sceneManager = new SceneManager(loopTracker);
+
+		
+		var textLabel = new GameObject("prompt text");
+		textLabel.active = false;
+		var text = textLabel.AddComponent<GUIText>();
+		textLabel.transform.position = new Vector3(0f, 0.06f, -9.5f);
+		var font = (Font) Resources.Load("sierra_agi_font/sierra_agi_font", typeof(Font));
+		text.font = font;
+
+		var messageBox = new MessageBox(font);
+		var prompt = new Prompt(textLabel, text);
+
+		sceneManager = new SceneManager(loopTracker, new MessagePromptCoordinator(prompt, messageBox));
 	}
 
 	// Update is called once per frame

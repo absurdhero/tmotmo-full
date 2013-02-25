@@ -2,7 +2,7 @@ using System;
 
 namespace UnityEngine
 {
-	public class Object
+	public class Object : MarshalByRefObject
 	{
 		public string name;
 		private static  bool CompareBaseObjects (Object lhs, Object rhs)

@@ -25,7 +25,7 @@ public abstract class Scene : MarshalByRefObject {
 	/// Whether the scene will end once the current loop completes
 	public bool completed { get; private set; }
 	
-	public Prompt prompt { get { return sceneManager.prompt; } }
+	public MessagePromptCoordinator messagePromptCoordinator { get { return sceneManager.messagePromptCoordinator; } }
 	
 	public void endScene() {
 		solved = true;

@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-public class MessageBox {
+public class MessageBox : MarshalByRefObject {
 	const int lineWidth = 20;
 
 	GameObject textLabel;

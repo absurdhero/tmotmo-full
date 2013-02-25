@@ -184,7 +184,7 @@ public class HospitalRoom {
 		}
 	}
 
-	public void hintWhenTouched(Action<GameObject> onCompleted, Prompt prompt, TouchSensor touch) {
+	public void hintWhenTouched(Action<GameObject> onCompleted, MessagePromptCoordinator messagePromptCoordinator, TouchSensor touch) {
 		if (interactions == null) {
 			interactions = new Dictionary<GameObject, ActionResponsePair[]> {
 				{clipBoard, new [] {new ActionResponsePair("look at chart", new [] {"even the doctors don't understand the test results"})}},
@@ -200,7 +200,7 @@ public class HospitalRoom {
 					}},
 			};
 		}
-		prompt.hintWhenTouched(onCompleted, touch, interactions);
+		messagePromptCoordinator.hintWhenTouched(onCompleted, touch, Time.time, interactions);
 	}
 	
 	public bool touchedBed(TouchSensor touch) {

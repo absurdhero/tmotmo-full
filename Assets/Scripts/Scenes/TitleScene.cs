@@ -60,7 +60,7 @@ public class TitleScene : Scene {
 			Application.OpenURL("http://themakingofthemakingof.com");
 			ConsumeTouches();
 		}
-		else if (touch.any()) {
+		else if (touch.hasTaps()) {
 			endScene();
 		}
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class TouchSensor {
+public class TouchSensor : MarshalByRefObject {
 	UnityInput input;
 	
 	public TouchPhase[] allPhases = (TouchPhase[]) Enum.GetValues(typeof(TouchPhase));
@@ -43,7 +43,7 @@ public class TouchSensor {
 		return false;
 	}
 
-	public bool any() {
+	public bool hasTaps() {
 		return allTouches.Count > 0;
 	}
 }

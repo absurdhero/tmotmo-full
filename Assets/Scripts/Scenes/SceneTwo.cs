@@ -46,7 +46,7 @@ class SceneTwo : Scene {
 					room.addSplitLine();
 					endScene();
 				}
-			}, prompt, sensor);
+			}, messagePromptCoordinator, sensor);
 		}
 		
 		room.Update();

@@ -56,7 +56,7 @@ class SceneEight : Scene {
 		wiggler.Update(now);
 		
 		if (fullyTilted() && !confetti.pouring) {
-			prompt.solve(this, "tilt head");
+			messagePromptCoordinator.solve(this, "tilt head");
 			solvedScene();
 			confetti.Pour(now);
 		}

@@ -28,7 +28,7 @@ namespace Tests
 		{
 			var firstScene = mocks.DynamicMock<Scene>();
 			var lastScene = mocks.DynamicMock<Scene>();
-			var prompt = mocks.Stub<Prompt>();
+			var messagePromptCoordinator = mocks.Stub<MessagePromptCoordinator>();
 			using (mocks.Record ()) {
 				// emulate behavior of sceneFactory and return mock Scenes
 				Expect.Call(sceneFactory.GetFirstScene()).Return(firstScene);
@@ -39,7 +39,7 @@ namespace Tests
 				Expect.Call(sceneFactory.isLastScene(lastScene)).Return(true);
 			}
 			using (mocks.Playback ()) {
-				var sceneManager = new SceneManager(sceneFactory, loopTracker, prompt);
+				var sceneManager = new SceneManager(sceneFactory, loopTracker, messagePromptCoordinator);
 				sceneManager.NextScene();
 				sceneManager.NextScene();
 			}

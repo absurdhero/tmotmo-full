@@ -84,7 +84,7 @@ class SceneOne : Scene {
 
 		if (solved) return;
 
-		prompt.hintWhenTouched(GameObject => {}, sensor,
+		messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, now,
 			new Dictionary<GameObject, ActionResponsePair[]> {
 				{circle.gameObject,   new [] {new ActionResponsePair("stop circle from changing",   new[] {"Nope."})}},
 				{triangle.gameObject, new [] {new ActionResponsePair("stop triangle from changing", new[] {"Nope."})}},
@@ -93,11 +93,12 @@ class SceneOne : Scene {
 		if (circle.belowFinger(sensor)
 		    && triangle.belowFinger(sensor)
 		    && triangleShowing()) {
-			prompt.hintWhenTouched(gameObject => {
+			messagePromptCoordinator.clearTouch();
+			messagePromptCoordinator.hintWhenTouched(gameObject => {
 				Handheld.Vibrate();
 				wiggler.wiggleNow(now);
 				endScene();
-			}, sensor, new Dictionary<GameObject, ActionResponsePair[]> {
+			}, sensor, now, new Dictionary<GameObject, ActionResponsePair[]> {
 					{circle.gameObject,   new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
 					{triangle.gameObject, new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
 			});

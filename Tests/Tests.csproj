@@ -177,6 +177,13 @@
       <Link>SpriteTouchExtensions.cs</Link>
     </Compile>
     <Compile Include="WrapTest.cs" />
+    <Compile Include="..\Assets\Scripts\FullScreenQuad.cs">
+      <Link>FullScreenQuad.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\MessagePromptCoordinator.cs">
+      <Link>MessagePromptCoordinator.cs</Link>
+    </Compile>
+    <Compile Include="TestMessagePrompt.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

@@ -56,17 +56,17 @@ class SceneThree : Scene {
 
 		if (solved) return;
 
-	    prompt.hintWhenTouched(GameObject => {}, sensor, prodResponses);
+	    messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, Time.time, prodResponses);
 
 		if(room.guySplitDistance == MAX_SPLIT) {
-			prompt.solve(this, "pull guy in half");
+			messagePromptCoordinator.solve(this, "pull guy in half");
 			endScene();
 		}
 		else if(PinchingGuy()) {
 			var distance = PinchDistance();
 			var horizontal_distance = Math.Min(Math.Abs(distance.x), MAX_SPLIT);
 			room.separateHalves(horizontal_distance);
-			prompt.progress("pull guy apart");
+			messagePromptCoordinator.progress("pull guy apart");
 		}
 	}
 	

@@ -18,7 +18,7 @@ class Continued : Scene {
 	}
 	
 	public override void Update() {
-		if (touch.any())
+		if (touch.hasTaps())
 			endScene();
 
 		sceneManager.loopTracker.PlayAllButVocals();
