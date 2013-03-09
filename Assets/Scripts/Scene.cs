@@ -60,15 +60,4 @@ public abstract class Scene : MarshalByRefObject {
 	protected void rewindLoop(float seconds) {
 		rewindTime = seconds;
 	}
-	
-	protected virtual void ConsumeTouches() {
-		for (int i = 0; i < input.touchCount; i++) {
-			input.GetTouch(i);
-		}
-	}
-	
-	protected void MoveToScreenXY(GameObject obj, int x, int y) {
-		var layoutpos = camera.ScreenToWorldPoint(new Vector3(x, y, 0));
-		obj.transform.position = new Vector3(layoutpos.x, layoutpos.y, obj.transform.position.z);
-	}
 }

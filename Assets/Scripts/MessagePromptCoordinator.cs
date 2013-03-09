@@ -43,7 +43,6 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	}
 
 	public void Reset() {
-		Debug.Log("Reset");
 		touchedObject = null;
 		prompt.hide();
 		messageBox.hide();
@@ -77,7 +76,6 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	}
 	
 	public void clearTouch() {
-		Debug.Log("cleared touch");
 		touchedObject = null;
 	}
 	
@@ -90,15 +88,12 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 		if (currentTime <= actionPrintedAt + promptTime && touchedObject != null) {
 			// ignore a tap if it's been at least a half second since prompting
 			if (sensor.hasTaps() && currentTime > actionPrintedAt + 0.5f) {
-				Debug.Log("suppressed touch past grace period");
 				return;
 			}
 			// ignore touches of the same object before the first dialog is shown
 			if (touchedObject != null && sensor.insideSprite(Camera.main, touchedObject.GetComponent<Sprite>(), TouchSensor.allPhases)) {
-				Debug.Log("suppressed successive touch");
 				return;
 			}
-			Debug.Log("fell through pre dialog check");
 		}
 		
 		// if a dialog was just shown, let it sit there for a moment
