@@ -162,6 +162,121 @@ namespace Tests
 
 			mocks.VerifyAll ();
 		}
+
+		[Test]
+		public void triggerFirstCallbackWhenTouchedOnFirstHintCall ()
+		{
+			var messagePromptCoordinator = new MessagePromptCoordinator (prompt, messageBox);
+			
+			var singleActionResponse = new Dictionary<GameObject, ActionResponsePair[]> {
+				{mocks.DynamicMock<GameObject>(), new [] {new ActionResponsePair("action",   new[] {"response"})}}
+			};
+			
+			using (mocks.Ordered()) {
+				// touch on first tick
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
+				Expect.Call(sensor.hasTaps()).Return(true);
+				// no touch on second tick
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (false);
+			}
+			
+			mocks.ReplayAll ();
+			
+			bool hintTriggered = false;
+			bool secondHintTriggered = false;
+			
+			Action<GameObject> setHintTriggered =  GameObject => { hintTriggered = true; };
+			Action<GameObject> setSecondHintTriggered =  GameObject => { secondHintTriggered = true; };
+			
+			messagePromptCoordinator.hintWhenTouched (
+				setHintTriggered,
+				sensor,
+				beforeEverything,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update (beforeEverything);
+			
+			messagePromptCoordinator.hintWhenTouched (
+				setSecondHintTriggered,
+				sensor,
+				beforeMessageTime,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update(beforeMessageTime);
+
+			messagePromptCoordinator.hintWhenTouched (
+				setSecondHintTriggered,
+				sensor,
+				afterMessageTime,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update(afterMessageTime);
+			
+			Assert.That (hintTriggered, Is.True);
+			Assert.That (secondHintTriggered, Is.False);
+			
+			mocks.VerifyAll ();
+		}
+
+		[Test]
+		public void failToTriggerAnyCallbackWhenTouchedOnSecondHintCall ()
+		{
+			var messagePromptCoordinator = new MessagePromptCoordinator (prompt, messageBox);
+			
+			var singleActionResponse = new Dictionary<GameObject, ActionResponsePair[]> {
+				{mocks.DynamicMock<GameObject>(), new [] {new ActionResponsePair("action",   new[] {"response"})}}
+			};
+			
+			using (mocks.Ordered()) {
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (false);
+				// touch on second tick
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
+				Expect.Call(sensor.hasTaps()).Return(true);
+			}
+			
+			mocks.ReplayAll ();
+			
+			bool hintTriggered = false;
+			bool secondHintTriggered = false;
+			
+			Action<GameObject> setHintTriggered =  GameObject => { hintTriggered = true; };
+			Action<GameObject> setSecondHintTriggered =  GameObject => { secondHintTriggered = true; };
+			
+			messagePromptCoordinator.hintWhenTouched (
+				setHintTriggered,
+				sensor,
+				beforeEverything,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update (beforeEverything);
+			
+			messagePromptCoordinator.hintWhenTouched (
+				setSecondHintTriggered,
+				sensor,
+				beforeMessageTime,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update(beforeMessageTime);
+			
+			messagePromptCoordinator.hintWhenTouched (
+				setSecondHintTriggered,
+				sensor,
+				afterMessageTime,
+				singleActionResponse
+				);
+			
+			messagePromptCoordinator.Update(afterMessageTime);
+			
+			Assert.That (hintTriggered, Is.False);
+			Assert.That (secondHintTriggered, Is.False);
+			
+			mocks.VerifyAll ();
+		}
 	}
 }
 
