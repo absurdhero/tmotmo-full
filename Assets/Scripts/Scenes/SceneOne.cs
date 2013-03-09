@@ -84,11 +84,6 @@ class SceneOne : Scene {
 
 		if (solved) return;
 
-		messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, now,
-			new Dictionary<GameObject, ActionResponsePair[]> {
-				{circle.gameObject,   new [] {new ActionResponsePair("stop circle from changing",   new[] {"Nope."})}},
-				{triangle.gameObject, new [] {new ActionResponsePair("stop triangle from changing", new[] {"Nope."})}},
-			});
 
 		if (circle.belowFinger(sensor)
 		    && triangle.belowFinger(sensor)
@@ -102,6 +97,12 @@ class SceneOne : Scene {
 					{circle.gameObject,   new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
 					{triangle.gameObject, new [] {new ActionResponsePair("stop shapes from changing", new [] {"OK"})}},
 			});
+		} else {
+			messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, now,
+				new Dictionary<GameObject, ActionResponsePair[]> {
+					{circle.gameObject,   new [] {new ActionResponsePair("stop circle from changing",   new[] {"Nope."})}},
+					{triangle.gameObject, new [] {new ActionResponsePair("stop triangle from changing", new[] {"Nope."})}},
+				});
 		}
 
 		AnimateShapes(now);

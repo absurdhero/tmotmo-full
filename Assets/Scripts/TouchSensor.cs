@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TouchSensor : MarshalByRefObject {
 	UnityInput input;
 	
-	public TouchPhase[] allPhases = (TouchPhase[]) Enum.GetValues(typeof(TouchPhase));
+	public static readonly TouchPhase[] allPhases = (TouchPhase[]) Enum.GetValues(typeof(TouchPhase));
 
 	public TouchSensor(UnityInput input) {
 		this.input = input;

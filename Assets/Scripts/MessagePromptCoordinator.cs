@@ -11,8 +11,8 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	
 	float actionPrintedAt = 0f;
 
-	const float promptTime = 1.5f;
-	const float boxTime = 2.0f;
+	public const float promptTime = 1.5f;
+	public const float boxTime = 2.0f;
 	
 	List<string> remainingMessages = new List<string>();
 	Action<GameObject> onComplete = GameObject => {};
@@ -94,7 +94,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 				return;
 			}
 			// ignore touches of the same object before the first dialog is shown
-			if (touchedObject != null && sensor.insideSprite(Camera.main, touchedObject.GetComponent<Sprite>(), sensor.allPhases)) {
+			if (touchedObject != null && sensor.insideSprite(Camera.main, touchedObject.GetComponent<Sprite>(), TouchSensor.allPhases)) {
 				Debug.Log("suppressed successive touch");
 				return;
 			}
