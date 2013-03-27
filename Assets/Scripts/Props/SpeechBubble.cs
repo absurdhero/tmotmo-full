@@ -53,8 +53,12 @@ class SpeechBubble {
 		chooseTail();
 	}
 
+	public bool onRightSide() {
+		return speechBubble.ScreenCenter().x > leftToRightSwitchOverPosition;
+	}
+
 	private void chooseTail() {
-		if (speechBubble.ScreenCenter().x > leftToRightSwitchOverPosition) {
+		if (onRightSide()) {
 			speechBubbleLeft.visible(false);
 			speechBubbleRight.visible(true);
 		} else {

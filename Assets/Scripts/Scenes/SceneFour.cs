@@ -48,12 +48,15 @@ class SceneFour : Scene {
 		if (solved) return;
 
 		if (speechBubble.hasMoved()) {
-			messagePromptCoordinator.progress("move speech bubble");
+			if (speechBubble.onRightSide())
+				messagePromptCoordinator.progress("give not same a voice");
+			else
+				messagePromptCoordinator.progress("give same a voice");
 		}
 
 		if(speechBubble.inTerminalPosition) {
 			speechBubble.snapToEnd();
-			messagePromptCoordinator.solve(this, "move speech bubble to other side");
+			messagePromptCoordinator.solve(this, "give not same a voice");
 			endScene();
 			return;
 		}		
