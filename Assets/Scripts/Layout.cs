@@ -7,6 +7,7 @@ using UnityEngine;
 public class Layout : MonoBehaviour {
 	SceneManager sceneManager;
 	Sounds sounds;
+	public MessageBox messageBox {get; private set;}
 
 	void Start () {
 	  	// Stop reorientation weirdness 
@@ -29,7 +30,7 @@ public class Layout : MonoBehaviour {
 		var font = (Font) Resources.Load("sierra_agi_font/sierra_agi_font", typeof(Font));
 		text.font = font;
 
-		var messageBox = new MessageBox(font);
+		messageBox = new MessageBox(font);
 		var prompt = new Prompt(textLabel, text);
 
 		sceneManager = new SceneManager(loopTracker, new MessagePromptCoordinator(prompt, messageBox));
