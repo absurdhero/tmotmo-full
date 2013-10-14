@@ -12,10 +12,11 @@ public class Layout : MonoBehaviour {
 	void Start () {
 	  	// Stop reorientation weirdness 
 		// http://answers.unity3d.com/questions/14655/unity-iphone-black-rect-when-i-turn-the-iphone
-		TouchScreenKeyboard.autorotateToPortrait = false; 
-		TouchScreenKeyboard.autorotateToPortraitUpsideDown = false; 
-		TouchScreenKeyboard.autorotateToLandscapeRight = false; 
-		TouchScreenKeyboard.autorotateToLandscapeLeft = false;
+		Screen.autorotateToPortrait = false;
+		Screen.autorotateToPortraitUpsideDown = false;
+		Screen.autorotateToLandscapeRight = false;
+		Screen.autorotateToLandscapeLeft = false;
+		
 
 		sounds = new Sounds(gameObject);
 		sounds.Start();
