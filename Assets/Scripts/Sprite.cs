@@ -128,7 +128,7 @@ public class Sprite : MonoBehaviour {
 	}
 	
 	public void visible(bool enable) {
-		this.gameObject.active = enable;
+		this.gameObject.SetActive(enable);
 	}
 	
 	public bool LastTexture() {

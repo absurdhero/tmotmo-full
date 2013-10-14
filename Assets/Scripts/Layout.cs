@@ -25,7 +25,7 @@ public class Layout : MonoBehaviour {
 
 		
 		var textLabel = new GameObject("prompt text");
-		textLabel.active = false;
+		textLabel.SetActive(false);
 		var text = textLabel.AddComponent<GUIText>();
 		textLabel.transform.position = new Vector3(0f, 0.06f, -9.5f);
 		var font = (Font) Resources.Load("sierra_agi_font/sierra_agi_font", typeof(Font));

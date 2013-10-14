@@ -83,7 +83,7 @@ public class Confetti {
 	public void Deactivate() {
 		if (confetti == null) return;
 		foreach (var piece in confetti) {
-			piece.active = false;
+			piece.SetActive(false);
 		}
 	}
 

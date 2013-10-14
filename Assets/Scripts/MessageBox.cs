@@ -19,7 +19,7 @@ public class MessageBox : MarshalByRefObject {
 		buildMessageBackground();
 
 		textLabel = new GameObject("message text");
-		textLabel.active = false;
+		textLabel.SetActive(false);
 		text = textLabel.AddComponent<GUIText>();
 		textLabel.transform.position = new Vector3(0.5f, 0.5f, -9.5f);
 		text.alignment = TextAlignment.Center;
@@ -97,7 +97,7 @@ public class MessageBox : MarshalByRefObject {
 	}
 
 	public void show() {
-		textLabel.active = true;
+		textLabel.SetActive(true);
 		messageBackground.visible(true);
 		leftBorder.visible(true);
 		rightBorder.visible(true);
@@ -106,7 +106,7 @@ public class MessageBox : MarshalByRefObject {
 	}
 
 	public void hide() {
-		textLabel.active = false;
+		textLabel.SetActive(false);
 		messageBackground.visible(false);
 		leftBorder.visible(false);
 		rightBorder.visible(false);

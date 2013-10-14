@@ -12,7 +12,7 @@ public class SceneEleven : Scene {
 	
 	public override void LoadAssets() {
 		videoClip = resourceFactory.Create("SceneTen/SideGuitarClip");
-		videoClip.active = false;
+		videoClip.SetActive(false);
 	}
 	
 	public override void Setup (float startTime) {
@@ -20,7 +20,7 @@ public class SceneEleven : Scene {
 
 		videoSpeed = new Metronome(startTime, 0.33333333f);
 
-		videoClip.active = true;
+		videoClip.SetActive(true);
 		videoSprite = videoClip.GetComponent<Sprite>();
 		videoSprite.setScreenPosition(0, 0);
 

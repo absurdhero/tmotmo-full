@@ -78,7 +78,7 @@ public class ScrollingLetters {
 	public void Deactivate() {
 		if (letters == null) return;
 		foreach (var letter in letters) {
-			letter.gameObject.active = false;
+			letter.gameObject.SetActive(false);
 		}
 	}
 

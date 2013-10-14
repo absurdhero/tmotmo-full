@@ -15,7 +15,7 @@ public class SceneManager {
 	public bool rightClickToComplete = false;
 	
 	// start the program at the given scene
-	private int skipToSceneNumber = 0;
+	private int skipToSceneNumber = 3;
 	
 	public SceneManager(LoopTracker loopTracker, MessagePromptCoordinator messagePromptCoordinator) : this(null, loopTracker, messagePromptCoordinator) {
 	}

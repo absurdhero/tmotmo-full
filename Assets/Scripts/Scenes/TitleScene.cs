@@ -40,7 +40,7 @@ public class TitleScene : Scene {
 		
 		// place buttons in the bottom corners
 		news.setScreenPosition(4, 4);
-		buyMusic.setScreenPosition((int) cam.GetScreenWidth() - buyMusic.PixelWidth() - 4, 4);
+		buyMusic.setScreenPosition((int) Screen.width - buyMusic.PixelWidth() - 4, 4);
 		
 		// animate title
 		cycle_title = new Cycler(0.4f, 5);

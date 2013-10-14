@@ -14,12 +14,12 @@ class DitheredBlueBackground {
 		background = FullScreenQuad.create("SceneTwelve/bgletgo");
 		bottomDither = resourceFactory.Create("SceneTwelve/BottomDither");
 		background.visible(false);
-		bottomDither.active = false;
+		bottomDither.SetActive(false);
 	}
 
 	public void Show() {
 		background.visible(true);
-		bottomDither.active = true;
+		bottomDither.SetActive(true);
 	}
 
 	public void Destroy () {

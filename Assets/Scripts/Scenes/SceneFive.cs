@@ -42,18 +42,18 @@ class SceneFive : Scene {
 		public LipsAppear(GameObjectFactory<string> resourceFactory) : base(0.5f) {
 			lips = resourceFactory.Create("SceneFive/Lips");
 			lips.GetComponent<Sprite>().setWorldPosition(-60f, -50f, -10f);
-			lips.active = false;
+			lips.SetActive(false);
 		}
 
 		public override void OnTick ()
 		{
 			if(currentTick > 6) {
-				lips.active = true;
+				lips.SetActive(true);
 			}
 			
 			if(currentTick == 8) {
 				Reset(Time.time);
-				lips.active = false;
+				lips.SetActive(false);
 			}
 		}
 		

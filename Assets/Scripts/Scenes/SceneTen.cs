@@ -34,10 +34,10 @@ public class SceneTen : Scene {
 		wireShadow = resourceFactory.Create(this, "WireShadow");
 
 		background.visible(false);
-		shoe.active = false;
-		amp.active = false;
-		wires.active = false;
-		wireShadow.active = false;
+		shoe.SetActive(false);
+		amp.SetActive(false);
+		wires.SetActive(false);
+		wireShadow.SetActive(false);
 
 
 		// double the scale on all of these because the art is half-size
@@ -61,10 +61,10 @@ public class SceneTen : Scene {
 		endScene();
 		
 		background.visible(true);
-		shoe.active = true;
-		amp.active = true;
-		wires.active = true;
-		wireShadow.active = true;
+		shoe.SetActive(true);
+		amp.SetActive(true);
+		wires.SetActive(true);
+		wireShadow.SetActive(true);
 
 		stompSpeed = new Metronome(startTime, 0.1f);
 	}

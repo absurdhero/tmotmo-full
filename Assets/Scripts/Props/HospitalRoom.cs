@@ -90,19 +90,19 @@ public class HospitalRoom {
 	
 	public void openEyes() {
 		if (eyes.GetComponent<Sprite>().LastTexture()) {
-			eyes.active = false;
+			eyes.SetActive(false);
 			return;
 		}
 		eyes.GetComponent<Sprite>().DrawNextFrame();
 	}
 	
 	private bool eyesTotallyOpen {
-		get { return !eyes.active; }
+		get { return !eyes.activeSelf; }
 	}
 	
 	public void addCover() {
 		if (cover != null) {
-			cover.active = true;
+			cover.SetActive(true);
 			return;
 		}
 		cover = resourceFactory.Create(this, "Cover");
@@ -112,7 +112,7 @@ public class HospitalRoom {
 	}
 	
 	public void removeCover() {
-		cover.active = false;
+		cover.SetActive(false);
 	}
 	
 	public void addFootboard() {

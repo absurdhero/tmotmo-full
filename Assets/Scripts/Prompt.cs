@@ -14,7 +14,7 @@ public class Prompt : MarshalByRefObject {
 	
 	void buildBlackBox() {
 		blackBox = GameObject.CreatePrimitive(PrimitiveType.Plane);
-		blackBox.active = false;
+		blackBox.SetActive(false);
 		blackBox.name = "prompt background";
 		blackBox.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
 		blackBox.transform.Rotate(new Vector3(270f, 0f, 0f));
@@ -31,12 +31,12 @@ public class Prompt : MarshalByRefObject {
 	}
 	
 	public void show() {
-		blackBox.active = true;
-		textLabel.active = true;
+		blackBox.SetActive(true);
+		textLabel.SetActive(true);
 	}
 	
 	public void hide() {
-		blackBox.active = false;
-		textLabel.active = false;
+		blackBox.SetActive(false);
+		textLabel.SetActive(false);
 	}
 }
