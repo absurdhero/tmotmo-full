@@ -9,7 +9,7 @@ public abstract class Scene : MarshalByRefObject {
 	protected GameObjectFactory<string> resourceFactory;
 	public float rewindTime { get; protected set; }
 
-	private UnityInput input;
+	protected UnityInput input;
 
 	public virtual float TimeLength() {
 		return timeLength;

@@ -25,7 +25,7 @@ public class SceneTwelve : Scene {
 
 	public SceneTwelve(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
-		touchSensor = new TouchSensor(new UnityInput());
+		touchSensor = new TouchSensor(input);
 		background = new DitheredBlueBackground(resourceFactory);
 		fallingGuyProp = new FallingGuyProp();
 	}

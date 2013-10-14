@@ -14,13 +14,10 @@ class SceneSix : Scene {
 	
 	bool leftHeadTouched, rightHeadTouched;
 	
-	private UnityInput input;
-	
 	public SceneSix(SceneManager manager) : base(manager) {
 		timeLength = 4.0f;
 		permitUnloadResources = false;
 		bigHeadProp = new BigHeadProp(resourceFactory);
-		input = new UnityInput();
 	}
 
 	public override void Setup (float startTime) {

@@ -11,10 +11,7 @@ public class TitleScene : Scene {
 	
 	private Cycler cycle_title, cycle_start;
 	
-	private UnityInput input;
-	
 	public TitleScene(SceneManager manager) : base(manager) {
-		input = new UnityInput();
 	}
 
 	public override void Setup(float startTime) {

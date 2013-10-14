@@ -8,8 +8,6 @@ class SceneThree : Scene {
 	
 	public const int MAX_SPLIT = 30;
 	
-	UnityInput input;
-
 	TouchSensor sensor;
 	
 	Dictionary<GameObject, ActionResponsePair[]> prodResponses;
@@ -19,7 +17,6 @@ class SceneThree : Scene {
 		rewindLoop(8.0f);
 
 		this.room = room;
-		input = new UnityInput();
 	}
 
 	public override void Setup(float startTime) {
@@ -34,7 +31,7 @@ class SceneThree : Scene {
 		wiggler = new Wiggler(startTime, timeLength, new[] {guyLeftPivot});
 		reverseWiggler = new ReverseWiggler(startTime, timeLength, new[] {guyRightPivot});
 
-		sensor = new TouchSensor(new UnityInput());
+		sensor = new TouchSensor(input);
 		
 		prodResponses = new Dictionary<GameObject, ActionResponsePair[]> {
 				{room.guyLeft.gameObject, new [] {new ActionResponsePair("prod Same",   new[] {"it's already awake."}),

@@ -13,13 +13,10 @@ class SceneEight : Scene {
 	
 	Vector3 previousMousePosition;
 
-	private UnityInput input;
-	
 	public SceneEight(SceneManager manager) : base(manager) {
 		timeLength = 4.0f;
 		permitUnloadResources = false;
 		bigHeadProp = new BigHeadProp(resourceFactory);
-		input = new UnityInput();
 		confetti = new Confetti();
 	}
 

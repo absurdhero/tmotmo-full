@@ -5,12 +5,10 @@ class SceneTwo : Scene {
 	public HospitalRoom room { get; private set; }
 	
 	private Wiggler wiggler;
-	private UnityInput input;
 	private TouchSensor sensor;
 	
 	public SceneTwo(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
-		input = new UnityInput();
 		room = new HospitalRoom(resourceFactory, camera);
 	}
 

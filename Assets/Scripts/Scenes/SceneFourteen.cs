@@ -6,14 +6,12 @@ public class SceneFourteen : Scene {
 	FallingGuyProp fallingGuyProp;
 	Metronome animation;
 	float startTime;
-	UnityInput input;
 	bool leftHandTouched = false, rightHandTouched = false;
 
 	public SceneFourteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
 		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
 		permitUnloadResources = false;
-		input = new UnityInput();
 		background = new DitheredBlueBackground(resourceFactory);
 	}
 

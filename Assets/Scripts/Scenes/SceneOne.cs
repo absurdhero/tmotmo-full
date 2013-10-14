@@ -10,7 +10,6 @@ class SceneOne : Scene {
 	public Sprite triangle;
 	
 	Wiggler wiggler;
-	UnityInput input;
 	TouchSensor sensor;
 
 	Cycler notSameCycler;
@@ -24,7 +23,6 @@ class SceneOne : Scene {
 
 	public SceneOne(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
-		input = new UnityInput();
 	}
 
 	public override void LoadAssets() {
