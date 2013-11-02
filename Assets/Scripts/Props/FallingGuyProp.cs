@@ -160,7 +160,7 @@ public class FallingGuyProp {
 	public void makeFistsWhenTogether(Metronome metronome) {
 		// flap the hands twice per second on the beat
 		if ((leftSideStopped && rightSideStopped)
-		    || (int) (metronome.currentTick(Time.time) * metronome.interval * 2f) % 2 == 1) {
+		    || ((int) (metronome.elapsed(Time.time) * 2f)) % 2 == 1) {
 			guyWithArmOut.visible(true);
 			otherArm.visible(true);
 			otherFist.visible(false);

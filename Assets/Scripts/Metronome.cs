@@ -11,7 +11,11 @@ public class Metronome {
 	public int currentTick(float currentTime) {
 		return (int) ((currentTime - startTime) / interval);
 	}
-	
+
+	public float elapsed(float currentTime) {
+		return currentTime - startTime;
+	}
+
 	public bool isNextTick(float time) {
 		var tick = currentTick(time);
 		if (lastNewTick < tick) {

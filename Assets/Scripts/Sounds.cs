@@ -6,7 +6,8 @@ using System.Collections.Generic;
 // This is a MonoBehaviour class only to use the Unity features to initialize AudioSource members
 public class Sounds : MarshalByRefObject {
 	const float trackStartingOffset = 8.0f;
-	
+	const float driftTolerance = 0.04f;
+
 	public AudioSource guitar1;
 	public AudioSource keys;
 	public AudioSource bass_beatsfx;
@@ -60,7 +61,13 @@ public class Sounds : MarshalByRefObject {
 	}
 
 	private void setTime (AudioSource stem, float when) {
-		stem.time = when + trackStartingOffset;
+		float currentTime = stem.time;
+		float newTime = when + trackStartingOffset;
+
+		if (currentTime > newTime - driftTolerance && currentTime < newTime + driftTolerance)
+			return;
+
+		stem.time = newTime;
 	}
 
 	public float getAudioTime () {

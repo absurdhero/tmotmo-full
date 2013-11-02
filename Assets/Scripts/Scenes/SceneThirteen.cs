@@ -9,6 +9,7 @@ public class SceneThirteen : Scene {
 	public SceneThirteen(SceneManager manager, FallingGuyProp fallingGuyProp) : base(manager) {
 		timeLength = 8.0f;
 		this.fallingGuyProp = fallingGuyProp;
+		permitUnloadResources = false;
 		background = new DitheredBlueBackground(resourceFactory);
 	}
 

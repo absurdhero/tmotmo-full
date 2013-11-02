@@ -29,6 +29,17 @@ namespace UnityEngine {
 		
 		public GameObject(string name) {
 		}
+
+        public void SetActive(bool b)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public bool activeSelf
+        {
+            get;
+            set;
+        }
 		
 		public Component GetComponent (Type type) { throw new InvalidOperationException(); }
 		public T GetComponent<T> () where T : Component
