@@ -31,6 +31,9 @@ class SceneSix : Scene {
 		
 		var mouthLeftGameObject = resourceFactory.Create("SceneSix/MouthLeft-KeepMeInPlace");
 		var mouthLeft = mouthLeftGameObject.GetComponent<Sprite>();
+		// This is off compared to the mouth position in SceneSeven.
+		// It seems to be because the mouth is a child of the head in this scene.
+		// Perhaps due to rounding error in the matrix multiplication.
 		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
 		mouthLeftGameObject.transform.parent = bigHeadProp.faceLeft.transform;
 		

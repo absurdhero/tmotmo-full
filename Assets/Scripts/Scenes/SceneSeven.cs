@@ -27,7 +27,7 @@ class SceneSeven : Scene {
 
 		mouthLeft.visible(true);
 		mouthRight.visible(true);
-		mouthLeft.setWorldPosition(-29.5f, -56f, -5f);
+		mouthLeft.setWorldPosition(-28.0f, -56f, -5f);
 		mouthRight.setWorldPosition(10f, -56f, -5f);
 
 		mouthAnimator = new MouthAnimator(startTime, mouthLeft, mouthRight);
