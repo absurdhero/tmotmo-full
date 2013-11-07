@@ -24,8 +24,7 @@ class SceneThree : Scene {
 		room.removeCover();
 		room.openEyes();
 		room.openEyes();
-		room.removeZzz();
-
+		
 		var guyLeftPivot = room.guyLeft.createPivotOnBottomRightCorner();
 		var guyRightPivot = room.guyRight.createPivotOnBottomLeftCorner();
 		wiggler = new Wiggler(startTime, timeLength, new[] {guyLeftPivot});

@@ -84,6 +84,7 @@ public class HospitalRoom {
 	}
 	
 	public void removeZzz() {
+		interactions.Remove(zzz);
 		DestroyIfNotNull(zzz);
 		zzzAnimator = null;
 	}
@@ -96,7 +97,7 @@ public class HospitalRoom {
 		eyes.GetComponent<Sprite>().DrawNextFrame();
 	}
 	
-	private bool eyesTotallyOpen {
+	public bool eyesTotallyOpen {
 		get { return !eyes.activeSelf; }
 	}
 	
