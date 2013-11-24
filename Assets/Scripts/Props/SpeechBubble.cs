@@ -14,9 +14,9 @@ class SpeechBubble {
 	public SpeechBubble(GameObjectFactory<string> resourceFactory, Camera camera, float leftToRightSwitchOverPosition) {
 		this.camera = camera;
 		this.leftToRightSwitchOverPosition = leftToRightSwitchOverPosition;
-		speechBubble = resourceFactory.Create(this, "SpeechBubble").GetComponent<Sprite>();
-		speechBubbleLeft = resourceFactory.Create(this, "BubbleTailLeft").GetComponent<Sprite>();
-		speechBubbleRight = resourceFactory.Create(this, "BubbleTailRight").GetComponent<Sprite>();
+		speechBubble = Sprite.create("SceneFour/bubble");
+		speechBubbleLeft = Sprite.create("SceneFour/bubble_1");
+		speechBubbleRight = Sprite.create("SceneFour/bubble_2");
 		speechBubbleRight.visible(false);
 		
 		speechBubble.setWorldPosition(-80f, 60f, -1f);
