@@ -11,7 +11,7 @@ class SpeechBubble {
 	Dragger dragger;
 	UnityInput input;
 
-	public SpeechBubble(GameObjectFactory<string> resourceFactory, Camera camera, float leftToRightSwitchOverPosition) {
+	public SpeechBubble(Camera camera, float leftToRightSwitchOverPosition) {
 		this.camera = camera;
 		this.leftToRightSwitchOverPosition = leftToRightSwitchOverPosition;
 		speechBubble = Sprite.create("SceneFour/bubble");

@@ -25,7 +25,7 @@ class SceneFour : Scene {
 
 	public override void Setup(float startTime) {
 		hospitalRoom.separateHalves(SceneThree.MAX_SPLIT);
-		speechBubble = new SpeechBubble(resourceFactory, camera, hospitalRoom.guyCenterPoint);
+		speechBubble = new SpeechBubble(camera, hospitalRoom.guyCenterPoint);
 		mouthMovement = new MouthAnimator(startTime, leftMouth, rightMouth);
 		wiggler = new Wiggler(startTime, timeLength, new[] {speechBubble.centerPivot()});
 	}
