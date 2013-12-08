@@ -68,7 +68,7 @@ class SceneFour : Scene {
 		leftMouth.visible(false);
 		rightMouth.visible(false);
 		
-		leftMouth.setWorldPosition(-19f, 24f, -4f);
+		leftMouth.setWorldPosition(-19f, 25f, -4f);
 		rightMouth.setWorldPosition(22.5f, 24f, -4f);
 	}
 	
