@@ -11,6 +11,7 @@ class SceneOne : Scene {
 	
 	Wiggler wiggler;
 	TouchSensor sensor;
+	SpriteCollection shapes;
 
 	Cycler notSameCycler;
 	Cycler circleCycler;
@@ -20,8 +21,6 @@ class SceneOne : Scene {
 
  	// animate both shapes at the same frequency
 	const float shapeSpeed = 0.5f;
-
-	float circleTouched, triangleTouched;
 
 	public SceneOne(SceneManager manager) : base(manager) {
 		timeLength = 8.0f;
@@ -66,6 +65,7 @@ class SceneOne : Scene {
 		wiggler = new Wiggler(startTime, timeLength, new[] {circle, triangle});
 
 		sensor = new TouchSensor(input);
+		shapes = new SpriteCollection(new[] {circle, triangle}, camera, sensor);
 	}
 
 	public override void Destroy() {
@@ -84,15 +84,7 @@ class SceneOne : Scene {
 
 		if (solved) return;
 
-		const float maxDoubleTouchDelay = 0.2f;
-
-		lastTouchedFor(circle, now, ref circleTouched);
-		lastTouchedFor(triangle, now, ref triangleTouched);
-
-		if (circle.belowFinger(sensor)
-		    && triangle.belowFinger(sensor)
-			&& Math.Abs(circleTouched - triangleTouched) < maxDoubleTouchDelay //the touches must be less than 200ms apart
-		    && triangleShowing()) {
+		if (shapes.touchedAtSameTime(now) && triangleShowing()) {
 			messagePromptCoordinator.clearTouch();
 			messagePromptCoordinator.progress("stop shapes from changing");
 			Handheld.Vibrate();
@@ -123,14 +115,6 @@ class SceneOne : Scene {
 
 	bool triangleShowing() {
 		return triangleCycler != null;
-	}
-
-	void lastTouchedFor(Sprite shape, float now, ref float lastTouched) {
-		const float delayBeforeRegisteringTouch = 0.05f;
-		if (sensor.insideSprite(camera, shape, new[] {TouchPhase.Began})
-			&& lastTouched + delayBeforeRegisteringTouch < now) {
-			lastTouched = now;
-		}
 	}
 
 	void AnimateShapes(float time) {
