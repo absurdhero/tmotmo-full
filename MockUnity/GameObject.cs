@@ -41,10 +41,10 @@ namespace UnityEngine {
             set;
         }
 		
-		public Component GetComponent (Type type) { throw new InvalidOperationException(); }
+		public Component GetComponent (Type type) { return null; }
 		public T GetComponent<T> () where T : Component
 		{
-			throw new InvalidOperationException();
+			return null;
 		}
 		public Component GetComponent (string type)
 		{

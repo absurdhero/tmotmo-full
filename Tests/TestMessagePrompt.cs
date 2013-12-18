@@ -89,6 +89,66 @@ namespace Tests
 		}
 
 		[Test]
+		public void triggersFrontMostObjectWhenObjectsOverlap()
+		{
+			var messagePromptCoordinator = new MessagePromptCoordinator (prompt, messageBox);
+
+			var back = new Vector3(0, 0, 0);
+			var front = new Vector3(0, 0, -1);
+
+			var first = new GameObject("first");
+			var second = new GameObject("second");
+
+			first.transform = new Transform();
+			first.transform.position = back;
+			second.transform = new Transform();
+			second.transform.position = front;
+
+			var singleActionResponse = new Dictionary<GameObject, ActionResponsePair[]> {
+				{first, new [] {new ActionResponsePair("action",   new[] {"response"})}},
+				{second, new [] {new ActionResponsePair("action2",   new[] {"response2"})}}
+			};
+
+
+			using (mocks.Ordered()) {
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (false);
+
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
+				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
+			}
+			
+			mocks.ReplayAll ();
+			
+			
+			messagePromptCoordinator.hintWhenTouched (
+				GameObject => { }, 
+				sensor, 
+				beforeEverything,
+				singleActionResponse
+			);
+
+			messagePromptCoordinator.Update (beforeEverything);
+
+			GameObject triggeredObject = null;
+
+			messagePromptCoordinator.hintWhenTouched (
+				gameObject => { triggeredObject = gameObject; }, 
+			sensor,
+			afterMessageTime,
+			singleActionResponse
+			);
+			
+			messagePromptCoordinator.Update (afterMessageTime + MessagePromptCoordinator.promptTime + 0.1f);
+			
+			Assert.That (triggeredObject, Is.EqualTo(second));
+			
+			mocks.VerifyAll ();
+		}
+		
+
+
+		[Test]
 		public void failToTriggerWhenTouchedOnSecondHintCall ()
 		{
 			var messagePromptCoordinator = new MessagePromptCoordinator (prompt, messageBox);

@@ -136,7 +136,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 
 	private GameObject detectObjectInteraction(TouchSensor sensor, Dictionary<GameObject, ActionResponsePair[]> interactions) {
 		GameObject touched = null;
-		foreach(var gameObject in interactions.Keys) {
+		foreach(var gameObject in interactions.Keys.OrderByDescending<GameObject, float>((gameObject) => gameObject.transform.position.z)) {
 			if (sensor.insideSprite(Camera.main, gameObject.GetComponent<Sprite>(), new[] {TouchPhase.Began})) {
 				touched = gameObject;
 			}
