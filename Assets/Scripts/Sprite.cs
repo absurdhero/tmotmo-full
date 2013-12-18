@@ -298,12 +298,12 @@ public class Sprite : MonoBehaviour {
 	
 	private float worldHeight {
 		// This is multiplied by two because orthographicSize is half the screen height
-		get { return height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }
+		get { return (float) height / Camera.main.pixelHeight * Camera.main.orthographicSize * 2.0f; }
 	}
 	
 	private float worldWidth {
 		// This is multiplied by two because orthographicSize is half the screen height
-		get { return width / Camera.main.pixelWidth * Camera.main.orthographicSize * 2.0f; }
+		get { return (float) width / Camera.main.pixelWidth * Camera.main.orthographicSize * 2.0f; }
 	}
 
 	private Vector3 snapToPixel(Vector3 pos) {
