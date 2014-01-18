@@ -17,13 +17,9 @@ public class HospitalRoom {
 			return camera.pixelWidth / 2.0f + (float) guyCenterOffset;
 		}
 	}
-
-	public GameObject cover;
 	
 	public GameObject clipBoard;
-	public GameObject zzz;
 	public GameObject heartRate;
-	ZzzAnimator zzzAnimator;
 	GameObject footBoard;
 	GameObject eyes;
 	Camera camera;
@@ -61,13 +57,11 @@ public class HospitalRoom {
 		DestroyIfNotNull(guyLeft);
 		DestroyIfNotNull(guyRight);
 		DestroyIfNotNull(eyes);
-		DestroyIfNotNull(cover);
 		DestroyIfNotNull(footBoard);
 		DestroyIfNotNull(clipBoard);
 		DestroyIfNotNull(heartRate);
 		
 		heartRateCycler = null;
-		removeZzz();
 	}
 	
 	public void addPerson() {
@@ -85,18 +79,6 @@ public class HospitalRoom {
 		eyes.GetComponent<Sprite>().setWorldPosition(-5.5f, 36.5f, -1f);
 	}
 	
-	public void addZzz() {
-		zzz = resourceFactory.Create(this, "Zzz");
-		zzz.GetComponent<Sprite>().setWorldPosition(50f, 60f, -1f);
-		zzzAnimator = new ZzzAnimator(zzz);
-	}
-	
-	public void removeZzz() {
-		interactions.Remove(zzz);
-		DestroyIfNotNull(zzz);
-		zzzAnimator = null;
-	}
-	
 	public void openEyes() {
 		if (eyes.GetComponent<Sprite>().LastTexture()) {
 			eyes.SetActive(false);
@@ -107,21 +89,6 @@ public class HospitalRoom {
 	
 	public bool eyesTotallyOpen {
 		get { return !eyes.activeSelf; }
-	}
-	
-	public void addCover() {
-		if (cover != null) {
-			cover.SetActive(true);
-			return;
-		}
-		cover = resourceFactory.Create(this, "Cover");
-		var coverSprite = cover.GetComponent<Sprite>();
-		coverSprite.setCenterToViewportCoord(0.515f, 0.34f);
-		
-	}
-	
-	public void removeCover() {
-		cover.SetActive(false);
 	}
 	
 	public void addFootboard() {
@@ -187,40 +154,10 @@ public class HospitalRoom {
 		}
 		
 		setGuySplit();
-		
-		if (zzzAnimator != null && !eyesTotallyOpen) {
-			zzzAnimator.Update(Time.time);
-		}
 	}
 
 	public void hintWhenTouched(Action<GameObject> onCompleted, MessagePromptCoordinator messagePromptCoordinator, TouchSensor touch) {
 		messagePromptCoordinator.hintWhenTouched(onCompleted, touch, Time.time, interactions);
 	}
 	
-	public bool touchedBed(TouchSensor touch) {
-		return touch.insideSprite(Camera.main, cover.GetComponent<Sprite>(), new[] {TouchPhase.Began});
-	}
-
-	class ZzzAnimator : Repeater {
-		GameObject zzz;
-		Vector3 initialPosition;
-		int frame = 0;
-		
-		const int totalFrames = 4;
-		
-		
-		public ZzzAnimator(GameObject zzz) : base(0.5f) {
-			this.zzz = zzz;
-			initialPosition = zzz.transform.position;
-		}
-		
-		public override void OnTick() {
-			frame = (frame + 1) % totalFrames;
-			zzz.transform.position = initialPosition + new Vector3(frame * 1, frame * 1, 0);
-		}
-		
-		public void Reset() {
-			zzz.transform.position = initialPosition;
-		}
-	}
 }

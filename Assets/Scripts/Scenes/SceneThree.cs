@@ -21,7 +21,6 @@ class SceneThree : Scene {
 
 	public override void Setup(float startTime) {
 		room.addSplitLine();
-		room.removeCover();
 		room.openEyes();
 		room.openEyes();
 		
