@@ -63,7 +63,7 @@ class SceneThree : Scene {
 
 	    messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, Time.time, prodResponses);
 
-		if(room.guySplitDistance == MAX_SPLIT) {
+		if(room.guySplitDistance >= MAX_SPLIT - Mathf.Epsilon) {
 			messagePromptCoordinator.solve(this, "pull guy in half");
 			endScene();
 		}

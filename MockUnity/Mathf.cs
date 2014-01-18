@@ -4,6 +4,7 @@ namespace UnityEngine
 {
 	public static class Mathf
 	{
+		public static float Epsilon = 0.0000001f;
 		public const float PI = 3.14159274f;
 
 		public static float Sin(float f)

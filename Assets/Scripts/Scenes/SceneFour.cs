@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 class SceneFour : Scene {
 	HospitalRoom hospitalRoom;
@@ -59,7 +58,9 @@ class SceneFour : Scene {
 			messagePromptCoordinator.solve(this, "give not same a voice");
 			endScene();
 			return;
-		}		
+		}
+
+		hospitalRoom.hintWhenTouched(GameObject => {}, messagePromptCoordinator, new TouchSensor(input));
 	}
 		
 	private void addMouth() {

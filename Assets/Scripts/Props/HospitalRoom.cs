@@ -20,34 +20,22 @@ public class HospitalRoom {
 
 	public GameObject cover;
 	
-	GameObject zzz;
+	public GameObject clipBoard;
+	public GameObject zzz;
+	public GameObject heartRate;
 	ZzzAnimator zzzAnimator;
 	GameObject footBoard;
-	GameObject clipBoard;
 	GameObject eyes;
 	Camera camera;
-	GameObject heartRate;
 	Cycler heartRateCycler;
 
-	Dictionary<GameObject, ActionResponsePair[]> _interactions;
+	// the state of hospital room interactions is mutable so this is generated once and re-used
 	public Dictionary<GameObject, ActionResponsePair[]> interactions {
 		get {
-			if (_interactions == null) {
-				_interactions = new Dictionary<GameObject, ActionResponsePair[]> {
+				return new Dictionary<GameObject, ActionResponsePair[]> {
 					{clipBoard, new [] {new ActionResponsePair("look at chart", new [] {"even the doctors don't understand the test results"})}},
-					{zzz,       new [] {new ActionResponsePair("catch z", new [] {"that's not going to wake him up"})}},
 					{heartRate, new [] {new ActionResponsePair("look at monitor", new []{"things are stable, for now"})}},
-					{cover,     new [] {new ActionResponsePair("prod him", new[] {"He doesn't want to wake up"}),
-							            new ActionResponsePair("prod him until he wakes up", new [] {"OK"}),
-								        new ActionResponsePair("expose him to the cold",
-											new [] {
-											"you remove the blankets, security and otherwise.",
-											"there are now two distinct halves.",
-											"are they the same person?"}),
-						}},
 				};
-			}
-			return _interactions;
 		}
 	}
 
