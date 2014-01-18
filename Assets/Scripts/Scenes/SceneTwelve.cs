@@ -201,7 +201,6 @@ public class SceneTwelve : Scene {
 		Metronome swingInterval;
 		GameObject swingPivot;
 		bool swinging;
-		Sprite bottomArm;
 
 		public ArmSwinger(float startTime, GameObject swingPivot) {
 			swingInterval = new Metronome(startTime, 0.1f);

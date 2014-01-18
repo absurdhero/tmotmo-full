@@ -33,11 +33,14 @@ class SceneThree : Scene {
 		sensor = new TouchSensor(input);
 		
 		prodResponses = new Dictionary<GameObject, ActionResponsePair[]> {
-				{room.guyLeft.gameObject, new [] {new ActionResponsePair("prod Same",   new[] {"it's already awake."}),
-				new ActionResponsePair("prod Same",   new[] {"listen to the lyrics."})}},
-				{room.guyRight.gameObject, new [] {new ActionResponsePair("prod Not Same", new[] {"it's already awake."}),
-				new ActionResponsePair("prod Not Same", new[] {"listen to the lyrics."})}},
+				{room.guyLeft.gameObject, new [] {
+					new ActionResponsePair("prod Same",   new[] {"it's already awake."}),
+					new ActionResponsePair("prod Same",   new[] {"listen to the lyrics."})}},
+				{room.guyRight.gameObject, new [] {
+					new ActionResponsePair("prod Not Same", new[] {"it's already awake."}),
+					new ActionResponsePair("prod Not Same", new[] {"listen to the lyrics."})}},
 		};
+				
 	}
 	
 	public override void Destroy() {
@@ -51,6 +54,12 @@ class SceneThree : Scene {
 		reverseWiggler.Update(Time.time);
 
 		if (solved) return;
+
+		room.hintWhenTouched((touched) => {}, messagePromptCoordinator, sensor);
+
+		foreach(var gameObject in room.interactions.Keys) {
+			prodResponses[gameObject] = room.interactions[gameObject];
+		}
 
 	    messagePromptCoordinator.hintWhenTouched(GameObject => {}, sensor, Time.time, prodResponses);
 
