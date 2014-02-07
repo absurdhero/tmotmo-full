@@ -62,6 +62,11 @@ public class Sprite : MonoBehaviour {
 	public ImageMaterial imageMaterial { get; private set; }
 	
 	public Material material { get { return imageMaterial.material; } }
+
+	public Vector3 worldPosition {
+		get { return gameObject.transform.position; }
+		set { setWorldPosition(value); }
+	}
 	
 	/// Destroys the underlying GameObject
 	public static void Destroy(Sprite sprite) {

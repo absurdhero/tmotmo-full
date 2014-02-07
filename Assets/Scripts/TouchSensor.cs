@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TouchSensor : MarshalByRefObject {
 	UnityInput input;
@@ -35,9 +36,38 @@ public class TouchSensor : MarshalByRefObject {
 	}
 
 	public bool insideSprite(Camera camera, Sprite sprite, ICollection<TouchPhase> phases) {
+		if (input.touchCount == 0) {
+			return false;
+		}
+
+		if (!touchesFor(phases).Any(touch => sprite.Contains(camera, touch.position))) {
+			return false;
+		}
+
+		var spritesInScene = new List<Sprite>();
+		GameObject[] objectsInScene = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+		foreach (var inScene in objectsInScene) {
+			var possibleSpriteInScene = inScene.GetComponent<Sprite>();
+			if (possibleSpriteInScene != null) {
+				spritesInScene.Add(possibleSpriteInScene);
+			}
+		}
+
 		foreach (var touch in touchesFor(phases)) {
-			if (sprite.Contains(camera, touch.position))
+			if (!sprite.Contains(camera, touch.position)) {
+				continue;
+			}
+
+			var topSprite = sprite;
+			foreach (var spriteInScene in spritesInScene) {
+				if (spriteInScene.Contains(camera, touch.position)
+				    && spriteInScene.worldPosition.z < sprite.worldPosition.z) {
+					topSprite = spriteInScene;
+				}
+			}
+			if (topSprite == sprite) {
 				return true;
+			}
 		}
 
 		return false;
