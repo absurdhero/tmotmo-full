@@ -4,5 +4,8 @@ Library
 Temp
 Assembly-CSharp*.csproj
 Tests/test-results
+Tests/bin/
+Tests/obj/
 MockUnity/bin/
+MockUnity/obj/
 
