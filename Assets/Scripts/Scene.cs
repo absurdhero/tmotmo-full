@@ -37,12 +37,13 @@ public abstract class Scene : MarshalByRefObject {
 	/// Set this to false if transition between scenes must be perfectly smooth
 	public bool permitUnloadResources { get; protected set; }
 
-	public Scene(SceneManager manager) : this(manager, new ResourceFactory(), new UnityInput()){
+	public Scene(SceneManager manager) : this(manager, new ResourceFactory(), new GameObjectFinder(), new UnityInput()){
 	}
 
-	public Scene(SceneManager manager, GameObjectFactory<string> resourceFactory, AbstractInput input) {
+	public Scene(SceneManager manager, GameObjectFactory<string> resourceFactory, GameObjectFinder finder, AbstractInput input) {
 		sceneManager = manager;
 		this.resourceFactory = resourceFactory;
+		this.gameObjectFinder = finder;
 		this.input = input;
 		completed = false;
 		permitUnloadResources = true;
