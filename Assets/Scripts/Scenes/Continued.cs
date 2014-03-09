@@ -12,7 +12,7 @@ class Continued : Scene {
 	public override void Setup(float startTime) {
 		originalBGColor = Camera.main.backgroundColor;
 		Camera.main.backgroundColor = Color.black;
-		touch = new TouchSensor(new UnityInput());
+		touch = new TouchSensor(input, new GameObjectFinder());
 		var layout = GameObject.Find("Layout").GetComponent<Layout>();
 		messageBox = layout.messageBox;
 		messageBox.setMessage("Insert Disk 2");

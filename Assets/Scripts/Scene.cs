@@ -7,9 +7,10 @@ public abstract class Scene : MarshalByRefObject {
 	protected Camera camera;
 	protected SceneManager sceneManager;
 	protected GameObjectFactory<string> resourceFactory;
+	protected GameObjectFinder gameObjectFinder;
 	public float rewindTime { get; protected set; }
 
-	protected UnityInput input;
+	protected AbstractInput input;
 
 	public virtual float TimeLength() {
 		return timeLength;
@@ -36,16 +37,16 @@ public abstract class Scene : MarshalByRefObject {
 	/// Set this to false if transition between scenes must be perfectly smooth
 	public bool permitUnloadResources { get; protected set; }
 
-	public Scene(SceneManager manager) : this(manager, new ResourceFactory()){
+	public Scene(SceneManager manager) : this(manager, new ResourceFactory(), new UnityInput()){
 	}
 
-	public Scene(SceneManager manager, GameObjectFactory<string> resourceFactory) {
+	public Scene(SceneManager manager, GameObjectFactory<string> resourceFactory, AbstractInput input) {
 		sceneManager = manager;
 		this.resourceFactory = resourceFactory;
+		this.input = input;
 		completed = false;
 		permitUnloadResources = true;
 		camera = Camera.main;
-		input = new UnityInput();
 	}
 
 	public virtual void LoadAssets() {}

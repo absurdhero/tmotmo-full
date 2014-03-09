@@ -2,11 +2,11 @@ using UnityEngine;
 using System;
 
 public class Dragger {
-	UnityInput input;
+	AbstractInput input;
 	Sprite sprite;
 	Vector3 startPosition;
 	
-	public Dragger(UnityInput input, Sprite sprite) {
+	public Dragger(AbstractInput input, Sprite sprite) {
 		this.input = input;
 		this.sprite = sprite;
 		this.startPosition = sprite.getScreenPosition();

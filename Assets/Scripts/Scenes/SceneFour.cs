@@ -60,7 +60,7 @@ class SceneFour : Scene {
 			return;
 		}
 
-		hospitalRoom.hintWhenTouched(GameObject => {}, messagePromptCoordinator, new TouchSensor(input));
+		hospitalRoom.hintWhenTouched(GameObject => {}, messagePromptCoordinator, new TouchSensor(input, gameObjectFinder));
 	}
 		
 	private void addMouth() {

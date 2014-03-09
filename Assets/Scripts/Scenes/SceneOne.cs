@@ -64,7 +64,7 @@ class SceneOne : Scene {
 
 		wiggler = new Wiggler(startTime, timeLength, new[] {circle, triangle});
 
-		sensor = new TouchSensor(input);
+		sensor = new TouchSensor(input, gameObjectFinder);
 		shapes = new SpriteCollection(new[] {circle, triangle}, camera, sensor);
 	}
 

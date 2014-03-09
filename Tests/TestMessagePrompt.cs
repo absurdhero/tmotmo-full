@@ -115,7 +115,6 @@ namespace Tests
 				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (false);
 
 				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
-				Expect.Call (sensor.insideSprite (null, null, new[] {TouchPhase.Began})).Return (true);
 			}
 			
 			mocks.ReplayAll ();

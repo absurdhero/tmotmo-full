@@ -29,7 +29,7 @@ class SceneTwo : Scene {
         
 
 		wiggler = new Wiggler(startTime, timeLength, cover.GetComponent<Sprite>());
-        sensor = new TouchSensor(input);
+        sensor = new TouchSensor(input, gameObjectFinder);
 
 		prodResponses = new Dictionary<GameObject, ActionResponsePair[]> {
 			{zzz,       new [] {new ActionResponsePair("catch z", new [] {"that's not going to wake him up"})}},

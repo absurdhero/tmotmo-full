@@ -9,7 +9,7 @@ class SpeechBubble {
 	Sprite speechBubbleRight;
 	
 	Dragger dragger;
-	UnityInput input;
+	AbstractInput input;
 
 	public SpeechBubble(Camera camera, float leftToRightSwitchOverPosition) {
 		this.camera = camera;

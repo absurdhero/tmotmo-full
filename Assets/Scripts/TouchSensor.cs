@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class TouchSensor : MarshalByRefObject {
-	UnityInput input;
+	const float OPAQUE = 0.01f;
+	
+	AbstractInput input;
+
+	GameObjectFinder gameObjectFinder;
 	
 	public static readonly TouchPhase[] allPhases = (TouchPhase[]) Enum.GetValues(typeof(TouchPhase));
 
-	public TouchSensor(UnityInput input) {
+	public TouchSensor(AbstractInput input, GameObjectFinder gameObjectFinder) {
 		this.input = input;
+		this.gameObjectFinder = gameObjectFinder;
 	}
 
 	private IList<Touch> allTouches {
@@ -44,14 +49,7 @@ public class TouchSensor : MarshalByRefObject {
 			return false;
 		}
 
-		var spritesInScene = new List<Sprite>();
-		GameObject[] objectsInScene = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
-		foreach (var inScene in objectsInScene) {
-			var possibleSpriteInScene = inScene.GetComponent<Sprite>();
-			if (possibleSpriteInScene != null) {
-				spritesInScene.Add(possibleSpriteInScene);
-			}
-		}
+		var spritesInScene = gameObjectFinder.allSprites();
 
 		foreach (var touch in touchesFor(phases)) {
 			if (!sprite.Contains(camera, touch.position)) {
@@ -61,12 +59,14 @@ public class TouchSensor : MarshalByRefObject {
 			var topSprite = sprite;
 			foreach (var spriteInScene in spritesInScene) {
 				if (spriteInScene.Contains(camera, touch.position)
-				    && spriteInScene.worldPosition.z < sprite.worldPosition.z) {
+				    && spriteInScene.worldPosition.z < sprite.worldPosition.z
+				    && (spriteInScene.getAlphaAtScreenPosition(touch.position) > OPAQUE)) {
 					topSprite = spriteInScene;
 				}
 			}
-			if (topSprite == sprite) {
-				return true;
+			if (topSprite == sprite
+			    && topSprite.getAlphaAtScreenPosition(touch.position) > OPAQUE) {
+			    return true;
 			}
 		}
 

@@ -191,6 +191,13 @@
       <Link>SpriteCollection.cs</Link>
     </Compile>
     <Compile Include="TestSpriteCollection.cs" />
+    <Compile Include="TestTouchSensor.cs" />
+    <Compile Include="..\Assets\Scripts\AbstractInput.cs">
+      <Link>AbstractInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\GameObjectFinder.cs">
+      <Link>GameObjectFinder.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
@@ -199,6 +206,9 @@
       <HintPath>..\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="NMock3">
+      <HintPath>..\packages\NMock3.3.5.44\lib\net35\NMock3.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MockUnity\MockUnity.csproj">
@@ -208,5 +218,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Props\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scenes.meta" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

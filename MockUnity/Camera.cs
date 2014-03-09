@@ -2,7 +2,7 @@ using System;
 
 namespace UnityEngine
 {
-	public sealed class Camera : Behaviour
+	public class Camera : Behaviour
     {
         public static Camera main;
 		public static Camera current;

@@ -63,7 +63,7 @@ public class Sprite : MonoBehaviour {
 	
 	public Material material { get { return imageMaterial.material; } }
 
-	public Vector3 worldPosition {
+	public virtual Vector3 worldPosition {
 		get { return gameObject.transform.position; }
 		set { setWorldPosition(value); }
 	}
@@ -196,11 +196,11 @@ public class Sprite : MonoBehaviour {
 		return new Vector2(pos.x + width / 2, pos.y + height / 2);
 	}
 
-	public bool Contains(Camera camera, Vector2 position) {
+	public virtual bool Contains(Camera camera, Vector2 position) {
 		return ScreenRect(camera).Contains(position);
 	}
 	
-	public bool Contains(Camera camera, Vector3 position) {
+	public virtual bool Contains(Camera camera, Vector3 position) {
 		return ScreenRect(camera).Contains(new Vector2(position.x, position.y));
 	}
 
@@ -221,6 +221,12 @@ public class Sprite : MonoBehaviour {
 	
 	public Vector3 getScreenPosition() {
 		return Camera.main.WorldToScreenPoint(gameObject.transform.position);
+	}
+
+	public virtual float getAlphaAtScreenPosition(Vector2 position) {
+		var texture = this.textures[texture_index];
+		var spritePosition = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+		return texture.GetPixel((int)(spritePosition.x + position.x), (int)(spritePosition.y + position.y)).a;
 	}
 	
 	/* In viewport space, 0 and 1 are the edges of the screen. */

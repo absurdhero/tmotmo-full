@@ -46,7 +46,7 @@ public class TitleScene : Scene {
 	}
 	
 	public override void Update () {
-		var touch = new TouchSensor(input);
+		var touch = new TouchSensor(input, gameObjectFinder);
 		
 		if (touch.insideSprite(Camera.main, buyMusic)) {
 			Application.OpenURL("http://itunes.apple.com/us/album/same-not-same-ep/id533347009");

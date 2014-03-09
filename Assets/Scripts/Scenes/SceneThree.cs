@@ -29,7 +29,7 @@ class SceneThree : Scene {
 		wiggler = new Wiggler(startTime, timeLength, new[] {guyLeftPivot});
 		reverseWiggler = new ReverseWiggler(startTime, timeLength, new[] {guyRightPivot});
 
-		sensor = new TouchSensor(input);
+		sensor = new TouchSensor(input, gameObjectFinder);
 		
 		prodResponses = new Dictionary<GameObject, ActionResponsePair[]> {
 				{room.guyLeft.gameObject, new [] {
