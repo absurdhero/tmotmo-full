@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MessagePromptCoordinator : MarshalByRefObject {
 	Prompt prompt;
-	MessageBox messageBox;
+	AbstractMessageBox messageBox;
 	bool displayingAnything;
 	
 	float actionPrintedAt = 0f;
@@ -19,7 +19,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	GameObject target;
 	GameObject touchedObject;
 
-	public MessagePromptCoordinator(Prompt prompt, MessageBox messageBox) {
+	public MessagePromptCoordinator(Prompt prompt, AbstractMessageBox messageBox) {
 		this.prompt = prompt;
 		this.messageBox = messageBox;
 	}
@@ -81,7 +81,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	
 	// Cycles through displaying a sequence of action-response pairs for each object that is touched.
 	// Calls onComplete when it reaches the end of a cycle with the object for which the sequence was completed.
-	public void hintWhenTouched(Action<GameObject> onComplete, TouchSensor sensor, float currentTime, Dictionary<GameObject, ActionResponsePair[]> interactions) {
+	public void hintWhenTouched(Action<GameObject> onComplete, AbstractTouchSensor sensor, float currentTime, Dictionary<GameObject, ActionResponsePair[]> interactions) {
 		//if (!sensor.hasTaps()) return; // only act on touches
 		
 		// if there was an interaction but a dialog has not shown yet...
@@ -134,7 +134,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 		}
 	}
 
-	private GameObject detectObjectInteraction(TouchSensor sensor, Dictionary<GameObject, ActionResponsePair[]> interactions) {
+	private GameObject detectObjectInteraction(AbstractTouchSensor sensor, Dictionary<GameObject, ActionResponsePair[]> interactions) {
 		foreach (var gameObject in interactions.Keys
 		        .Where((gameObject) => gameObject != null)) {
 			if (sensor.insideSprite(Camera.main, gameObject.GetComponent<Sprite>(), new[] {TouchPhase.Began})) {

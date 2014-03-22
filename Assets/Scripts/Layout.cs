@@ -32,7 +32,7 @@ public class Layout : MonoBehaviour {
 		text.font = font;
 
 		messageBox = new MessageBox(font);
-		var prompt = new Prompt(textLabel, text);
+		var prompt = new Prompt(textLabel, text).build();
 
 		sceneManager = new SceneManager(loopTracker, new MessagePromptCoordinator(prompt, messageBox));
 	}

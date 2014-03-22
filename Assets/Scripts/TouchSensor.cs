@@ -32,15 +32,15 @@ public class TouchSensor : MarshalByRefObject, AbstractTouchSensor {
 		return touches;
 	}
 
-	public bool insideSprite(Camera camera, Sprite sprite) {
+	public virtual bool insideSprite(Camera camera, Sprite sprite) {
 		return insideSprite(camera, sprite, new[] {TouchPhase.Began});
 	}
 
-	public bool changeInsideSprite(Camera camera, Sprite sprite) {
+	public virtual bool changeInsideSprite(Camera camera, Sprite sprite) {
 		return insideSprite(camera, sprite, allPhases);
 	}
 
-	public bool insideSprite(Camera camera, Sprite sprite, ICollection<TouchPhase> phases) {
+	public virtual bool insideSprite(Camera camera, Sprite sprite, ICollection<TouchPhase> phases) {
 		if (input.touchCount == 0) {
 			return false;
 		}

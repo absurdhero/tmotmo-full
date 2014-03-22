@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 
 public class Prompt : MarshalByRefObject {
 	GameObject textLabel, blackBox;
@@ -9,10 +8,9 @@ public class Prompt : MarshalByRefObject {
 	public Prompt(GameObject textLabel, GUIText text) {
 		this.textLabel = textLabel;
 		this.text = text;
-		buildBlackBox();
 	}
 	
-	void buildBlackBox() {
+	public Prompt build() {
 		blackBox = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		blackBox.SetActive(false);
 		blackBox.name = "prompt background";
@@ -20,6 +18,7 @@ public class Prompt : MarshalByRefObject {
 		blackBox.transform.Rotate(new Vector3(270f, 0f, 0f));
 		blackBox.transform.position = new Vector3(0, -95, -9);
 		blackBox.transform.localScale = new Vector3(30f, 1f, 1.5f);
+		return this;
 	}
 	
 	public void Destroy() {

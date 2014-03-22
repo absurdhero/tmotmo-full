@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-public class MessageBox : MarshalByRefObject {
+public class MessageBox : AbstractMessageBox {
 	const int lineWidth = 20;
 
 	GameObject textLabel;
@@ -51,7 +51,7 @@ public class MessageBox : MarshalByRefObject {
 		messageBackground.transform.position = new Vector3(0f, 0f, -9f);
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(string message) {
 		text.text = wrap(message);
 
 		var textRect = text.GetScreenRect(Camera.main);
@@ -78,10 +78,10 @@ public class MessageBox : MarshalByRefObject {
 		messageBackground.setScreenPosition(textRect.x - borderThickness - paddingX, textRect.y - borderThickness - paddingY);
 	}
 
-	static public String wrap(String text) {
+	static public string wrap(string text) {
 		StringBuilder output = new StringBuilder(text.Length + 1);
 		int spaceLeft = lineWidth;
-		foreach(String word in text.Split(' ')) {
+		foreach(string word in text.Split(' ')) {
 			if (word.Length + 1 > spaceLeft) {
 				output.Append('\n');
 				output.Append(word);

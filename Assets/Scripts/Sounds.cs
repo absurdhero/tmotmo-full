@@ -48,13 +48,13 @@ public class Sounds : MarshalByRefObject {
 
 	void Update () {} // this is not really a MonoBehaviour object
 
-	public void playAudio () {
+	public virtual void playAudio () {
 		foreach (var stem in orderedStems) {
 			stem.Play ();
 		}
 	}
 
-	public void setAudioTime (float when) {
+	public virtual void setAudioTime (float when) {
 		foreach (AudioSource stem in orderedStems) {
 			setTime (stem, when);
 		}
@@ -70,7 +70,7 @@ public class Sounds : MarshalByRefObject {
 		stem.time = newTime;
 	}
 
-	public float getAudioTime () {
+	public virtual float getAudioTime () {
 		if (playingStem == null) {
 			return 0f;
 		}
@@ -81,7 +81,7 @@ public class Sounds : MarshalByRefObject {
 	// Then remove the last (highest array index) pair of stems each round...
 	// ...until only the first and second are left, after that start adding in the highest numbers again...
 	// ...until we're back to playing all again, and then we start over
-	public void pickStemsFor (int repetition) {
+	public virtual void pickStemsFor (int repetition) {
 		var toPlay = new List<AudioSource> ();
 		
 		toPlay.Add (orderedStems[0]);
