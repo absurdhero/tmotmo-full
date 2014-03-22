@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneFive : Scene {
+class SceneFive : AbstractScene {
 	BigHeadProp bigHeadProp;
 	
 	BigMouthAnimator bigMouthAnimator;

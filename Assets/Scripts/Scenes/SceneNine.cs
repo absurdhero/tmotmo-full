@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class SceneNine : Scene {
+public class SceneNine : AbstractScene {
 	public Confetti confetti;
 	ScrollLetters spreadConfetti;
 	Sprite todoList;

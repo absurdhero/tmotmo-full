@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SceneTwelve : Scene {
+public class SceneTwelve : AbstractScene {
 	DitheredBlueBackground background;
 
 	Sprite topHand, bottomPalm, bottomWrist;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SceneTen : Scene {
+public class SceneTen : AbstractScene {
 	Metronome stompSpeed;
 	GameObject amp;
 	GameObject shoe;

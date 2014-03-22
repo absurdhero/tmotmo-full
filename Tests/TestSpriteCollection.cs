@@ -1,107 +1,121 @@
-using System;
 using NUnit.Framework;
-using Rhino.Mocks;
 using UnityEngine;
-using Rhino.Mocks.Constraints;
-using System.Collections.Generic;
-using System.Collections;
+using NMock;
 
 namespace Irrelevant
 {
 	[TestFixture]
 	public class TestSpriteCollection {
-		private MockRepository mocks;
-		private Sprite sprite1, sprite2;
-		private Camera camera;
-		private TouchSensor sensor;
+		private MockFactory factory;
+		private Mock<Sprite> sprite1, sprite2;
+		private Mock<Camera> camera;
+		private Mock<AbstractTouchSensor> sensor;
 		private Sprite[] sprites;
 
 		[SetUp]
 		public void SetUp() {
-			mocks = new MockRepository();
-			camera = mocks.DynamicMock<Camera>();
-			sensor = mocks.DynamicMock<TouchSensor>();
+			factory = new MockFactory();
+			camera = factory.CreateMock<Camera>();
+			sensor = factory.CreateMock<AbstractTouchSensor>();
 
-			sprite1 = mocks.DynamicMock<Sprite>();
-			sprite2 = mocks.DynamicMock<Sprite>();
-			sprites = new[] { sprite1, sprite2 };
+			sprite1 = factory.CreateMock<Sprite>();
+			sprite2 = factory.CreateMock<Sprite>();
+			sprites = new[] { sprite1.MockObject, sprite2.MockObject };
 		}
 
 		[Test]
 		public void touchedWhenAllSpritesTouched() {
-			var collection = new SpriteCollection(sprites, camera, sensor);
+			var collection = new SpriteCollection(sprites, camera.MockObject, sensor.MockObject);
 
-			using (mocks.Record()) {
-				Expect.Call (sensor.insideSprite(null, null, null)).IgnoreArguments().Return (true);
-			}
-			using (mocks.Playback()) {
-				Assert.IsTrue(collection.touchedAtSameTime(0f));
-			}
+			sensor.Expects.AtLeastOne.Method(_ => _.insideSprite(null, null, null)).WithAnyArguments().WillReturn(true);
+
+			Assert.IsTrue(collection.touchedAtSameTime(0f));
 		}
 
 		[Test]
 		public void touchedWhenOneSpriteTouched() {
-			var collection = new SpriteCollection(sprites, camera, sensor);
+			var collection = new SpriteCollection(sprites, camera.MockObject, sensor.MockObject);
 
-			using (mocks.Record()) {
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Anything()).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Anything()).Return(false);
-			}
-			using (mocks.Playback()) {
-				Assert.IsFalse(collection.touchedAtSameTime(0f));
-			}
+			sensor.Expects.AtLeastOne.Method(_ => _.insideSprite(null, null, null))
+				.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.Anything).WillReturn(true);
+			sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+				.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.Anything).WillReturn(false);
+
+			Assert.IsFalse(collection.touchedAtSameTime(0f));
 		}
 
 		[Test]
 		public void touchedWhenOneThenBoth() {
-			var collection = new SpriteCollection(sprites, null, sensor);
+			var collection = new SpriteCollection(sprites, null, sensor.MockObject);
 
-			using (mocks.Ordered()) {
+			using (factory.Ordered()) {
 				var heldDown = new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary};
 				var initialTouch = new[] {TouchPhase.Began};
 
 				// first finger down
-//				Expect.Call (sensor.insideSprite(null, null, null))
-//					.Callback(delegate (Camera camera, Sprite sprite, ICollection<TouchPhase> phases) { Console.WriteLine("called with " + sprite + ", " + phases); return Is.Same(sprite1).Eval(sprite) && Is.Equal(heldDown).Eval(phases); }).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(initialTouch)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(heldDown)).Return(false);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(false);
 
 				// second finger down
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(initialTouch)).Return(false);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(initialTouch)).Return(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(false);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(true);
 			}
 			
-			mocks.ReplayAll ();
-
 			collection.touchedAtSameTime(0f);
 			Assert.IsTrue(collection.touchedAtSameTime(0.1f));
 		}
 
 		[Test]
 		public void notTouchedWhenOneThenBothTooLate() {
-			var collection = new SpriteCollection(sprites, null, sensor);
+			var collection = new SpriteCollection(sprites, null, sensor.MockObject);
 
-			using (mocks.Ordered()) {
+			using (factory.Ordered()) {
 				var heldDown = new[] {TouchPhase.Began, TouchPhase.Moved, TouchPhase.Stationary};
 				var initialTouch = new[] {TouchPhase.Began};
 
 				// first finger down
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(initialTouch)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(heldDown)).Return(false);
-
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(false);
+				
 				// second finger down
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite1), Is.Equal(initialTouch)).Return(false);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(heldDown)).Return(true);
-				Expect.Call (sensor.insideSprite(null, null, null)).Constraints(Is.Anything(), Is.Same(sprite2), Is.Equal(initialTouch)).Return(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite1.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(false);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(heldDown))
+					.WillReturn(true);
+				sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
+					.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.EqualTo(initialTouch))
+					.WillReturn(true);
 			}
 			
-			mocks.ReplayAll ();
-
 			collection.touchedAtSameTime(0f);
 			Assert.IsFalse(collection.touchedAtSameTime(0.3f));
 		}

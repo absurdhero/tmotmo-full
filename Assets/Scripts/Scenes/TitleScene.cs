@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class TitleScene : Scene {
+public class TitleScene : AbstractScene {
 	public Sprite title;
 	public Sprite subtitle;
 	public Sprite news;

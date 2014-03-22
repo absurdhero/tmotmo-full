@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class LoopTracker : MarshalByRefObject {
+public class LoopTracker : AbstractLoopTracker {
 	int repetition;
 	float loopStart = 0.0f;
 	float loopEnd = 0.0f;

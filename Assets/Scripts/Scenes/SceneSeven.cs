@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneSeven : Scene {
+class SceneSeven : AbstractScene {
 	BigHeadProp bigHeadProp;
 	MouthAnimator mouthAnimator;
 	Sprite mouthLeft, mouthRight;

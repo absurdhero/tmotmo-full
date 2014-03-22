@@ -1,6 +1,6 @@
 using UnityEngine;
 
-class SceneFour : Scene {
+class SceneFour : AbstractScene {
 	HospitalRoom hospitalRoom;
 	Wiggler wiggler;
 

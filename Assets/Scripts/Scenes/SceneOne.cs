@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneOne : Scene {
+class SceneOne : AbstractScene {
 	public Sprite background;
 	public Sprite same;
 	public Sprite notSame;

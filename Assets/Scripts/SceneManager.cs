@@ -5,9 +5,9 @@ using System.Collections.Generic;
 /// Controls progression from scene to scene and provides shared game state accessible to scenes.
 /// </summary>
 public class SceneManager {
-	SceneFactory sceneFactory;
+	AbstractSceneFactory sceneFactory;
 	public Scene currentScene { get; private set;}
-	public LoopTracker loopTracker { get; private set;}
+	public AbstractLoopTracker loopTracker { get; private set;}
 	public MessagePromptCoordinator messagePromptCoordinator { get; private set;}
 
 	// click instantly through scenes instead of waiting for them to transition
@@ -20,7 +20,7 @@ public class SceneManager {
 	public SceneManager(LoopTracker loopTracker, MessagePromptCoordinator messagePromptCoordinator) : this(null, loopTracker, messagePromptCoordinator) {
 	}
 	
-	public SceneManager (SceneFactory sceneFactory, LoopTracker loopTracker, MessagePromptCoordinator messagePromptCoordinator) {
+	public SceneManager (AbstractSceneFactory sceneFactory, AbstractLoopTracker loopTracker, MessagePromptCoordinator messagePromptCoordinator) {
 		if(sceneFactory == null) {
 			sceneFactory = new SceneFactory(this);
 		}
@@ -54,10 +54,10 @@ public class SceneManager {
 
 		currentScene.Destroy();
 
-		if(sceneFactory.isFirstScene(currentScene)) {
+		if(currentScene.TimeLength() == 0f) {
 			loopTracker.startPlaying();
 		}
-		
+
 		currentScene = sceneFactory.GetSceneAfter(currentScene);
 
 		if (currentScene.permitUnloadResources) {

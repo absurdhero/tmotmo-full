@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class SpriteCollection {
 	Camera camera;
-	TouchSensor sensor;
+	AbstractTouchSensor sensor;
 	Sprite[] sprites;
 	float[] lastTouchedTimes;
 
-	public SpriteCollection(Sprite[] sprites, Camera camera, TouchSensor sensor) {
+	public SpriteCollection(Sprite[] sprites, Camera camera, AbstractTouchSensor sensor) {
 		this.sprites = sprites;
 		this.camera = camera;
 		this.sensor = sensor;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SceneFourteen : Scene {
+public class SceneFourteen : AbstractScene {
 	DitheredBlueBackground background;
 	FallingGuyProp fallingGuyProp;
 	Metronome animation;

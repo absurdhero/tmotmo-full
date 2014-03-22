@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneThree : Scene {
+class SceneThree : AbstractScene {
 	public HospitalRoom room { get; private set; }
 	Wiggler wiggler, reverseWiggler;
 	

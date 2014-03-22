@@ -1,6 +1,6 @@
 using UnityEngine;
 
-class Continued : Scene {
+class Continued : AbstractScene {
 	private Color originalBGColor;
 	private TouchSensor touch;
 	private MessageBox messageBox;

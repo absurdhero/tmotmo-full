@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class SceneEleven : Scene {
+public class SceneEleven : AbstractScene {
 	Metronome videoSpeed;
 	GameObject videoClip;
 	Sprite videoSprite;

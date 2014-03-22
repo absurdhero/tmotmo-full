@@ -54,9 +54,6 @@
     <Compile Include="..\Assets\Scripts\SceneFactory.cs">
       <Link>SceneFactory.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\Scripts\Scene.cs">
-      <Link>Scene.cs</Link>
-    </Compile>
     <Compile Include="..\Assets\Scripts\Scenes\SceneOne.cs">
       <Link>Scenes\SceneOne.cs</Link>
     </Compile>
@@ -198,6 +195,17 @@
     <Compile Include="..\Assets\Scripts\GameObjectFinder.cs">
       <Link>GameObjectFinder.cs</Link>
     </Compile>
+    <Compile Include="..\Assets\Scripts\AbstractTouchSensor.cs" />
+    <Compile Include="..\Assets\Scripts\AbstractLoopTracker.cs">
+      <Link>AbstractLoopTracker.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\AbstractSceneFactory.cs">
+      <Link>AbstractSceneFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\AbstractScene.cs">
+      <Link>AbstractScene.cs</Link>
+    </Compile>
+    <Compile Include="..\Assets\Scripts\Scene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

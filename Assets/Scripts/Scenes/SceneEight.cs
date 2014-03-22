@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneEight : Scene {
+class SceneEight : AbstractScene {
 	public Confetti confetti;
 
 	BigHeadProp bigHeadProp;

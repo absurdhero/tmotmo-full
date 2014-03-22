@@ -224,12 +224,12 @@ public class Sprite : MonoBehaviour {
 	}
 
 	public virtual float getAlphaAtScreenPosition(Vector2 position) {
-		var texture = this.textures[texture_index];
+		var texture = textures[texture_index];
 		var spritePosition = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 		try {
 			return texture.GetPixel((int)(spritePosition.x + position.x), (int)(spritePosition.y + position.y)).a;
-		} catch(UnityException ignored) {
-			// if a texture doesn't let us read its pixels, assume it isn't transparent
+		} catch(UnityException) {
+			// if a texture doesn't let us read its pixels, assume it is not transparent
 			return 1.0f;
 		}
 	}

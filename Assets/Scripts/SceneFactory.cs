@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// Instantiates scenes and defines their order
 /// </summary>
-public class SceneFactory : MarshalByRefObject {
+public class SceneFactory : MarshalByRefObject, AbstractSceneFactory {
 	SceneManager sceneManager;
 	
 	Type LAST_SCENE = typeof(Continued);
@@ -51,11 +49,6 @@ public class SceneFactory : MarshalByRefObject {
 	public Scene GetFirstScene() {
 		ensureScenesInstantiated();
 		return new TitleScene(sceneManager);
-	}
-
-	public bool isFirstScene(Scene scene) {
-		if (scene.GetType() == typeof(TitleScene)) return true;
-		return false;
 	}
 
 	public bool isLastScene(Scene scene) {

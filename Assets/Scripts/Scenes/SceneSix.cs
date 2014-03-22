@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-class SceneSix : Scene {
+class SceneSix : AbstractScene {
 	BigHeadProp bigHeadProp;
 	BigMouthAnimator bigMouthAnimator;
 	OffsetCamera wrapCam;
