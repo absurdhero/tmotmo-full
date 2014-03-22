@@ -227,7 +227,7 @@ public class Sprite : MonoBehaviour {
 		var texture = textures[texture_index];
 		var spritePosition = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 		try {
-			return texture.GetPixel((int)(spritePosition.x + position.x), (int)(spritePosition.y + position.y)).a;
+			return texture.GetPixel((int)(position.x - spritePosition.x), (int)(position.y - spritePosition.y)).a;
 		} catch(UnityException) {
 			// if a texture doesn't let us read its pixels, assume it is not transparent
 			return 1.0f;
