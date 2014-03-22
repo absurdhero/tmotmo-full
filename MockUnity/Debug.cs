@@ -2,9 +2,9 @@ using System;
 
 namespace UnityEngine
 {
-	public sealed class Debug
+	public class Debug
 	{
-        private static void Internal_Log (int level, string msg, Object obj) {
+        static void Internal_Log (int level, string msg, Object obj) {
             if (level == 0)
                 Console.Out.WriteLine(msg);
             else

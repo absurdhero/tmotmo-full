@@ -4,17 +4,11 @@ namespace UnityEngine
 {
 	public class GUIText : GUIElement
 	{
-		public string text
-		{
-			get
-			{
-				throw new InvalidOperationException();
-			}
-			set
-			{
-				throw new InvalidOperationException();
-			}
+		public string text {
+			get;
+			set;
 		}
+		
 		public Material material
 		{
 			get

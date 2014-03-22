@@ -5,8 +5,6 @@ namespace UnityEngine
 	public class Object : MarshalByRefObject
 	{
 		public string name;
-		private static  bool CompareBaseObjects (Object lhs, Object rhs)
-			{ throw new InvalidOperationException(); }
 		public int GetInstanceID () { throw new InvalidOperationException(); }
 		//public static Object Instantiate (Object original, Vector3 position, Quaternion rotation)
 		//	 { throw new InvalidOperationException(); }

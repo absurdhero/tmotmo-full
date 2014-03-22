@@ -21,16 +21,14 @@ namespace UnityEngine {
 		public  bool active;
 		public  string tag;
 		public GameObject gameObject;
-		/*
-		public static  GameObject CreatePrimitive (PrimitiveType type) {
-			throw new InvalidOperationException();
-		}
-		*/
 		
+		public GameObject() {
+		}
+
 		public GameObject(string name) {
 		}
 
-        public void SetActive(bool b)
+        public virtual void SetActive(bool active)
         {
             throw new InvalidOperationException();
         }
@@ -41,50 +39,49 @@ namespace UnityEngine {
             set;
         }
 		
-		public Component GetComponent (Type type) { return null; }
-		public T GetComponent<T> () where T : Component
+		public virtual Component GetComponent (Type type) { return null; }
+		public virtual T GetComponent<T> () where T : Component
 		{
 			return null;
 		}
-		public Component GetComponent (string type)
+		public virtual Component GetComponent (string type)
 		{
 			throw new InvalidOperationException();
 		}
-		private  Component GetComponentByName (string type) { throw new InvalidOperationException(); }
-		public Component GetComponentInChildren (Type type)
+		public virtual Component GetComponentInChildren (Type type)
 		{
 			throw new InvalidOperationException();
 		}
-		public T GetComponentInChildren<T> () where T : Component
+		public virtual T GetComponentInChildren<T> () where T : Component
 		{
 			throw new InvalidOperationException();
 		}
-		public Component[] GetComponents (Type type)
+		public virtual Component[] GetComponents (Type type)
 		{
 			throw new InvalidOperationException();
 		}
-		public T[] GetComponents<T> () where T : Component
+		public virtual T[] GetComponents<T> () where T : Component
 		{
 			throw new InvalidOperationException();
 		}
-		public Component[] GetComponentsInChildren (Type type)
+		public virtual Component[] GetComponentsInChildren (Type type)
 		{
 			throw new InvalidOperationException();
 		}
-		public Component[] GetComponentsInChildren (Type type, bool includeInactive)
+		public virtual Component[] GetComponentsInChildren (Type type, bool includeInactive)
 		{
 			throw new InvalidOperationException();
 		}
-		public T[] GetComponentsInChildren<T> (bool includeInactive) where T : Component
+		public virtual T[] GetComponentsInChildren<T> (bool includeInactive) where T : Component
 		{
 			throw new InvalidOperationException();
 		}
-		public T[] GetComponentsInChildren<T> () where T : Component
+		public virtual T[] GetComponentsInChildren<T> () where T : Component
 		{
 			throw new InvalidOperationException();
 		}
-		public  void SetActiveRecursively (bool state) { throw new InvalidOperationException(); }
-		public  bool CompareTag (string tag) { throw new InvalidOperationException(); }
+		public void SetActiveRecursively (bool state) { throw new InvalidOperationException(); }
+		public bool CompareTag (string tag) { throw new InvalidOperationException(); }
 		public static  GameObject FindGameObjectWithTag (string tag) { throw new InvalidOperationException(); }
 		public static GameObject FindWithTag (string tag)
 		{
@@ -148,7 +145,7 @@ namespace UnityEngine {
 			throw new InvalidOperationException();
 		}
 		//public  void SampleAnimation (AnimationClip animation, float time) { throw new InvalidOperationException(); }
-		public static  GameObject Find (string name) { throw new InvalidOperationException(); }
+		public static GameObject Find (string name) { throw new InvalidOperationException(); }
 
 		public static GameObject CreatePrimitive(PrimitiveType type) { throw new InvalidOperationException(); }
 
