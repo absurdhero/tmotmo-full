@@ -1,86 +1,72 @@
 using System;
 using NUnit.Framework;
-using Rhino.Mocks;
-using UnityEngine;
+using NMock;
 
 namespace Irrelevant
 {
+	[TestFixture]
+	public class TestCycler {
+		private MockFactory factory;
+		private Mock<Sprite> sprite;
+		private float beginning = 0.0f;
+		private float frameTime = 1.0f;
 
-  [TestFixture]
-  public class TestCycler
-  {
-    private MockRepository mocks;
-    private Sprite sprite;
+		[SetUp]
+		public void SetUp() {
+			factory = new MockFactory();
+			sprite = factory.CreateMock<Sprite>();
+		}
 
-    private float beginning = 0.0f;
-    private float frameTime = 1.0f;
+		[Test]
+		public void SwitchFrameEachTime() {
+			var cycler = new Cycler(frameTime, 3, beginning);
 
-    [SetUp]
-    public void SetUp()
-    {
-      mocks = new MockRepository();
-      sprite = mocks.DynamicMock<Sprite>();
-    }
+			sprite.Expects.Exactly(2).Method(_ => _.DrawNextFrame());
 
-    [Test]
-    public void SwitchFrameEachTime() {
-      var cycler = new Cycler(frameTime, 3, beginning);
-      using (mocks.Record()) {
-        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Twice();
-      }
-      using (mocks.Playback()) {
-        cycler.AddSprite(sprite);
-        cycler.Update(beginning + frameTime);
-        cycler.Update(beginning + frameTime * 2);
-      }
-    }
+			cycler.AddSprite(sprite.MockObject);
+			cycler.Update(beginning + frameTime);
+			cycler.Update(beginning + frameTime * 2);
+		}
 
-    [Test]
-    public void DontSwitchFramesWhenFrameIntervalHasntPassed() {
-      var cycler = new Cycler(frameTime, 3, beginning);
-      var inbetweenFrame = frameTime / 2.0f;
+		[Test]
+		public void DontSwitchFramesWhenFrameIntervalHasntPassed() {
+			var cycler = new Cycler(frameTime, 3, beginning);
+			var inbetweenFrame = frameTime / 2.0f;
 
-      using (mocks.Record()) {
-        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Once();
-      }
-      using (mocks.Playback()) {
-        cycler.AddSprite(sprite);
-        cycler.Update(beginning + inbetweenFrame);
-        cycler.Update(beginning + frameTime);
-        cycler.Update(beginning + frameTime + inbetweenFrame);
-      }
-    }
+			sprite.Expects.One.Method(_ => _.DrawNextFrame());
 
-    [Test]
-    public void CyclerStopsWhenTotalCyclesReached() {
-      int totalCycles = 3;
-      var cycler = new Cycler(frameTime, totalCycles, beginning);
-      using (mocks.Record()) {
-        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Times(totalCycles);
-      }
-      using (mocks.Playback()) {
-        cycler.AddSprite(sprite);
-        cycler.Update(beginning + frameTime);
-        cycler.Update(beginning + frameTime * 2);
-        cycler.Update(beginning + frameTime * 3);
-        cycler.Update(beginning + frameTime * 4);
-        cycler.Update(beginning + frameTime * 5);
-      }
-    }
-    [Test]
-    public void CyclerAnimatesIndefinitelyWhenTotalCyclesIsZero() {
-      int totalCycles = 0;
-      var cycler = new Cycler(frameTime, totalCycles, beginning);
-      using (mocks.Record()) {
-        Expect.Call(delegate{sprite.DrawNextFrame();}).Repeat.Times(3);
-      }
-      using (mocks.Playback()) {
-        cycler.AddSprite(sprite);
-        cycler.Update(beginning + frameTime);
-        cycler.Update(beginning + frameTime * 2);
-        cycler.Update(beginning + frameTime * 3);
-      }
-    }
-  }
+			cycler.AddSprite(sprite.MockObject);
+			cycler.Update(beginning + inbetweenFrame);
+			cycler.Update(beginning + frameTime);
+			cycler.Update(beginning + frameTime + inbetweenFrame);
+		}
+
+		[Test]
+		public void CyclerStopsWhenTotalCyclesReached() {
+			int totalCycles = 3;
+			var cycler = new Cycler(frameTime, totalCycles, beginning);
+			sprite.Expects.Exactly(totalCycles).Method(_ => _.DrawNextFrame());
+
+			cycler.AddSprite(sprite.MockObject);
+			cycler.Update(beginning + frameTime);
+			cycler.Update(beginning + frameTime * 2);
+			cycler.Update(beginning + frameTime * 3);
+			cycler.Update(beginning + frameTime * 4);
+			cycler.Update(beginning + frameTime * 5);
+		}
+
+		[Test]
+		public void CyclerAnimatesIndefinitelyWhenTotalCyclesIsZero() {
+			int totalCycles = 0;
+			var cycler = new Cycler(frameTime, totalCycles, beginning);
+
+			sprite.Expects.Exactly(3).Method(_ => _.DrawNextFrame());
+
+			cycler.AddSprite(sprite.MockObject);
+			cycler.Update(beginning + frameTime);
+			cycler.Update(beginning + frameTime * 2);
+			cycler.Update(beginning + frameTime * 3);
+		}
+	}
 }
 

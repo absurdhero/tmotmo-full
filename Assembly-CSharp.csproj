@@ -1,116 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-	<ProductVersion>10.0.20506</ProductVersion>
-	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}</ProjectGuid>
-	<OutputType>Library</OutputType>
-	<AppDesignerFolder>Properties</AppDesignerFolder>
-	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
-	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-	<FileAlignment>512</FileAlignment>
-	<BaseDirectory>Assets</BaseDirectory>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{784F8C0A-6A01-7D0A-8FE1-371C68EF7090}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	<DebugSymbols>true</DebugSymbols>
-	<DebugType>full</DebugType>
-	<Optimize>false</Optimize>
-	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
-	<ErrorReport>prompt</ErrorReport>
-	<WarningLevel>4</WarningLevel>
-	<NoWarn>0169</NoWarn>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	<DebugType>pdbonly</DebugType>
-	<Optimize>true</Optimize>
-	<OutputPath>Temp\bin\Release\</OutputPath>
-	<DefineConstants>TRACE</DefineConstants>
-	<ErrorReport>prompt</ErrorReport>
-	<WarningLevel>4</WarningLevel>
-	<NoWarn>0169</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="System" />
-    <Reference Include="System.XML" />
-	<Reference Include="System.Core" />
-	<Reference Include="System.Xml.Linq" />
-	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
-	</Reference>
-	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
-	</Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AbstractInput.cs" />
-     <Compile Include="Assets\Scripts\AbstractLoopTracker.cs" />
-     <Compile Include="Assets\Scripts\AbstractScene.cs" />
-     <Compile Include="Assets\Scripts\AbstractSceneFactory.cs" />
-     <Compile Include="Assets\Scripts\AbstractTouchSensor.cs" />
-     <Compile Include="Assets\Scripts\Animatable.cs" />
-     <Compile Include="Assets\Scripts\Cycler.cs" />
-     <Compile Include="Assets\Scripts\DelayedCycler.cs" />
-     <Compile Include="Assets\Scripts\Dragger.cs" />
-     <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
-     <Compile Include="Assets\Scripts\GameObjectFactory.cs" />
-     <Compile Include="Assets\Scripts\GameObjectFinder.cs" />
-     <Compile Include="Assets\Scripts\Grid.cs" />
-     <Compile Include="Assets\Scripts\ImageMaterial.cs" />
-     <Compile Include="Assets\Scripts\Layout.cs" />
-     <Compile Include="Assets\Scripts\LoopTracker.cs" />
-     <Compile Include="Assets\Scripts\MessageBox.cs" />
-     <Compile Include="Assets\Scripts\MessagePromptCoordinator.cs" />
-     <Compile Include="Assets\Scripts\Metronome.cs" />
-     <Compile Include="Assets\Scripts\Mover.cs" />
-     <Compile Include="Assets\Scripts\OffsetCamera.cs" />
-     <Compile Include="Assets\Scripts\Preloadable.cs" />
-     <Compile Include="Assets\Scripts\Prompt.cs" />
-     <Compile Include="Assets\Scripts\Props\BigHeadProp.cs" />
-     <Compile Include="Assets\Scripts\Props\Confetti.cs" />
-     <Compile Include="Assets\Scripts\Props\DitheredBlueBackground.cs" />
-     <Compile Include="Assets\Scripts\Props\FallingGuyProp.cs" />
-     <Compile Include="Assets\Scripts\Props\HospitalRoom.cs" />
-     <Compile Include="Assets\Scripts\Props\ScrollingLetters.cs" />
-     <Compile Include="Assets\Scripts\Props\SpeechBubble.cs" />
-     <Compile Include="Assets\Scripts\Repeater.cs" />
-     <Compile Include="Assets\Scripts\Scene.cs" />
-     <Compile Include="Assets\Scripts\SceneFactory.cs" />
-     <Compile Include="Assets\Scripts\SceneManager.cs" />
-     <Compile Include="Assets\Scripts\Scenes\Continued.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneEight.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneEleven.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneFive.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneFour.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneFourteen.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneNine.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneOne.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneSeven.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneSix.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneTen.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneThirteen.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneThree.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneTwelve.cs" />
-     <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
-     <Compile Include="Assets\Scripts\Scenes\TitleScene.cs" />
-     <Compile Include="Assets\Scripts\Sounds.cs" />
-     <Compile Include="Assets\Scripts\Sprite.cs" />
-     <Compile Include="Assets\Scripts\SpriteCollection.cs" />
-     <Compile Include="Assets\Scripts\SpriteTouchExtensions.cs" />
-     <Compile Include="Assets\Scripts\TouchSensor.cs" />
-     <Compile Include="Assets\Scripts\UnityInput.cs" />
-     <Compile Include="Assets\Scripts\Wiggler.cs" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
-     <None Include="Assets\Resources\sierra_agi_font\license.txt" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
-     <None Include="Assets\Resources\sierra_agi_font\read me.txt" />
+    <Compile Include="Assets\Scripts\AbstractInput.cs" />
+    <Compile Include="Assets\Scripts\AbstractLoopTracker.cs" />
+    <Compile Include="Assets\Scripts\AbstractScene.cs" />
+    <Compile Include="Assets\Scripts\AbstractSceneFactory.cs" />
+    <Compile Include="Assets\Scripts\AbstractTouchSensor.cs" />
+    <Compile Include="Assets\Scripts\Animatable.cs" />
+    <Compile Include="Assets\Scripts\Cycler.cs" />
+    <Compile Include="Assets\Scripts\DelayedCycler.cs" />
+    <Compile Include="Assets\Scripts\Dragger.cs" />
+    <Compile Include="Assets\Scripts\FullScreenQuad.cs" />
+    <Compile Include="Assets\Scripts\GameObjectFactory.cs" />
+    <Compile Include="Assets\Scripts\GameObjectFinder.cs" />
+    <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\ImageMaterial.cs" />
+    <Compile Include="Assets\Scripts\Layout.cs" />
+    <Compile Include="Assets\Scripts\LoopTracker.cs" />
+    <Compile Include="Assets\Scripts\MessageBox.cs" />
+    <Compile Include="Assets\Scripts\MessagePromptCoordinator.cs" />
+    <Compile Include="Assets\Scripts\Metronome.cs" />
+    <Compile Include="Assets\Scripts\Mover.cs" />
+    <Compile Include="Assets\Scripts\OffsetCamera.cs" />
+    <Compile Include="Assets\Scripts\Preloadable.cs" />
+    <Compile Include="Assets\Scripts\Prompt.cs" />
+    <Compile Include="Assets\Scripts\Props\BigHeadProp.cs" />
+    <Compile Include="Assets\Scripts\Props\Confetti.cs" />
+    <Compile Include="Assets\Scripts\Props\DitheredBlueBackground.cs" />
+    <Compile Include="Assets\Scripts\Props\FallingGuyProp.cs" />
+    <Compile Include="Assets\Scripts\Props\HospitalRoom.cs" />
+    <Compile Include="Assets\Scripts\Props\ScrollingLetters.cs" />
+    <Compile Include="Assets\Scripts\Props\SpeechBubble.cs" />
+    <Compile Include="Assets\Scripts\Repeater.cs" />
+    <Compile Include="Assets\Scripts\Scene.cs" />
+    <Compile Include="Assets\Scripts\SceneFactory.cs" />
+    <Compile Include="Assets\Scripts\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Continued.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneEight.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneEleven.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneFive.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneFour.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneFourteen.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneNine.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneOne.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneSeven.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneSix.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneTen.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneThirteen.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneThree.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneTwelve.cs" />
+    <Compile Include="Assets\Scripts\Scenes\SceneTwo.cs" />
+    <Compile Include="Assets\Scripts\Scenes\TitleScene.cs" />
+    <Compile Include="Assets\Scripts\Sounds.cs" />
+    <Compile Include="Assets\Scripts\Sprite.cs" />
+    <Compile Include="Assets\Scripts\SpriteCollection.cs" />
+    <Compile Include="Assets\Scripts\SpriteTouchExtensions.cs" />
+    <Compile Include="Assets\Scripts\TouchSensor.cs" />
+    <Compile Include="Assets\Scripts\UnityInput.cs" />
+    <Compile Include="Assets\Scripts\Wiggler.cs" />
+    <None Include="Assets\Resources\sierra_agi_font\license.txt" />
+    <None Include="Assets\Resources\sierra_agi_font\read me.txt" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
+    <None Include="Assets\Standard Assets %28Mobile%29\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
+    <Compile Include="Assets\Scripts\AbstractMessageBox.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -120,6 +120,52 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><MonoDevelop><Properties><Policies><NameConventionPolicy><Rules><NamingRule Name="Namespaces" AffectedEntity="Namespace" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Types" AffectedEntity="Class, Struct, Enum, Delegate" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Interfaces" AffectedEntity="Interface" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True"><RequiredPrefixes><String>I</String></RequiredPrefixes></NamingRule><NamingRule Name="Attributes" AffectedEntity="CustomAttributes" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True"><RequiredSuffixes><String>Attribute</String></RequiredSuffixes></NamingRule><NamingRule Name="Event Arguments" AffectedEntity="CustomEventArgs" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True"><RequiredSuffixes><String>EventArgs</String></RequiredSuffixes></NamingRule><NamingRule Name="Exceptions" AffectedEntity="CustomExceptions" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True"><RequiredSuffixes><String>Exception</String></RequiredSuffixes></NamingRule><NamingRule Name="Methods" AffectedEntity="Methods" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Static Readonly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="False" IncludeStaticEntities="True" /><NamingRule Name="Fields" AffectedEntity="Field" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="ReadOnly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" /><NamingRule Name="Constant Fields" AffectedEntity="ConstantField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Properties" AffectedEntity="Property" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Events" AffectedEntity="Event" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Enum Members" AffectedEntity="EnumMember" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Parameters" AffectedEntity="Parameter" VisibilityMask="VisibilityMask" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" /><NamingRule Name="Type Parameters" AffectedEntity="TypeParameter" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True"><RequiredPrefixes><String>T</String></RequiredPrefixes></NamingRule></Rules></NameConventionPolicy></Policies></Properties></MonoDevelop></ProjectExtensions>
-
+  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <NameConventionPolicy>
+            <Rules>
+              <NamingRule Name="Namespaces" AffectedEntity="Namespace" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Types" AffectedEntity="Class, Struct, Enum, Delegate" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Interfaces" AffectedEntity="Interface" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>I</String>
+                </RequiredPrefixes>
+              </NamingRule>
+              <NamingRule Name="Attributes" AffectedEntity="CustomAttributes" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>Attribute</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Event Arguments" AffectedEntity="CustomEventArgs" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>EventArgs</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Exceptions" AffectedEntity="CustomExceptions" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>Exception</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Methods" AffectedEntity="Methods" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Static Readonly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="False" IncludeStaticEntities="True" />
+              <NamingRule Name="Fields" AffectedEntity="Field" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="ReadOnly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" />
+              <NamingRule Name="Constant Fields" AffectedEntity="ConstantField" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Properties" AffectedEntity="Property" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Events" AffectedEntity="Event" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Enum Members" AffectedEntity="EnumMember" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Parameters" AffectedEntity="Parameter" VisibilityMask="VisibilityMask" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Type Parameters" AffectedEntity="TypeParameter" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>T</String>
+                </RequiredPrefixes>
+              </NamingRule>
+            </Rules>
+          </NameConventionPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

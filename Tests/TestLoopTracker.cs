@@ -1,51 +1,46 @@
-using System;
-using Rhino.Mocks;
 using NUnit.Framework;
-using UnityEngine;
+using NMock;
 
 namespace Irrelevant
 {
+	[TestFixture]
+	public class TestLoopTracker {
+		private LoopTracker tracker;
+		private Mock<MockSounds> sounds;
+		private MockFactory factory;
+		private float beginning = 0f;
 
-  [TestFixture]
-  public class TestLoopTracker
-  {
-    private LoopTracker tracker;
-    private Sounds sounds;
-    private MockRepository mocks;
+		public class MockSounds : Sounds {
+			public MockSounds() : base(null) {}
+		}
+		
+		[SetUp]
+		public void SetUp() {
+			factory = new MockFactory();
+			sounds = factory.CreateMock<MockSounds>();
+			tracker = new LoopTracker(sounds.MockObject);
+		}
 
-    private float beginning = 0f;
+		[Test]
+		public void AudioMovesToBeginningWhenNoLoopPreviouslyPlayed() {
+			float loopLength = 2f;
+			
+			sounds.Expects.One.Method(_ => _.pickStemsFor(0)).WithAnyArguments();
+			sounds.Expects.One.MethodWith(_ => _.setAudioTime(beginning));
+			tracker.NextLoop(loopLength);
+		}
 
-    [SetUp]
-    public void SetUp()
-    {
-      mocks = new MockRepository();
-      sounds = mocks.DynamicMock<Sounds>();
-      tracker = new LoopTracker(sounds);
-    }
+		[Test]
+		public void AudioMovesToEndOfPreviousLoopWhenAdvancingToNextLoop() {
+			float endTime = 2f;
+			float anything = 8f;
+			
+			sounds.Expects.AtLeastOne.Method(_ => _.pickStemsFor(0)).WithAnyArguments();
+			sounds.Expects.One.MethodWith(_ => _.setAudioTime(beginning));
+			sounds.Expects.One.MethodWith(_ => _.setAudioTime(endTime));
 
-    [Test]
-    public void AudioMovesToBeginningWhenNoLoopPreviouslyPlayed() {
-        float loopLength = 2f;
-        using (mocks.Record()) {
-          Expect.Call(delegate{sounds.setAudioTime(beginning);});
-        }
-        using (mocks.Playback()) {
-          tracker.NextLoop(loopLength);
-        }
-    }
-
-    [Test]
-    public void AudioMovesToEndOfPreviousLoopWhenAdvancingToNextLoop () {
-        float endTime = 2f;
-        float anything = 8f;
-        using (mocks.Record()) {
-          Expect.Call(delegate{sounds.setAudioTime(beginning);});
-          Expect.Call(delegate{sounds.setAudioTime(endTime);});
-        }
-        using (mocks.Playback()) {
-          tracker.NextLoop(endTime);
-          tracker.NextLoop(anything);
-        }
-    }
-  }
+			tracker.NextLoop(endTime);
+			tracker.NextLoop(anything);
+		}
+	}
 }
