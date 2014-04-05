@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using NMock;
+using Is = NMock.Is;
 
 namespace Irrelevant
 {

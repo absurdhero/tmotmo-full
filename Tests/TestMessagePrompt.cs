@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
 using UnityEngine;
 
@@ -13,9 +12,9 @@ namespace Tests
 	public class PromptTest
 	{
 		private MockRepository mocks;
-		private TouchSensor sensor;
+		private AbstractTouchSensor sensor;
 		private Prompt prompt;
-		private MessageBox messageBox;
+		private AbstractMessageBox messageBox;
 		const float epsilon = 0.000001f;
 		const float beforeEverything = 10.0f;
 		const float beforeMessageTime = beforeEverything + MessagePromptCoordinator.promptTime - epsilon;
@@ -28,7 +27,7 @@ namespace Tests
 			mocks = new MockRepository ();
 			sensor = mocks.StrictMock<TouchSensor> ();
 			prompt = mocks.DynamicMock<Prompt> ();
-			messageBox = mocks.DynamicMock<MessageBox> ();
+			messageBox = mocks.DynamicMock<AbstractMessageBox> ();
 		}
 		
 		[Test]

@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 using UnityEngine;
 using NMock;
 

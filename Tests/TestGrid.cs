@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 using UnityEngine;
 
 namespace Tests
