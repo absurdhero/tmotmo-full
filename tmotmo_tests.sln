@@ -26,11 +26,11 @@ Global
 		{5CD7675E-2B62-445F-A71F-B209AD6E7836}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MockUnity\MockUnity.csproj
+		StartupItem = Tests\Tests.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.FileWidth = 120
-		$1.TabsToSpaces = False
+		$1.NoTabsAfterNonTabs = True
 		$1.EolMarker = Unix
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain

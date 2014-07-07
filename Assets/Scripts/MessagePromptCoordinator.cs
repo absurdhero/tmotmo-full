@@ -4,8 +4,8 @@ using System.Linq;
 
 using UnityEngine;
 
-public class MessagePromptCoordinator : MarshalByRefObject {
-	Prompt prompt;
+public class MessagePromptCoordinator {
+    TextControl prompt;
 	AbstractMessageBox messageBox;
 	bool displayingAnything;
 	
@@ -19,7 +19,7 @@ public class MessagePromptCoordinator : MarshalByRefObject {
 	GameObject target;
 	GameObject touchedObject;
 
-	public MessagePromptCoordinator(Prompt prompt, AbstractMessageBox messageBox) {
+    public MessagePromptCoordinator(TextControl prompt, AbstractMessageBox messageBox) {
 		this.prompt = prompt;
 		this.messageBox = messageBox;
 	}

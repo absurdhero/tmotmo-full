@@ -1,7 +1,18 @@
 using UnityEngine;
 using System;
 
-public class Prompt : MarshalByRefObject {
+public interface Builder<T> {
+    T build();
+}
+
+public interface TextControl {
+    void Destroy();
+    void setText(string action);
+    void show();
+    void hide();
+}
+
+public class Prompt : TextControl, Builder<Prompt> {
 	GameObject textLabel, blackBox;
 	GUIText text;
 
