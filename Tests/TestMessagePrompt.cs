@@ -64,8 +64,8 @@ namespace Tests
             };
 
             using (factory.Ordered()) {
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
+                expectTouchWithinSprite(sprite.MockObject, true);
+                expectTouchWithinSprite(sprite.MockObject, false);
             }
 	
             bool hintTriggered = false;
@@ -127,9 +127,9 @@ namespace Tests
             };
 
             using (factory.Ordered()) {
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
+                expectTouchWithinSprite(sprite.MockObject, true);
+                expectTouchWithinSprite(sprite.MockObject, false);
+                expectTouchWithinSprite(sprite.MockObject, true);
             }
 			
             messagePromptCoordinator.hintWhenTouched(
@@ -177,13 +177,12 @@ namespace Tests
             };
 	
             using (factory.Ordered()) {
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
+                expectTouchWithinSprite(sprite.MockObject, true);
                 sensor.Expects.One.MethodWith(_ => _.hasTaps()).WillReturn(true);
                 sensor.Expects.One.MethodWith(_ => _.hasTaps()).WillReturn(true);
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
+                expectTouchWithinSprite(sprite.MockObject, false);
+                expectTouchWithinSprite(sprite.MockObject, false);
             }
-			
 			
             bool hintTriggered = false;
             bool secondHintTriggered = false;
@@ -253,10 +252,10 @@ namespace Tests
 			
             using (factory.Ordered()) {
                 // touch on first tick
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
+                expectTouchWithinSprite(sprite.MockObject, true);
                 sensor.Expects.One.MethodWith(_ => _.hasTaps()).WillReturn(true);
                 // no touch on second tick
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
+                expectTouchWithinSprite(sprite.MockObject, false);
             }
 			
 			
@@ -311,9 +310,9 @@ namespace Tests
             };
 			
             using (factory.Ordered()) {
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(false);
+                expectTouchWithinSprite(sprite.MockObject, false);
                 // touch on second tick
-                sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite.MockObject, new[] { TouchPhase.Began })).WillReturn(true);
+                expectTouchWithinSprite(sprite.MockObject, true);
                 sensor.Expects.One.MethodWith(_ => _.hasTaps()).WillReturn(true);
             }
 			
@@ -357,6 +356,12 @@ namespace Tests
 			
             Assert.That(hintTriggered, Iz.False);
             Assert.That(secondHintTriggered, Iz.False);
+        }
+
+        private void expectTouchWithinSprite(Sprite sprite, bool touchIsInsideSprite) {
+            sensor.Expects.One.MethodWith(_ => _.insideSprite(null, sprite, new[] {
+                TouchPhase.Began
+            })).WillReturn(touchIsInsideSprite);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class TouchSensor : MarshalByRefObject, AbstractTouchSensor {
+public class TouchSensor : AbstractTouchSensor {
 	const float OPAQUE = 0.01f;
 	
 	AbstractInput input;

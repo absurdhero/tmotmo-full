@@ -3,7 +3,7 @@ using System;
 /// <summary>
 /// Instantiates scenes and defines their order
 /// </summary>
-public class SceneFactory : MarshalByRefObject, AbstractSceneFactory {
+public class SceneFactory : AbstractSceneFactory {
 	SceneManager sceneManager;
 	
 	Type LAST_SCENE = typeof(Continued);

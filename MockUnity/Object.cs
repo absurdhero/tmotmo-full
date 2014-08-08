@@ -2,7 +2,7 @@ using System;
 
 namespace UnityEngine
 {
-	public class Object : MarshalByRefObject
+	public class Object
 	{
 		public string name;
 		public int GetInstanceID () { throw new InvalidOperationException(); }

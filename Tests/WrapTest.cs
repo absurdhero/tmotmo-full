@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using NUnit.Framework;
 
 namespace Tests
@@ -7,10 +6,6 @@ namespace Tests
 	[TestFixture]
 	public class WrapTest
 	{
-		public WrapTest ()
-		{
-		}
-
 		[Test]
 		public void singleLetterIsUnchanged() {
 			assertNoWrap("1");

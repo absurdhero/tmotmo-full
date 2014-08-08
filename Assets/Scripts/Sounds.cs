@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 // Handles all sounds/stems in the app
 // This is a MonoBehaviour class only to use the Unity features to initialize AudioSource members
-public class Sounds : MarshalByRefObject {
+public class Sounds {
 	const float trackStartingOffset = 8.0f;
 	const float driftTolerance = 0.04f;
 

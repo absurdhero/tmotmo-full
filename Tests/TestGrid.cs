@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -7,19 +6,22 @@ namespace Tests
 	[TestFixture]
 	public class TestGrid
 	{
+        private Grid grid;
+
 		[Test]
 		public void PixelsAtCellZeroAreZeroVector()		
 		{
-			Grid grid = new Grid(8, 8);
+			grid = new Grid(8, 8);
 			Assert.That(grid.PixelAtCell(0, 0), Is.EqualTo(Vector2.zero));
 		}
 		
 		[Test]
 		public void PixelsAtCellZeroAreEqualToOffsetWhenOffsetIsNotZero()		
 		{
-			Grid grid = new Grid(8, 8);
-			grid.HorizontalOffset = 50f;
-			grid.VerticalOffset = 32f;
+			grid = new Grid(8, 8) {
+				HorizontalOffset = 50f,
+				VerticalOffset = 32f
+			};
 			Assert.That(grid.PixelAtCell(0, 0), Is.EqualTo(new Vector2(grid.HorizontalOffset, grid.VerticalOffset)));
 		}
 
@@ -28,12 +30,13 @@ namespace Tests
 		{
 			int gridWidth = 8;
 			int gridHeight = 5;
-			Grid grid = new Grid(gridWidth, gridHeight);
+            int zeroHorizontalOffset = 0, zeroVerticalOffset = 0;
+			grid = new Grid(gridWidth, gridHeight);
 			
 			int i = 3;
 			int j = 4;
-			float width = gridWidth * i;
-			float height = gridHeight * j;
+			float width = zeroHorizontalOffset + gridWidth * i;
+			float height = zeroVerticalOffset + gridHeight * j;
 			Assert.That(grid.PixelAtCell(i, j), Is.EqualTo(new Vector2(width, height)));
 		}
 
@@ -42,9 +45,10 @@ namespace Tests
 		{
 			int gridWidth = 8;
 			int gridHeight = 5;
-			Grid grid = new Grid(gridWidth, gridHeight);
-			grid.HorizontalOffset = 50f;
-			grid.VerticalOffset = 32f;
+			grid = new Grid(gridWidth, gridHeight) {
+				HorizontalOffset = 50f,
+				VerticalOffset = 32f
+			};
 			
 			int i = 3;
 			int j = 4;

@@ -1,8 +1,4 @@
-using System;
-using System.Reflection;
-
 using NUnit.Framework;
-using UnityEngine;
 using NMock;
 
 namespace Tests
@@ -15,7 +11,7 @@ namespace Tests
 		private MockFactory factory;
 
 		[SetUp]
-		public void SetUp ()
+		public void SetUp()
 		{
 			factory = new MockFactory();
 			loopTracker = factory.CreateMock<AbstractLoopTracker>();

@@ -30,7 +30,7 @@ namespace Irrelevant
 
 			sensor.Expects.AtLeastOne.Method(_ => _.insideSprite(null, null, null)).WithAnyArguments().WillReturn(true);
 
-			Assert.IsTrue(collection.touchedAtSameTime(0f));
+			Assert.That(collection.touchedAtSameTime(0f), Iz.True);
 		}
 
 		[Test]
@@ -42,7 +42,7 @@ namespace Irrelevant
 			sensor.Expects.One.Method(_ => _.insideSprite(null, null, null))
 				.With(Is.Anything, Is.EqualTo(sprite2.MockObject), Is.Anything).WillReturn(false);
 
-			Assert.IsFalse(collection.touchedAtSameTime(0f));
+			Assert.That(collection.touchedAtSameTime(0f), Iz.False);
 		}
 
 		[Test]
@@ -80,7 +80,7 @@ namespace Irrelevant
 			}
 			
 			collection.touchedAtSameTime(0f);
-			Assert.IsTrue(collection.touchedAtSameTime(0.1f));
+			Assert.That(collection.touchedAtSameTime(0.1f), Iz.True);
 		}
 
 		[Test]
@@ -118,7 +118,7 @@ namespace Irrelevant
 			}
 			
 			collection.touchedAtSameTime(0f);
-			Assert.IsFalse(collection.touchedAtSameTime(0.3f));
+			Assert.That(collection.touchedAtSameTime(0.3f), Iz.False);
 		}
 	}
 }

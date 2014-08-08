@@ -37,9 +37,9 @@ namespace Irrelevant
 			
 			sounds.Expects.AtLeastOne.Method(_ => _.pickStemsFor(0)).WithAnyArguments();
 			sounds.Expects.One.MethodWith(_ => _.setAudioTime(beginning));
-			sounds.Expects.One.MethodWith(_ => _.setAudioTime(endTime));
-
 			tracker.NextLoop(endTime);
+
+			sounds.Expects.One.MethodWith(_ => _.setAudioTime(endTime));
 			tracker.NextLoop(anything);
 		}
 	}
